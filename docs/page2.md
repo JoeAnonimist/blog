@@ -13,4 +13,8 @@ Content\
 Content\
 Content\
 Content\
-Content\
+Content
+
+```python
+{% include src/hello.py %}
+```
