@@ -4,7 +4,7 @@ layout: default
 nav_order: 3
 ---
 
-# Title of Pare 2
+## Title of Page 2
 
 Content
 Content
