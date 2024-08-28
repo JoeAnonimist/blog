@@ -2,6 +2,8 @@ title: My Blog
 description: Personal blog and Qt learning
 theme: just-the-docs
 
+includes_dir: "."
+
 defaults:
   -
     scope:
