@@ -1,5 +1,5 @@
 ---
-title: PySide6 template script
+title: PySide6 template script - empty
 layout: default
 nav_order: 2
 ---
