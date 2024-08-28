@@ -1,5 +1,5 @@
 ---
-title: Page2
+title: PySide6 template script - QLabel
 layout: default
 nav_order: 3
 ---
