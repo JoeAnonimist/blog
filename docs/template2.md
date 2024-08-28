@@ -8,5 +8,5 @@ nav_order: 3
 
 
 ```python
-{% include src/qtwidgetsexamples/helloworld1.py %}
+{% include src/qtwidgetsexamples/01_script_template/helloworld1.py %}
 ```
