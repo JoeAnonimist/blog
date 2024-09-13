@@ -1,7 +1,7 @@
 ---
 title: PySide6 template script - QLabel
 layout: default
-parent: Qt Widgets
+parent: 01 Template Scripts
 nav_order: 3
 ---
 
