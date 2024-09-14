@@ -6,7 +6,7 @@ import sys
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QLabel, QVBoxLayout)
 
-# 1 - Create a class that inherits from QMainWindow
+# 1 - Create a class that inherits from QWidget
 
 class Window(QWidget):
     
@@ -22,7 +22,7 @@ class Window(QWidget):
         # 3 - Create a QLabel instance
         #     and add it to the window layout
         
-        label = QLabel('Hello, World!', self)
+        label = QLabel('Hello, World!')
         layout.addWidget(label)
 
 # The boilerplate code is the same as in helloworld.py        
