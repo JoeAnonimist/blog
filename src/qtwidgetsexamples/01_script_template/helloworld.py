@@ -8,13 +8,13 @@ from PySide6.QtWidgets import QApplication, QWidget
 # 1 - Create a class inherited from QWidget
 
 class Window(QWidget):
-    
+
     def __init__(self):
-        
+
         # If you don't init the superclass 
         # you get a run-time error
         super().__init__()
-        
+    
 
 if __name__ == '__main__':
     
