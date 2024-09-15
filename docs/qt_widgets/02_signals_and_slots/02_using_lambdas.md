@@ -17,8 +17,8 @@ The pattern is the same as in [the basic signals-slots example]({% link docs/qt_
 
 2. Connect the `QPushButton.clicked()` signals with slots. There are three things to note here:
 
-    a) You can connect a Python lambda function (ie. a  function without a name) instead of an ordinary method/function to a slot,
+    a. You can connect a Python lambda function (ie. a  function without a name) instead of an ordinary method/function to a slot,
 
-    b) There are two slots (in this case lambdas) connected to the same signal. You can also connect multiple signals with a single slot.
+    b. There are two slots (in this case lambdas) connected to the same signal. You can also connect multiple signals with a single slot.
 
-    c) You can use a lambda to pass parameters to a slot. In the script, `checked` that matches the signal signature, but `'Something else'` is additional data passed to the actual function that will handle the signal.
+    c. You can use a lambda to pass parameters to a slot. In the script, `checked` that matches the signal signature, but `'Something else'` is additional data passed to the actual function that will handle the signal.
