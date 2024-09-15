@@ -21,4 +21,4 @@ Our slot simply prints a message in the terminal but any code you put there will
 
 3. Connect the signal and the slot. The Python syntax to make the connection is `object.signal_name.connect(slot_name)`. Note there are no parentheses after `self.on_button_clicked` because `button.clicked.connect()` accepts a function object.
 
-That's about it for this example but signals and slots is a large and an important topic and there's much more to it than this.
+That's about it for this example but signals and slots is a large and an important topic and there's much more to it than this simple script.
