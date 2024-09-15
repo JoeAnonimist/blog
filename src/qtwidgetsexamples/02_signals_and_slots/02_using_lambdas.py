@@ -30,11 +30,12 @@ class Window(QWidget):
         button = QPushButton('Click me!')
         button.setCheckable(True)
         
-        # 2 - In this case the slot is a Python lambda
+        # 2 - In this case the slots are Python lambdas
         #     placed in the button.clicked.connect() call.
-        
+        #     We have two slots connected to the same signal.
+
         button.clicked.connect(lambda: print('Clicked...'))
-        button.clicked.connect(lambda checked: print(checked))
+        button.clicked.connect(lambda checked: print(checked, 'Something else'))
         
         layout.addWidget(button)
         
