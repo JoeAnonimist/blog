@@ -10,3 +10,4 @@ parent: 02 Signals and Slots
 ```python
 {% include src/qtwidgetsexamples/02_signals_and_slots/02_using_lambdas.py %}
 ```
+

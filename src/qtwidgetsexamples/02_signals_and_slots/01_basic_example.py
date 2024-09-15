@@ -17,7 +17,7 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        # 1 - Create the event source, ie. the QPushButton.
+        # 1 - Create the signal sender, ie. the QPushButton.
         #     When you click it the button emits a signal.
         
         button = QPushButton('Click me!')
@@ -37,8 +37,8 @@ class Window(QWidget):
     #     executed when the button is clicked.
     
     @Slot()
-    def on_button_clicked(self):
-        print('Button clicked...')
+    def on_button_clicked(self, checked):
+        print('Button clicked,', 'checked:', checked)
         
 
 if __name__ == '__main__':
