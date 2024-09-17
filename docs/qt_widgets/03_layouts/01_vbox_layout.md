@@ -2,7 +2,7 @@
 title: QVBoxLayout Demo
 layout: default
 nav_order: 1
-parent: 02 Signals and Slots
+parent: 03 Layouts
 ---
 
 ## PySide6 QVBoxLayout Example
