@@ -1,12 +1,13 @@
 # QHBoxLayout is the horizontal box layout
-# It stacks widgets horizontally
+# It lines out widgets horizontally
+
+import sys
 
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QPushButton, QLabel, QHBoxLayout)
-
 from PySide6.QtCore import QTime
 
-import sys
+
 
 
 class Window(QWidget):
@@ -16,7 +17,6 @@ class Window(QWidget):
         super().__init__()
         
         # The steps are the same as for the vertical box layout:
-        
         # 1 - Create the layout and set it as the window layout
         
         layout = QHBoxLayout()
@@ -31,7 +31,7 @@ class Window(QWidget):
         
         # I need to access the label from the 
         # slot method (ie. on_button_clicked)
-        # so I attach it to the Window object using 'self'
+        # so I make it a Window instance variable.
         # I also set the label minimum width
         
         
