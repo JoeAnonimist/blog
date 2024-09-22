@@ -19,7 +19,7 @@ parent: 03 Layouts
 
 3. Add the widgets and add them to the layout using `QHBoxLayout.addWidget()` in order you want them to appear in the layout.
 
-We also add some interactivity to the window by handling the `QPushButtons` click events and set `QLabel`'s text to the current time. This brings us to an important point: Qt is more than a GUI framework - it is packed with features that you could use in a non-GUI application. But so is Python, the 'batteries included' programming language which leads to duplication of functionality, and it's up to the developer to decide whether to use eg. Python's `time`, Qt's `QTime` or something entirely different.
+We also add some interactivity to the window by handling the `QPushButton`'s click events and set `QLabel`'s text to the time the button was clicked. This brings us to an important point: Qt is more than a GUI framework - it is packed with features that you could use in a non-GUI application. But so is Python, the 'batteries included' programming language, which leads to duplication of functionality, and it's up to the developer to decide whether to use eg. Python's `time`, Qt's `QTime` or something entirely different.
 
 Here are a few Qt classes from the `QtCore` namespace just to get the taste of what is available:
 
