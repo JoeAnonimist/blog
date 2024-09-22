@@ -1,6 +1,7 @@
 # QFormLayout lets you create forms
 
 import sys
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QFormLayout, QLineEdit, QLabel)
 
@@ -41,7 +42,8 @@ class Window(QWidget):
         self.name_edit.editingFinished.connect(self.on_editing_finished)
         self.email_edit.editingFinished.connect(self.on_editing_finished)
         self.age_edit.editingFinished.connect(self.on_editing_finished)
-        
+    
+    @Slot()    
     def on_editing_finished(self):
         
         self.summary_label.setText(
