@@ -32,7 +32,7 @@ class Window(QWidget):
         layout.addRow('Name', self.name_edit)
         layout.addRow('e-mail', self.email_edit)
         layout.addRow('Age', self.age_edit)
-        layout.addWidget(self.summary_label)
+        layout.addRow('Summary:', self.summary_label)
         
         # self.on_editing_finished() will handle events for all widgets.
         # editingFinished() is fired when Return is pressed
@@ -45,9 +45,9 @@ class Window(QWidget):
     def on_editing_finished(self):
         
         self.summary_label.setText(
-            self.name_edit.text() + '\n' +
-            self.email_edit.text() + '\n' +
-            self.age_edit.text())
+            f'Name:\t{self.name_edit.text()}\n' +
+            f'e-mail:\t{self.email_edit.text()}\n' +
+            f'Age:\t{self.age_edit.text()}')
 
 
 if __name__ == '__main__':
