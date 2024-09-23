@@ -1,0 +1,59 @@
+# Radio buttons typically present the user 
+# with a "one of many" choice. In a group of radio buttons, 
+# only one radio button at a time can be checked
+
+from PySide6.QtWidgets import (QApplication, 
+    QWidget, QVBoxLayout, QRadioButton, QLabel)
+import sys
+
+
+class Window(QWidget):
+    
+    def __init__(self):
+
+        super().__init__()
+        
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        
+        # 1 - Create the radio buttons and add them to the layout
+        
+        self.blue_radiobutton = QRadioButton('Change bg to blue')
+        self.green_radiobutton = QRadioButton('Change bg to green')
+        self.red_radiobutton = QRadioButton('Change bg to red')
+        
+        self.label = QLabel('Colored label')
+        
+        layout.addWidget(self.blue_radiobutton)
+        layout.addWidget(self.green_radiobutton)
+        layout.addWidget(self.red_radiobutton)
+        layout.addWidget(self.label)
+        
+        self.blue_radiobutton.toggled.connect(self.on_button_toggled)
+        self.green_radiobutton.toggled.connect(self.on_button_toggled)
+        self.red_radiobutton.toggled.connect(self.on_button_toggled)
+    
+    # 2 - Create the slot to handle radio button toggled() signal
+    #     Use isChecked() to see if a particular button is selected.
+        
+    def on_button_toggled(self):
+        
+        if self.blue_radiobutton.isChecked():
+            self.label.setStyleSheet('background-color:blue;')
+        elif self.green_radiobutton.isChecked():
+            self.label.setStyleSheet('background-color:green;')
+        else:
+            self.label.setStyleSheet('background-color:red;')
+
+
+if __name__ == '__main__':
+
+    if not QApplication.instance():
+        app = QApplication(sys.argv)
+    else:
+        app = QApplication.instance()
+
+    main_window = Window()
+    main_window.show()
+
+    sys.exit(app.exec())
