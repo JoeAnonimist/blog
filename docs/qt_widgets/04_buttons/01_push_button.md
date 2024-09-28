@@ -23,6 +23,6 @@ QPushButton is a simple widget and is a commonly used Gui element. It sends `cli
 
     That a class has more than one constructor is a common case in Qt and in the OOP world in general. The Qt documentation is comprehensive and you can consult it to find the most suitable constructor for your use case.
 
-2. Create the metod to be used as the slot. This is the method that will be called when the button is clicked. In this case the method sets a `QLabel`'s text to a random integer. Note that the label is created as an instance variable (by attaching it to `self`) and that we had to convert the generated `int` to `str` to display it in the label.
+2. Create the method to be used as the slot. This is the method that will be called when the button is clicked. In this case the method sets a `QLabel`'s text to a random integer. Note that the label is created as an instance variable (by attaching it to `self`) so we can access it from the slot, and that we had to convert the generated `int` to `str` to display it in the label.
 
 3. Connect the button's `clicked` signal with the slot. That's just one line of code and you can call your slot anything you want (within reason). That's about it - three easy steps.
