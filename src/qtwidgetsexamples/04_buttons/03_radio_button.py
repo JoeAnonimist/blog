@@ -29,21 +29,22 @@ class Window(QWidget):
         layout.addWidget(self.red_radiobutton)
         layout.addWidget(self.label)
         
-        self.blue_radiobutton.toggled.connect(self.on_button_toggled)
-        self.green_radiobutton.toggled.connect(self.on_button_toggled)
-        self.red_radiobutton.toggled.connect(self.on_button_toggled)
+        self.blue_radiobutton.toggled.connect(
+            lambda: self.on_button_toggled('blue'))
+        self.green_radiobutton.toggled.connect(
+            lambda: self.on_button_toggled('green'))
+        self.red_radiobutton.toggled.connect(
+            lambda: self.on_button_toggled('red'))
+        
+        self.blue_radiobutton.setChecked(True)
     
     # 2 - Create the slot to handle radio button toggled() signal
     #     Use isChecked() to see if a particular button is selected.
         
-    def on_button_toggled(self):
+    def on_button_toggled(self, color):
         
-        if self.blue_radiobutton.isChecked():
-            self.label.setStyleSheet('background-color:blue;')
-        elif self.green_radiobutton.isChecked():
-            self.label.setStyleSheet('background-color:green;')
-        else:
-            self.label.setStyleSheet('background-color:red;')
+        self.label.setStyleSheet(
+            f'background-color:{color}; color: white;')
 
 
 if __name__ == '__main__':
