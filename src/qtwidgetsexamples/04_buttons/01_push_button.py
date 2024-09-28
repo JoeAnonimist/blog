@@ -1,10 +1,12 @@
 # QPushButton generates 'clicked' signals when you click it duh
 
-from PySide6.QtWidgets import (QApplication, 
-    QPushButton, QLabel, QWidget, QVBoxLayout)
-from PySide6.QtCore import Qt
-import sys
 from random import randint
+import sys
+
+from PySide6.QtCore import Qt
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import (QApplication,
+    QPushButton, QLabel, QWidget, QVBoxLayout)
 
 
 class Window(QWidget):
@@ -32,6 +34,7 @@ class Window(QWidget):
     
     # 2 - Create the method/function to use as the slot
     
+    @Slot()
     def on_button_clicked(self):
         self.label.setText(str(randint(0, 100)))
 
