@@ -17,7 +17,7 @@ parent: 04 Buttons
 
 2. Create the slot to process checkboxes' `checkStateChanged` signals. The documentation suggests that you mark it with the `Slot()` decorator but if you do you also need to import the `Qt` class from `PySide6.QtCore`. If you don't PySide6 will complain:
 
-> TypeError: Cannot call meta function "void on_state_changed(Qt::CheckState)" because parameter 0 of type "Qt::CheckState" cannot be converted.    
+> TypeError: Cannot call meta function "void on_state_changed(Qt::CheckState)" because parameter 0 of type "Qt::CheckState" cannot be converted.
 
     This is because `checkStateChanged` `state` argument is of type `Qt.CheckState` and `Qt.CheckState`, like many other Qt enums, resides in `PySide6.QtCore.Qt` so you'll often need to import it. So, in this case, either import `Qt` or omit the `Slot()` decorator.
     
