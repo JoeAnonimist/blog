@@ -18,10 +18,10 @@ QPushButton is a simple widget and is a commonly used Gui element. It sends `cli
     - The one that optionally accepts only the button's parent. If you use it the button will initially be shown without any text
 
     - The one that, in addition to parent, accepts the text to be displayed on the button. This is the one we use in the example
-    
+
     - The one that, in addition to parent and text, accepts an icon so you can add an image to a button
-    
-That a class has more than one constructor is a common case in Qt and in the OOP world in general. The Qt documentation is comprehensive and you can consult it to find the most suitable constructor for your use case.
+
+    That a class has more than one constructor is a common case in Qt and in the OOP world in general. The Qt documentation is comprehensive and you can consult it to find the most suitable constructor for your use case.
 
 2. Create the metod to be used as the slot. This is the method that will be called when the button is clicked. In this case the method sets a `QLabel`'s text to a random integer. Note that the label is created as an instance variable (by attaching it to `self`) and that we had to convert the generated `int` to `str` to display it in the label.
 
