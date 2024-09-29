@@ -2,6 +2,7 @@
 # with a "one of many" choice. In a group of radio buttons, 
 # only one radio button at a time can be checked
 
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QVBoxLayout, QRadioButton, QLabel)
 import sys
@@ -29,6 +30,9 @@ class Window(QWidget):
         layout.addWidget(self.red_radiobutton)
         layout.addWidget(self.label)
         
+        # 3. Connect the radio buttons' toggled signal
+        #    to the slot
+        
         self.blue_radiobutton.toggled.connect(
             lambda: self.on_button_toggled('blue'))
         self.green_radiobutton.toggled.connect(
@@ -39,8 +43,8 @@ class Window(QWidget):
         self.blue_radiobutton.setChecked(True)
     
     # 2 - Create the slot to handle radio button toggled() signal
-    #     Use isChecked() to see if a particular button is selected.
-        
+    
+    @Slot()    
     def on_button_toggled(self, color):
         
         self.label.setStyleSheet(
