@@ -17,7 +17,7 @@ parent: 05 Input Widgets
 QWidget
     ...
     QAbstractSlider
-        <Strong>QDial</Strong>
+        `**QDial**`
         QScrollBar
         QSlider
     ...
@@ -26,6 +26,6 @@ QWidget
             QDateEdit
             QTimeEdit
         QDoubleSpinBox
-        <Strong>QSpinBox</Strong>
+        `**QSpinBox**`
     ...
 ```
