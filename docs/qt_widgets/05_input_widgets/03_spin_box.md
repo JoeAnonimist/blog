@@ -17,7 +17,7 @@ parent: 05 Input Widgets
 QWidget
     ...
     QAbstractSlider
-        QDial
+        __QDial__
         QScrollBar
         QSlider
     ...
@@ -26,6 +26,6 @@ QWidget
             QDateEdit
             QTimeEdit
         QDoubleSpinBox
-        QSpinBox
+        __QSpinBox__
     ...
 ```
