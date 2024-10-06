@@ -1,8 +1,10 @@
 # The QComboBox widget is a combined button and popup list.
 
-from PySide6.QtWidgets import (QApplication, 
-    QWidget, QVBoxLayout, QComboBox, QLabel)
 import sys
+
+from PySide6.QtCore import Slot, Qt
+from PySide6.QtWidgets import (QApplication,
+    QWidget, QVBoxLayout, QComboBox, QLabel)
 
 
 class Window(QWidget):
@@ -20,13 +22,12 @@ class Window(QWidget):
         
         # 2 - Add items to it
         
-        self.combo_box.addItem('Linux')
-        self.combo_box.addItem('Windows')
-        self.combo_box.addItem('Mac')
-        self.combo_box.addItem('Android')
+        self.combo_box.addItems(
+            ['Linux', 'Windows', 'Mac', 'Android'])
         
         # Set setEditable to False if you
         # want to limit text to your predefined values.
+        # False is the default value
         
         self.combo_box.setEditable(True)
         
@@ -44,13 +45,23 @@ class Window(QWidget):
             self.on_text_activated)
     
     # 3 - Handle QComboBox.currentTextChanged signals
-        
+    
+    @Slot()
     def on_current_text_changed(self, text):
         self.label_text_changed.setText(text)
+        self.print_current()
 
     #     Also handle QComboBox.textActivated
+    
+    @Slot()
     def on_text_activated(self, text):
         self.label_text_activated.setText(text)
+        self.print_current()
+        
+    def print_current(self):
+        print(self.combo_box.currentData(Qt.DisplayRole))
+        print(self.combo_box.currentIndex())
+        print(self.combo_box.currentText())
 
 
 if __name__ == '__main__':
