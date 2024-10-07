@@ -2,10 +2,11 @@
 # model that can be subclassed to create table models.
 
 import sys
-from PyQt6.QtWidgets import (QApplication, 
+
+from PySide6.QtSql import QSqlDatabase, QSqlTableModel
+from PySide6.QtWidgets import (QApplication,
     QWidget, QHBoxLayout, QTableView)
-from PyQt6.QtCore import Qt, QModelIndex
-from PyQt6.QtSql import QSqlDatabase, QSqlTableModel
+
 
 class Window(QWidget):
     
