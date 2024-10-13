@@ -11,14 +11,3 @@ parent: 10 Dialogs
 {% include src/qtwidgetsexamples/10_dialogs/02_dialogs.py %}
 ```
 
-
-Take me to [pookie](#pookie)
-
-should be the correct markdown syntax to jump to the anchor point named pookie.
-
-To insert an anchor point of that name use HTML:
-
-<a name="pookie">ppp</a>
-
-
-
