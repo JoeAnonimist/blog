@@ -12,13 +12,13 @@ parent: 10 Dialogs
 ```
 
 
-Take me to [pookie](#pookie)
+Take me to [](#pookie)
 
 should be the correct markdown syntax to jump to the anchor point named pookie.
 
 To insert an anchor point of that name use HTML:
 
-<a name="pookie"></a>
+<a name="pookie">ppp</a>
 
 
 
