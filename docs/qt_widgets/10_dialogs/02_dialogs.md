@@ -12,7 +12,7 @@ parent: 10 Dialogs
 ```
 
 
-Take me to [](#pookie)
+Take me to [pookie](#pookie)
 
 should be the correct markdown syntax to jump to the anchor point named pookie.
 
