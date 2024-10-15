@@ -2,7 +2,7 @@
 title: QtQuick Column Layout
 layout: default
 nav_order: 1
-parent: 02 QtQuick Signals and Slots
+parent: 03 QtQuick Layouts
 ---
 
 ## QtQuick Column Layout
