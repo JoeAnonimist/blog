@@ -6,18 +6,20 @@ from PySide6.QtQml import QQmlApplicationEngine
 
 if __name__ == '__main__':
     
-    # 1. Create a QGuiApplication instance
+    # 3. Create a QGuiApplication instance
 
     app = QGuiApplication(sys.argv)
     
-    # 2. Create a QQMlApplicationEngine instance and connect
+    # 4. Create a QQmlApplicationEngine instance and connect
     #    its quit signal with QGuiApplication.quit()
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
     
-    # 3. Load the Qml file and start the event loop
+    # 5. Load the Qml file
     
     engine.load('01_hello_world.qml')
+    
+    # 6.  Start the main event loop
 
     sys.exit(app.exec())
