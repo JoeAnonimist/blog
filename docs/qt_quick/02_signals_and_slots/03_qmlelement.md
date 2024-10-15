@@ -1,7 +1,7 @@
 ---
 title: Qml Signal - PySide6 Slot Using QmlElement
 layout: default
-nav_order: 2
+nav_order: 3
 parent: 02 QtQuick Signals and Slots
 ---
 
