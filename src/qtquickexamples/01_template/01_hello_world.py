@@ -10,7 +10,7 @@ if __name__ == '__main__':
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('view.qml')
+    engine.load('01_hello_world.qml')
 
     result = app.exec()
     del engine
