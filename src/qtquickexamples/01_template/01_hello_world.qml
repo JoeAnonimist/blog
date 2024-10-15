@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+// 1. Create an instance of 
+//    the ApplicationWindow Qml type
 
 ApplicationWindow {
 
@@ -9,7 +11,10 @@ ApplicationWindow {
     width: 400
     height:200
     title: "Template App"
-
+    
+    // 2. Add a layout to the application window
+    //    and add a Label Qml type instance to it.
+    
     RowLayout {
         
         anchors.fill: parent
