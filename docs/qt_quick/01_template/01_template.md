@@ -26,7 +26,7 @@ On the Qml side of things, after the necessary imports
 
 Back in Python/Pyside6 we
 
-3. Create an instance of the `QGuiApplication` class. `QGuiApplication` is suitable for QtQuick applications just as `QApplication` is suitable for Qt Widget applications while you would use `QCoreApplication` for non-Gui Qt applications. Since `QGuiApplication` handles your application initialization you must create it before any other objects related to the user interface.
+3. Create an instance of the `QGuiApplication` class. `QGuiApplication` is suitable for QtQuick applications just as `QApplication` is suitable for Qt Widget applications while you would use `QCoreApplication` for non-Gui Qt applications. Since `QGuiApplication` handles your application initialization you must create it before any other objects related to the user interface. { start=4 }
 
 4. Create an instance of the `QQmlApplicationEngine` class and connect its `quit` signal to the `QGuiApplication.quit()` slot to make sure both the application and the engine exit at the same time.
 
