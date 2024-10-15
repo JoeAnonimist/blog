@@ -17,6 +17,6 @@ parent: 05 Input Widgets
 
 2. Write the slot methods. The first slot the first label's text to the total number of entered characters every time the text in the `QPLainTextEdit` changes. The second slot sets the second label's text to the current cursor position in the `QPLainTextEdit` when the cursor is moved.
 
-  Just like with `QTextEdit` you can access `QPLainTextEdit`'s underlying `QTextDocument` using `QPlainTextEdit.document()` and its `QTextCursor` using `QPLainTextEdit.textCursor()`
+    Just like with `QTextEdit` you can access `QPLainTextEdit`'s underlying `QTextDocument` using `QPlainTextEdit.document()` and its `QTextCursor` using `QPLainTextEdit.textCursor()`
 
 3. Add the `QPlainTextEdit` and the two labels to the window's layout and connect the slots to the `QPlainTextEdit`'s `textChanged` and `cursorPositionChanged` signals.
