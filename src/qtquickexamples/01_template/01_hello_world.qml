@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 // 1. Create an instance of 
 //    the ApplicationWindow Qml type
+//    and set its properties
 
 ApplicationWindow {
 
