@@ -14,7 +14,7 @@ ApplicationWindow {
     
     // 1. Add a property named timer to the root object
     
-    property var timer
+    property variant timer
     
     RowLayout {
         
