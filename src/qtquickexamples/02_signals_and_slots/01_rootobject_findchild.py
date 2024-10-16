@@ -13,12 +13,12 @@ if __name__ == '__main__':
     engine.quit.connect(app.quit)
     engine.load('01_rootobjects_findchild.qml')
     
-    # 2. Find the Label element
+    # 1. Find the Label element
     
     root = engine.rootObjects()[0]
     label = root.findChild(QObject, 'label')
     
-    # 3. Create a timer and connect
+    # 2. Create a timer and connect
     #    the timer signal to the label slot
     
     timer = QTimer()
