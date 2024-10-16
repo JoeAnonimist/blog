@@ -4,10 +4,11 @@
 #
 # Access their current value using their value() property
 
-from PySide6.QtCore import Slot
-from PySide6.QtWidgets import (QApplication, 
-    QWidget, QVBoxLayout, QSpinBox, QDial, QLabel)
 import sys
+
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import (QApplication,
+    QWidget, QVBoxLayout, QSpinBox, QDial, QLabel)
 
 
 class Window(QWidget):
