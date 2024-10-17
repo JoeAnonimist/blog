@@ -1,10 +1,11 @@
-# The QListWidget class provides an item-based list widget, 
-# ie. it displays a list of items.
+# The QListWidget class provides an item-based
+# list widget, ie. it displays a list of items.
 # This is a basic example. You can also add 
 # icons and checkboxes. QListView is even more flexible.
 
 import sys
 
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (QApplication,
     QWidget, QVBoxLayout, QListWidget, QLabel)
 
@@ -35,11 +36,11 @@ class Window(QWidget):
             self.on_current_item_changed)
     
     # 2 - Create the slot to handle item changed events
+    
+    @Slot()
+    def on_current_item_changed(self, current, previous):
         
-    def on_current_item_changed(self):
-        
-        current_item = self.list_widget.currentItem()
-        color = current_item.text()
+        color = current.text()
         self.label.setStyleSheet(
             'background-color:{};'.format(color))
 
