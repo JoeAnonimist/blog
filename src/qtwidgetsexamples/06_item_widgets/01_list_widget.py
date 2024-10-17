@@ -1,13 +1,12 @@
 # The QListWidget class provides an item-based list widget, 
 # ie. it displays a list of items.
-# This is a basic example. You can also display icons and checkboxes
-# QListView is even more flexible.
+# This is a basic example. You can also add 
+# icons and checkboxes. QListView is even more flexible.
 
 import sys
 
 from PySide6.QtWidgets import (QApplication,
-    QWidget, QVBoxLayout, QListWidget,
-    QListWidgetItem, QLabel)
+    QWidget, QVBoxLayout, QListWidget, QLabel)
 
 
 class Window(QWidget):
@@ -22,11 +21,8 @@ class Window(QWidget):
         # 1 - Create the list widget and add items to it
         
         self.list_widget = QListWidget()
-        
-        self.list_widget.addItem(QListWidgetItem('blue'))
-        self.list_widget.addItem(QListWidgetItem('green'))
-        self.list_widget.addItem(QListWidgetItem('red'))
-        
+        self.list_widget.addItems(['blue', 'green', 'red'])
+
         self.label = QLabel()
         
         layout.addWidget(self.list_widget)
