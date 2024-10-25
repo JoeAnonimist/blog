@@ -14,3 +14,7 @@ parent: 06 Item Widgets
 The `QTreeWidget` provides a standard tree widget. It uses a predefined item model - each tree node is represented with a `QTreeWidgetItem` instance. To use `QTreeWidget in your application
 
 1. Create a `QTreeWidget` object
+
+```mermaid
+info
+```
