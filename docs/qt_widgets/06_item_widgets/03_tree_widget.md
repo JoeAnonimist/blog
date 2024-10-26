@@ -16,7 +16,7 @@ The `QTreeWidget` provides a standard tree widget. It uses a predefined item mod
 1. Create a `QTreeWidget` object
 
 ```mermaid
-graph LR;
+flowchart LR;
 A-->B;
 A-->C;
 B-->D;
