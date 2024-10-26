@@ -21,4 +21,9 @@ A(A node)-- Event 1 ---B(B node);
 A(A node)-- Event 2 ---C;
 B-->D;
 C-->D;
+D==>E;
+E==>F;
+E==>G;
+F-->H;
+G-->H;
 ```
