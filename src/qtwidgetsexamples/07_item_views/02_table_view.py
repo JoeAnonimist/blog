@@ -4,49 +4,13 @@
 
 import os
 from random import randint
+import sqlite3
 import sys
 
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtWidgets import (QApplication,
     QWidget, QVBoxLayout, QTableView, QHeaderView)
-
-
-# 1 - So, create the model, in this case 
-#     a QAbstractTableModel subclass. You must
-#     implement rowCount(), columnCount() and data()
-class RandomTableModel(QAbstractTableModel):
-    
-    def __init__(self):
-        
-        super().__init__()
-        
-        self.row_count = 3
-        self.column_count = 5
-        
-        self.table = [[randint(0, 100) 
-            for _ in range(self.column_count)] 
-                for _ in range(self.row_count)]
-                
-    def rowCount(self, parent=QModelIndex()):
-        return self.row_count
-        
-    def columnCount(self, parent=QModelIndex()):
-        return self.column_count
-        
-    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
-        
-        # This is where you actually provide the data
-        
-        if role == Qt.ItemDataRole.DisplayRole:
-            i = index.row()
-            j = index.column()
-            return self.table[i][j]
-        # I did not expect to have to set cell 
-        # alignment in the model but hey.
-        # Here's the available roles:
-        # https://doc.qt.io/qt-6/qt.html#ItemDataRole-enum
-        elif role == Qt.ItemDataRole.TextAlignmentRole:
-            return Qt.AlignmentFlag.AlignCenter
+from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
 
 
 class Window(QWidget):
@@ -58,6 +22,13 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
+        # 1 - Set up the model data
+        
+        self.database = QSqlDatabase.addDatabase('QSQLITE')
+        self.database.setDatabaseName(':memory:')
+        self.database.open()
+        self.set_up_model()
+        
         # 2 - Create the table view
         
         table_view = QTableView()
@@ -65,8 +36,13 @@ class Window(QWidget):
         # 3 - Create the model instance and set it
         #     as the table view model.
         
-        model = RandomTableModel()
-        table_view.setModel(model)
+        self.model = QSqlQueryModel()
+        self.model.setQuery('Select * From users')
+        self.model.setHeaderData(0, Qt.Horizontal, 'Id')
+        self.model.setHeaderData(1, Qt.Horizontal, 'fname')
+        self.model.setHeaderData(2, Qt.Horizontal, 'lname')
+        self.model.setHeaderData(3, Qt.Horizontal, 'age')
+        table_view.setModel(self.model)
         
         # Make the columns and rows fit the table view
         # size so there's no scrollbars
@@ -78,6 +54,25 @@ class Window(QWidget):
             QHeaderView.ResizeMode.Stretch)
         
         layout.addWidget(table_view)
+        
+    def set_up_model(self):
+        
+        query = QSqlQuery()
+        query.exec('''
+        Create Table users (
+        id Integer Primary Key,
+        fname Text Not Null,
+        lname Text Not Null,
+        age Integer Not Null)
+        ''')
+
+        query.exec('''
+        Insert Into users (fname, lname, age)
+        Values
+        ('Alice', 'Carol', 32),
+        ('Bob', 'Rock', 28),
+        ('Chuck', 'Moore', 23)
+        ''')
 
 
 if __name__ == '__main__':
