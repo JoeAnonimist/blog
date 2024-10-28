@@ -27,18 +27,14 @@ class Window(QWidget):
         
         # 3 - Connect the signals with the slots
         
-        self.line_edit.textChanged.connect(self.on_text_changed)
+        self.line_edit.textChanged.connect(self.label.setText)
         self.line_edit.editingFinished.connect(self.on_editing_finished)
         self.line_edit.inputRejected.connect(self.on_input_rejected)
         
         layout.addWidget(self.line_edit)
         layout.addWidget(self.label)
 
-    # 2 - Create methods to handle line edit events. 
-    
-    @Slot()
-    def on_text_changed(self):
-        self.label.setText(self.line_edit.text())
+    # 2 - Create methods to handle line edit signals. 
     
     @Slot()
     def on_editing_finished(self):

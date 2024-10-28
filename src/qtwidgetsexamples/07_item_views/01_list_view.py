@@ -7,6 +7,7 @@
 import os
 import sys
 
+from PySide6.QtCore import QDir
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtWidgets import (QApplication,
     QWidget, QVBoxLayout, QListView)
@@ -38,9 +39,8 @@ class Window(QWidget):
         layout.addWidget(list_view)
         
     def populate_model(self):
-        # This incantation returns the contents
-        # of your home directory as a list:
-        files = os.listdir(os.path.expanduser('~'))
+
+        files = QDir.home().entryList()
         
         for f in files:
             item = QStandardItem(f)

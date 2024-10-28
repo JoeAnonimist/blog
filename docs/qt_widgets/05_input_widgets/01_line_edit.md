@@ -17,3 +17,5 @@ parent: 05 Input Widgets
 2. Create the slots to handle `QLineEdit` signals. The `textChanged` signal is emitted whenever the line edit text changes. The `editingFinished` signal is emitted when the Enter key is pressed or the line edit widget loses focus. The `inputRejected` signal is emitted when the user tries to enter invalid input. In this example all three slots set the label text based on the emitted signal.
 
 3. Connect the signals with the slot methods using the standard PySide6 notation.
+
+Note how we connect the `QLineEdit.textChanged` signal directly to `QLabel.setText`. We didn't need to write a custom slot in our code to handle `textChanged`.  `QLabel.setText` is itself a slot and their signatures match: `textChanged` emits a string and `setText` accepts a string, so we were able to save a few lines of code.
