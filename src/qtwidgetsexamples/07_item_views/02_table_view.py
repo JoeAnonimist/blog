@@ -56,6 +56,8 @@ class Window(QWidget):
         
     def set_up_data(self):
         
+        # Create a table and fill it with some data
+        
         query = QSqlQuery()
         query.exec('''
         Create Table users (
