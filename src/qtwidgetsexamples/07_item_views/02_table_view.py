@@ -27,9 +27,9 @@ class Window(QWidget):
         
         # Set up the model data for the example
         
-        self.database = QSqlDatabase.addDatabase('QSQLITE')
-        self.database.setDatabaseName(':memory:')
-        self.database.open()
+        database = QSqlDatabase.addDatabase('QSQLITE')
+        database.setDatabaseName(':memory:')
+        database.open()
         self.set_up_data()
         
         self.model = QSqlQueryModel()
