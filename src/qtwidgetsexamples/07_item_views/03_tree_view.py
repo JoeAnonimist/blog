@@ -1,6 +1,6 @@
-# The QTreeView class provides a default model/view 
+# The QTreeView class provides an  
 # implementation of a tree view.
-# For the model I'm using QFileSystemModel
+# For the model we are using QFileSystemModel
 # provided by Qt so no need for subclassing.
 
 import sys
@@ -24,21 +24,22 @@ class Window(QWidget):
         
         tree_view = QTreeView()
         
-        # 2 - Create the model
+        # 2 - Create the model and set its root path 
+        #     to the user's home directory.
         
         model = QFileSystemModel()
+        model.setRootPath(QDir.home().path())
         
-        # 3 - Set the mode as the tree view's model
+        # 3 - Set the tree view's model
         
         tree_view.setModel(model)
         
-        # 4 - This line sets the tree view root
-        #     In this case I set it to my home directory
+        # 4 - This line sets the tree view root index,
+        #     to the index of the user's home directory. 
         #     Any changes to files and directories within root
         #     will be reflected in the model.
         
-        tree_view.setRootIndex(
-            model.setRootPath(QDir.home().path()))
+        tree_view.setRootIndex(model.index(QDir.home().path()))
         
         layout.addWidget(tree_view)
         
