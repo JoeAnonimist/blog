@@ -2,15 +2,12 @@
 # implementation of a table view.
 # Just as with QListView you need to provide the model yourself
 
-import os
-from random import randint
-import sqlite3
 import sys
 
-from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
+from PySide6.QtCore import Qt
+from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
 from PySide6.QtWidgets import (QApplication,
     QWidget, QVBoxLayout, QTableView, QHeaderView)
-from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
 
 
 class Window(QWidget):
@@ -22,19 +19,18 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        # 1 - Set up the model data
+        # 1 - Create the table view
+        
+        table_view = QTableView()
+        
+        # 2 - Create the model instance
+        
+        # Set up the model data for the example
         
         self.database = QSqlDatabase.addDatabase('QSQLITE')
         self.database.setDatabaseName(':memory:')
         self.database.open()
-        self.set_up_model()
-        
-        # 2 - Create the table view
-        
-        table_view = QTableView()
-        
-        # 3 - Create the model instance and set it
-        #     as the table view model.
+        self.set_up_data()
         
         self.model = QSqlQueryModel()
         self.model.setQuery('Select * From users')
@@ -42,6 +38,9 @@ class Window(QWidget):
         self.model.setHeaderData(1, Qt.Horizontal, 'fname')
         self.model.setHeaderData(2, Qt.Horizontal, 'lname')
         self.model.setHeaderData(3, Qt.Horizontal, 'age')
+        
+        # 3 - Set it as the table view model.
+        
         table_view.setModel(self.model)
         
         # Make the columns and rows fit the table view
@@ -55,7 +54,7 @@ class Window(QWidget):
         
         layout.addWidget(table_view)
         
-    def set_up_model(self):
+    def set_up_data(self):
         
         query = QSqlQuery()
         query.exec('''

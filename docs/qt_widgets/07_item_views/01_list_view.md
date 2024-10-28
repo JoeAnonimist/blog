@@ -11,7 +11,7 @@ parent: 07 Item Views
 {% include src/qtwidgetsexamples/07_item_views/01_list_view.py %}
 ```
 
-`QListView` is one of the Qt view classes. Visually, it looks exactly the same as `QListWidget`, its child class, but lacks methods for item manipulation like `addItem()` and similar. Instead, it makes you create a model to provide the data, which may be more work but is more flexible. For instance, one model can be associated with multiple views. To use `QListView` in your application
+`QListView` is one of the Qt view classes. Visually, it looks exactly the same as `QListWidget`, its child class, but lacks methods for item manipulation like `addItem()` and similar. Instead, it makes you create a model to provide the data, which may be more work but is more flexible - for instance, one model can be associated with multiple views. To use `QListView` in your application
 
 1. Create a `QListView` instance.
 
