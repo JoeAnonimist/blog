@@ -35,9 +35,9 @@ class Window(QWidget):
         self.model = QSqlQueryModel()
         self.model.setQuery('Select * From users')
         self.model.setHeaderData(0, Qt.Horizontal, 'Id')
-        self.model.setHeaderData(1, Qt.Horizontal, 'fname')
-        self.model.setHeaderData(2, Qt.Horizontal, 'lname')
-        self.model.setHeaderData(3, Qt.Horizontal, 'age')
+        self.model.setHeaderData(1, Qt.Horizontal, 'First Name')
+        self.model.setHeaderData(2, Qt.Horizontal, 'Last Name')
+        self.model.setHeaderData(3, Qt.Horizontal, 'Age')
         
         # 3 - Set it as the table view model.
         
