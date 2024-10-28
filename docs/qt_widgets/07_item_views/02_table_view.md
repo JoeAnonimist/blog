@@ -19,4 +19,4 @@ parent: 07 Item Views
 
 3. Set the view's model using `QTableView.setModel()`
 
-In this example we use the `QSqlDatabase`, `QSqlQuery` and `QSqlQueryModel` classes which are part of the QtSQL module. You might have noticed that both `QSqlQery` and `QSqlQueryModel` both use SQL queries against our in-memory database but we didn't have to specify the database connection explicitly - they both use `self.database` implicitly as it is set as the default connection (but more on that later)
+In this example we use the `QSqlDatabase`, `QSqlQuery` and `QSqlQueryModel` classes which are part of the QtSQL module. You might have noticed that `QSqlQery` and `QSqlQueryModel` both use SQL queries against our in-memory database but we didn't have to specify the database connection explicitly - they both use `self.database` implicitly as it is set as the default connection (but more on that later)
