@@ -24,7 +24,7 @@ nav_order: 100
   {% endfor %}
 </ul>
 
-
+<p>
 {% for tag in unique_tags %}
   {% unless tag == "" %}
     <h2 id="{{ tag | slugify }}">{{ tag }}</h2>
@@ -37,3 +37,4 @@ nav_order: 100
     </ul>
   {% endunless %}
 {% endfor %}
+</p>
