@@ -6,12 +6,18 @@ nav_order: 100
 
 ## Tags
 
-{% assign docs_by_tags = site.documents | group_by: 'tag' %}
-{% for tag in docs_by_tags %}
-<h2>{{ tag.name }}</h2>
+<h1>Tags</h1>
 <ul>
-    {% for item in tag.items %}
-    <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
+{% for tag in site.tags %}
+  <li><a href="#{{ tag[0] }}">{{ tag[0] }}</a> ({{ tag[1].size }})</li>
+{% endfor %}
 </ul>
+
+{% for tag in site.tags %}
+  <h2 id="{{ tag[0] }}">{{ tag[0] }}</h2>
+  <ul>
+  {% for post in tag[1] %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+  </ul>
 {% endfor %}
