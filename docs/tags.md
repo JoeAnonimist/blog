@@ -6,7 +6,7 @@ nav_order: 100
 
 ## Tags
 
-{% assign docs_by_tags = site.documents | group_by: 'tags' %}
+{% assign docs_by_tags = site.documents | group_by: 'tag' %}
 {% for tag in docs_by_tags %}
 <h2>{{ tag.name }}</h2>
 <ul>
