@@ -1,5 +1,5 @@
 ---
 title: tags
-layout: tags
+layout: default
 nav_order: 100
 ---
