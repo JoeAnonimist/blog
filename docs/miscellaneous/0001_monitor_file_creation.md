@@ -16,6 +16,6 @@ The need to monitor file system events - file or directory creation, modificatio
 
 1. Create a `QFileSystemModel` object, set its root path to the path of the directory you want to monitor, and add a filter to exclude subdirectories.
 
-2. Create the slot method to handle the `rowsInserted` signals. In the slot we get the created file names from `QModelIndex` instances and set the label text to their paths.
+2. Create the slot method to handle the `rowsInserted` signals. `rowsInserted` passes the `first` and the `last` row that was changed and we use the row numbers to get `QModelIndex` instances and the changed files names and set the label text to their paths.
 
 3. Connect the signal and the slot.
