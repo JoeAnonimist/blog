@@ -7,7 +7,7 @@ nav_order: 100
 ## Tags
 
 {% if site.tags != "" %}
-  {% include collecttags.html %}
+  {% include include docs/collecttags.html %}
 {% endif %}
 
 
