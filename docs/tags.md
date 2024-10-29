@@ -15,7 +15,7 @@ nav_order: 100
       {% endfor %}
     {% endif %}
   {% endfor %}
-{% assign unique_tags = all_tags | split: ',' | uniq %}
+{% assign unique_tags = all_tags | split: ',' | uniq | sort %}
 
 {% for tag in unique_tags %}
   {% unless tag == "" %}
