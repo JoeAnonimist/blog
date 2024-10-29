@@ -1,6 +1,6 @@
 ---
 title: monitoring
-layout: default
+layout: tags
 tag-name: monitoring
 parent: Blog Tags
 nav_order: 1
