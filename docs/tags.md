@@ -15,5 +15,5 @@ nav_order: 100
   </ul>
 {% endfor %}
 tags:
-{{ site.pages[0] }}
+{{ site.pages[0].tags }}
 tags:
