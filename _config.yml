@@ -21,3 +21,8 @@ compress_html:
 
 mermaid:
   version: "11.3.0"
+  
+collections:
+  tags:
+	output: true
+	permalink: /tags/:path/
