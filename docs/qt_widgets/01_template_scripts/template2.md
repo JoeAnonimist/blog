@@ -2,6 +2,7 @@
 title: PySide6 template script - QLabel
 layout: default
 parent: 01 Template Scripts
+tags: templates
 nav_order: 3
 ---
 
