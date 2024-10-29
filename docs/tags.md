@@ -4,9 +4,8 @@ layout: default
 nav_order: 100
 ---
 
-## Tags
-
 <h1>Tags</h1>
+</br>
 <ul>
   {% assign all_tags = "" %}
   {% for page in site.pages %}
