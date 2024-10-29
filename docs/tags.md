@@ -14,3 +14,6 @@ nav_order: 100
     {% endfor %}
   </ul>
 {% endfor %}
+tags:
+{{ site.tags }}
+tags:
