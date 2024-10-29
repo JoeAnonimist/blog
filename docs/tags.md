@@ -19,7 +19,22 @@ nav_order: 100
   {% assign unique_tags = all_tags | split: ',' | uniq %}
   {% for tag in unique_tags %}
     {% unless tag == "" %}
-      <li><a href="{{ site.baseurl }}/tags/{{ tag | slugify }}">{{ tag }}</a></li>
+      <li><a href="#{{ tag | slugify }}">{{ tag }}</a></li>
     {% endunless %}
   {% endfor %}
 </ul>
+
+<hr>
+
+{% for tag in unique_tags %}
+  {% unless tag == "" %}
+    <h2 id="{{ tag | slugify }}">{{ tag }}</h2>
+    <ul>
+      {% for page in site.pages %}
+        {% if page.tags and page.tags contains tag %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endunless %}
+{% endfor %}
