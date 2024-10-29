@@ -6,7 +6,7 @@ nav_order: 100
 
 <h1>Tags</h1>
 
-
+<div>
 {% assign all_tags = "" %}
   {% for page in site.pages %}
     {% if page.tags %}
@@ -29,3 +29,4 @@ nav_order: 100
     </ul>
   {% endunless %}
 {% endfor %}
+</div>
