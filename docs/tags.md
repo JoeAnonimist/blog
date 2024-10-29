@@ -7,6 +7,7 @@ nav_order: 100
 <h1>Tags</h1>
 
 <div>
+<ul>
 {% assign all_tags = "" %}
   {% for page in site.pages %}
     {% if page.tags %}
@@ -16,6 +17,10 @@ nav_order: 100
     {% endif %}
   {% endfor %}
 {% assign unique_tags = all_tags | split: ',' | uniq | sort %}
+{% for tag in unique_tags %}
+  <li><a href="#{{ tag | slugify }}">{{ tag }}</a></li>
+{% endfor %}
+</ul>
 
 {% for tag in unique_tags %}
   {% unless tag == "" %}
