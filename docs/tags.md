@@ -24,7 +24,6 @@ nav_order: 100
   {% endfor %}
 </ul>
 
-<hr>
 
 {% for tag in unique_tags %}
   {% unless tag == "" %}
