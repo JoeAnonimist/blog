@@ -21,3 +21,5 @@ compress_html:
 
 mermaid:
   version: "11.3.0"
+  
+tags: monitoring
