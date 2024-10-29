@@ -1,6 +1,6 @@
 ---
 layout: tags
 tag-name: monitoring
-parent: tags
+parent: Blog Tags
 nav-order: 1
 ---
