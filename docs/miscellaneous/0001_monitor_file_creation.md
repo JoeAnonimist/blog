@@ -3,8 +3,7 @@ title: Monitor File Creation
 layout: default
 nav_order: 1
 parent: Miscellaneous
-tags:
-  - monitoring
+tags: monitoring
 ---
 
 ## Monitor File Creation Using `QFileSystemModel`
