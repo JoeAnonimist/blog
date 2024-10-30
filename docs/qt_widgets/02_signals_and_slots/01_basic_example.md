@@ -2,6 +2,7 @@
 title: A Basic Signal and Slot Example
 layout: default
 nav_order: 1
+tags: "signals-and-slots"
 parent: 02 Signals and Slots
 ---
 
