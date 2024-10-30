@@ -24,4 +24,4 @@ The pattern is the same as in [the basic signals-slots example]({% link docs/qt_
 
     - You can use a lambda to pass parameters to a slot. In the script, `checked` that matches the signal signature, but `'Something else'` is additional data passed to the actual function that will handle the signal.
     
-(Can you add the `@Slot()` annotation to a lambda?)
+(Can you add a `@Slot()` annotation to a lambda?)
