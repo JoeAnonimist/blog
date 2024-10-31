@@ -5,7 +5,7 @@ nav_order: 4
 parent: 08 Containers
 ---
 
-## PySide6 QTabWidget Example `{ .lh-default }`
+## PySide6 QTabWidget Example
 
 ![QTabWidget](/blog/images/qtwidgetsexamples/08_containers/04_tab_widget.png)
 
