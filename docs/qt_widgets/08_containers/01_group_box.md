@@ -7,7 +7,7 @@ parent: 08 Containers
 
 ## PySide6 QGroupBox Example
 
-![QScrollArea](/blog/images/qtwidgetsexamples/08_containers/01_group_box.png)
+![QGroupBox](/blog/images/qtwidgetsexamples/08_containers/01_group_box.png)
 
 ```python
 {% include src/qtwidgetsexamples/08_containers/01_group_box.py %}
