@@ -7,7 +7,7 @@ parent: 08 Containers
 
 ## PySide6 QScrollArea Example
 
-![QScrollArea](images/qtwidgetsexamples/08_containers/02_scroll_area.jpg)
+![QScrollArea](/images/qtwidgetsexamples/08_containers/02_scroll_area.jpg)
 
 ```python
 {% include src/qtwidgetsexamples/08_containers/02_scroll_area.py %}
