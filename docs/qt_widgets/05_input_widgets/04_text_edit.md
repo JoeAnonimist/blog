@@ -7,6 +7,8 @@ parent: 05 Input Widgets
 
 ## PySide6 QTextEdit Example
 
+![QTextEdit](/blog/images/qtwidgetsexamples/05_input_widgets/04_text_edit.png)
+
 ```python
 {% include src/qtwidgetsexamples/05_input_widgets/04_text_edit.py %}
 ```

@@ -7,6 +7,8 @@ parent: 05 Input Widgets
 
 ## PySide6 QComboBox Example
 
+![QComboBox](/blog/images/qtwidgetsexamples/05_input_widgets/02_combo_box.png)
+
 ```python
 {% include src/qtwidgetsexamples/05_input_widgets/02_combo_box.py %}
 ```
