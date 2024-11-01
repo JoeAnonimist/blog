@@ -7,6 +7,8 @@ parent: 04 Buttons
 
 ## PySide6 QPushButton Example
 
+![QPushButton](/blog/images/qtwidgetsexamples/04_buttons/01_push_button.png)
+
 ```python
 {% include src/qtwidgetsexamples/04_buttons/01_push_button.py %}
 ```

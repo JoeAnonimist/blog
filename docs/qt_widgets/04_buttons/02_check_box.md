@@ -7,6 +7,8 @@ parent: 04 Buttons
 
 ## PySide6 QCheckBox Example
 
+![QCheckBox](/blog/images/qtwidgetsexamples/04_buttons/02_check_box.png)
+
 ```python
 {% include src/qtwidgetsexamples/04_buttons/02_check_box.py %}
 ```
