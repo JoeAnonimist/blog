@@ -7,6 +7,8 @@ parent: 07 Item Views
 
 ## PySide6 QListView Example
 
+![QListView](/blog/images/qtwidgetsexamples/07_item_views/01_list_view.png)
+
 ```python
 {% include src/qtwidgetsexamples/07_item_views/01_list_view.py %}
 ```
