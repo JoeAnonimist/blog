@@ -7,6 +7,8 @@ parent: 08 Containers
 
 ## PySide6 QSplitter Example
 
+![QSplitter](/blog/images/qtwidgetsexamples/08_containers/05_splitters.png)
+
 ```python
 {% include src/qtwidgetsexamples/08_containers/05_splitters.py %}
 ```
