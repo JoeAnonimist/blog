@@ -7,6 +7,8 @@ parent: 06 Item Widgets
 
 ## PySide6 QListWidget Example
 
+![QListWidget](/blog/images/qtwidgetsexamples/06_item_widgets/01_list_widget.png)
+
 ```python
 {% include src/qtwidgetsexamples/06_item_widgets/01_list_widget.py %}
 ```

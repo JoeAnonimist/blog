@@ -7,6 +7,8 @@ parent: 06 Item Widgets
 
 ## PySide6 QTreeWidget Example
 
+![QTreeWidget](/blog/images/qtwidgetsexamples/06_item_widgets/03_tree_widget.png)
+
 ```python
 {% include src/qtwidgetsexamples/06_item_widgets/03_tree_widget.py %}
 ```

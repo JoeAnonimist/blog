@@ -7,6 +7,8 @@ parent: 06 Item Widgets
 
 ## PySide6 QTableWidget Example
 
+![QTableWidget](/blog/images/qtwidgetsexamples/06_item_widgets/02_table_widget.png)
+
 ```python
 {% include src/qtwidgetsexamples/06_item_widgets/02_table_widget.py %}
 ```
