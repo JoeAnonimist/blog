@@ -8,6 +8,8 @@ parent: 02 Signals and Slots
 
 ## PySide6 Basic Signal and Slot Example
 
+![Basic example](/blog/images/qtwidgetsexamples/02_signals_and_slots/01_basic_example.png)
+
 ```python
 {% include src/qtwidgetsexamples/02_signals_and_slots/01_basic_example.py %}
 ```

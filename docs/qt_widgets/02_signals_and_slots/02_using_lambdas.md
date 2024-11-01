@@ -8,6 +8,8 @@ parent: 02 Signals and Slots
 
 ## A PySide6 Signal and Slot Example using Lambdas
 
+![Using lambdas](/blog/images/qtwidgetsexamples/02_signals_and_slots/02_using_lambdas.png)
+
 ```python
 {% include src/qtwidgetsexamples/02_signals_and_slots/02_using_lambdas.py %}
 ```
