@@ -7,6 +7,8 @@ parent: 05 Input Widgets
 
 ## PySide6 QSpinBox and QDial Example
 
+![QSpinBox](/blog/images/qtwidgetsexamples/05_input_widgets/03_spin_box.png)
+
 ```python
 {% include src/qtwidgetsexamples/05_input_widgets/03_spin_box.py %}
 ```
