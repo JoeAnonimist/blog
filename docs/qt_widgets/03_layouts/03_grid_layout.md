@@ -7,6 +7,8 @@ parent: 03 Layouts
 
 ## PySide6 QGridLayout Example
 
+![QGridLayout](/blog/images/qtwidgetsexamples/03_layouts/01_grid_layout.png)
+
 ```python
 {% include src/qtwidgetsexamples/03_layouts/03_grid_layout.py %}
 ```
