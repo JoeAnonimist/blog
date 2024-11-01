@@ -7,6 +7,8 @@ parent: 03 Layouts
 
 ## PySide6 QFormLayout Example
 
+![QFormLayout](/blog/images/qtwidgetsexamples/03_layouts/04_form_layout.png)
+
 ```python
 {% include src/qtwidgetsexamples/03_layouts/04_form_layout.py %}
 ```

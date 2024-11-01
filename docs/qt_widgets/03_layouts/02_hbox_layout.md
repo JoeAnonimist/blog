@@ -7,6 +7,8 @@ parent: 03 Layouts
 
 ## PySide6 QHBoxLayout Example
 
+![QHBoxLayout](/blog/images/qtwidgetsexamples/03_layouts/02_hbox_layout.png)
+
 ```python
 {% include src/qtwidgetsexamples/03_layouts/02_hbox_layout.py %}
 ```

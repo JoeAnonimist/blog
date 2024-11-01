@@ -7,6 +7,8 @@ parent: 03 Layouts
 
 ## PySide6 QVBoxLayout Example
 
+![QVBoxLayout](/blog/images/qtwidgetsexamples/03_layouts/01_vbox_layout.png)
+
 ```python
 {% include src/qtwidgetsexamples/03_layouts/01_vbox_layout.py %}
 ```
