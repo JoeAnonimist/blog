@@ -7,7 +7,7 @@ parent: 07 Item Views
 
 ## PySide6 QTableView Example
 
-![QTableView](/blog/images/qtwidgetsexamples/07_item_views/01_table_view.png)
+![QTableView](/blog/images/qtwidgetsexamples/07_item_views/02_table_view.png)
 
 ```python
 {% include src/qtwidgetsexamples/07_item_views/02_table_view.py %}
