@@ -7,7 +7,7 @@ parent: 04 Buttons
 
 ## PySide6 QRadioButton Example
 
-![QCheckBox](/blog/images/qtwidgetsexamples/04_buttons/03_check_box.png)
+![QRadioButton](/blog/images/qtwidgetsexamples/04_buttons/03_radio_button.png)
 
 ```python
 {% include src/qtwidgetsexamples/04_buttons/03_radio_button.py %}
