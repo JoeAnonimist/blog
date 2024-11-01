@@ -8,7 +8,7 @@ nav_order: 3
 
 ## PySide6 starter script that shows a QLabel
 
-![Template 1](/blog/images/qtwidgetsexamples/01_template_scripts/helloworld1.png)
+![Template 1](/blog/images/qtwidgetsexamples/01_template_scripts/02_helloworld1.png)
 
 ```python
 {% include src/qtwidgetsexamples/01_script_template/helloworld1.py %}
