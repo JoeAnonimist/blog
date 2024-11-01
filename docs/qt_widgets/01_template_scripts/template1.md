@@ -8,6 +8,8 @@ parent: 01 Template Scripts
 
 ## PySide6 script that shows an empty window
 
+![Template 1](/blog/images/qtwidgetsexamples/01_template_scripts/helloworld.png)
+
 ```python
 {% include src/qtwidgetsexamples/01_script_template/helloworld.py %}
 ```
