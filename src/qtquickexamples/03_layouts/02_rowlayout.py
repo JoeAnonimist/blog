@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtCore import QObject, QTimer, Slot
 from PySide6.QtGui import QGuiApplication
-from PySide6.QtQml import QQmlApplicationEngine, QmlElement
+from PySide6.QtQml import QQmlApplicationEngine
 
 
 class Logger(QObject):

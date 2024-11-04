@@ -27,10 +27,7 @@ class QEditor(QMainWindow):
 
 if __name__ == '__main__':
 
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
+    app = QApplication(sys.argv)
 
     editor = QEditor()
     editor.show()
