@@ -25,14 +25,14 @@ class Window(QWidget):
         label = QLabel('Hello, World!')
         layout.addWidget(label)
 
-# The boilerplate code is the same as in helloworld.py        
+# The boilerplate code is similar to that from helloworld.py        
 
 if __name__ == '__main__':
 
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
+    # The qApp variable points to the application
+    # if it was already created so this is equivalent
+    # to checking for QApplication.instance()
+    app = qApp or QApplication(sys.argv)
 
     main_window = Window()
     main_window.show()

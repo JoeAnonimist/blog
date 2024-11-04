@@ -22,7 +22,7 @@ After the necessary imports
 
 In the main script code
 
-2. Create a `QApplication` instance. This should be the first thing you do in your application/script. For non Qt Widget GUI application there is `QGuiApplication` and for terminal/console applications there is `QCoreApplication`. `QApplication` is singleton so if you try to create it twice you get `RuntimeError: Please destroy the QApplication singleton before creating a new QApplication instance.`
+2. Create a `QApplication` instance. This should be the first thing you do in your application/script. For non Qt Widget GUI application there is `QGuiApplication` and for terminal/console applications there is `QCoreApplication`. `QApplication` is singleton so if you try to create it twice you get `RuntimeError: Please destroy the QApplication singleton before creating a new QApplication instance.` (From now on I won't be checking if the `QApplication` instance exists as all the examples are quite simple but it's something to be aware of)
 
 3. Create an object of your class (in the script `Window`) and `.show()` it. (`QWidget.show()`, well, shows it on the screen.)
 

@@ -22,4 +22,4 @@ In [the previous post]({% link docs/qt_widgets/01_template_scripts/template1.md 
 
 3. Create an instance (object) of the QLabel class and add it to the layout. QLabel is a widget that is used to display multi-line text that you can format but can not edit.
 
-The rest of the code is the same as in the script that shows an empty window.
+The rest of the code is the same as in the script that shows an empty window, except that we use `qApp` a variable available after importing `PySide6` which is equivalent to `QApplication.instance()`.
