@@ -40,10 +40,7 @@ class Window(QWidget):
 
 if __name__ == '__main__':
 
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
+    app = QApplication(sys.argv)
 
     main_window = Window()
     main_window.show()
