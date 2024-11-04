@@ -19,7 +19,7 @@ class Window(QWidget):
 if __name__ == '__main__':
     
     # 2 - Create an instance of the QApplication class
-    #     Make sure there is'nt one already running
+    #     Make sure there isn't one already running.
     
     if not QApplication.instance():
         app = QApplication(sys.argv)
