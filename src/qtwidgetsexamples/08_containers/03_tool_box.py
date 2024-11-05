@@ -21,25 +21,29 @@ class Window(QWidget):
         
         # 2 - Create the widgets (buttons in this case)
         
-        linux_button = QPushButton('Linux')
         windows_button = QPushButton('Windows')
         mac_button = QPushButton('Mac')
+        linux_widget = QWidget()
+
+        linux_widget.setLayout(QVBoxLayout())
+        debian_button = QPushButton('Debian')
+        arch_button = QPushButton('Arch')
+        linux_widget.layout().addWidget(debian_button)
+        linux_widget.layout().addWidget(arch_button)
         
         # 3 - Add widgets to the toolbox
         
-        toolbox.addItem(linux_button, 'Lin')
         toolbox.addItem(windows_button, 'Win')
         toolbox.addItem(mac_button, 'Mac')
+        toolbox.addItem(linux_widget, 'Lin')
         
-        linux_button.clicked.connect(self.on_clicked)
         windows_button.clicked.connect(self.on_clicked)
         mac_button.clicked.connect(self.on_clicked)
+        debian_button.clicked.connect(self.on_clicked)
+        arch_button.clicked.connect(self.on_clicked)
         
         self.label = QLabel()
-        
-        # QToolBox is kinda weird looking widget
-        # I don't think I like it.
-        
+
         layout.addWidget(toolbox)
         layout.addWidget(self.label)
         
