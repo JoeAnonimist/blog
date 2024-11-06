@@ -1,7 +1,7 @@
 ---
 title: Exposing a Python Signal to QML
 layout: default
-nav_order: 
+nav_order: 2
 parent: 02 Qml Python Integration
 ---
 
