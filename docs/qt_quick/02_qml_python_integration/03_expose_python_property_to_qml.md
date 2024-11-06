@@ -1,7 +1,7 @@
 ---
 title: Exposing a Python Property to QML
 layout: default
-nav_order: 
+nav_order: 3
 parent: 02 Qml Python Integration
 ---
 
