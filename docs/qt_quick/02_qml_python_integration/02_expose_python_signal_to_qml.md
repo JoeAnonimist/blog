@@ -1,0 +1,16 @@
+---
+title: Exposing a Python Signal to QML
+layout: default
+nav_order: 
+parent: 02 Qml Python Integration
+---
+
+## Exposing a Python Signal to QML
+
+```python
+{% include src/qtquickexamples/02_qml_python_integration/02_signal.py %}
+```
+
+```qml
+{% include src/qtquickexamples/02_qml_python_integration/02_signal.qml %}
+```
