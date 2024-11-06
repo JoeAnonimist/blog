@@ -2,7 +2,7 @@
 title: PySide6 Signal - QtQuick Slot Using QQmlApplicationEngine.setInitialProperties()
 layout: default
 nav_order: 2
-parent: 02 QtQuick Signals and Slots
+parent: 03 QtQuick Signals and Slots
 ---
 
 ## PySide6 Signal - QtQuick Slot Using QQmlApplicationEngine.setInitialProperties()
@@ -10,11 +10,11 @@ parent: 02 QtQuick Signals and Slots
 In the [previous example]({% link docs/qt_quick/02_signals_and_slots/01_rootobject_findchild.md %}) we've had a PySide6 signal, a Qml slot, and the connection is made in PySide6. In this one we still have a  PySide6 signal and a Qml slot but we connect them in the Qml file. To do this
 
 ```qml
-{% include src/qtquickexamples/02_signals_and_slots/02_setinitialproperties.qml %}
+{% include src/qtquickexamples/03_signals_and_slots/02_setinitialproperties.qml %}
 ```
 
 ```python
-{% include src/qtquickexamples/02_signals_and_slots/02_setinitialproperties.py %}
+{% include src/qtquickexamples/03_signals_and_slots/02_setinitialproperties.py %}
 ```
 
 1. Add a custom property to the Qml ApplicationWindow. Custom properties can be of any of the Qml value types like `bool`, `int` or `string` but as `QTimer` is an object we set the property type to `variant` (although `var` would also work).
