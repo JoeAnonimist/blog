@@ -1,5 +1,5 @@
 ---
-title: Exposing a Python Property to QML
+title: Create a Python Style Property
 layout: default
 nav_order: 4
 parent: 02 Qml Python Integration
