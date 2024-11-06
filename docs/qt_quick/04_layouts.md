@@ -1,6 +1,6 @@
 ---
-title: 03 QtQuick Layouts
+title: 04 QtQuick Layouts
 layout: default
 parent: Qt Quick
-nav_order: 3
+nav_order: 4
 ---
