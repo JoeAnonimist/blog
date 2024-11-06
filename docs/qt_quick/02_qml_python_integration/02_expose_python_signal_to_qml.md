@@ -1,8 +1,8 @@
 ---
-title: Exposing a Python Signal to QML
+title: Exposing a PySide6 Signal to QML
 layout: default
 nav_order: 2
-parent: 02 Qml Python Integration
+parent: 02 Qml PySide6 Integration
 ---
 
 ## Exposing a Python Signal to QML
