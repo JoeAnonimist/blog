@@ -7,7 +7,7 @@ parent: 03 QtQuick Signals and Slots
 
 ## PySide6 Signal - QtQuick Slot Using QQmlApplicationEngine.setInitialProperties()
 
-In the [previous example]({% link docs/qt_quick/02_signals_and_slots/01_rootobject_findchild.md %}) we've had a PySide6 signal, a Qml slot, and the connection is made in PySide6. In this one we still have a  PySide6 signal and a Qml slot but we connect them in the Qml file. To do this
+In the [previous example]({% link docs/qt_quick/03_signals_and_slots/01_rootobject_findchild.md %}) we've had a PySide6 signal, a Qml slot, and the connection is made in PySide6. In this one we still have a  PySide6 signal and a Qml slot but we connect them in the Qml file. To do this
 
 ```qml
 {% include src/qtquickexamples/03_signals_and_slots/02_setinitialproperties.qml %}
