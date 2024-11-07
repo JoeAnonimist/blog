@@ -2,7 +2,7 @@
 title: QObject.moveToThread() File Search
 layout: default
 nav_order: 2
-parent: 11 Multithreading
+parent: 01 Move QObject to Thread
 ---
 
 ## QObject.moveToThread() File Search
