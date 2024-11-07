@@ -12,6 +12,7 @@ class WorkerThread(QThread):
     
     def __init__(self, parent=None):
         super().__init__(parent)
+        print('Init it', QThread.currentThread().objectName())
         
     def run(self):
         print('Running in: ', QThread.currentThread().objectName())
@@ -19,7 +20,6 @@ class WorkerThread(QThread):
         path = os.path.abspath('.').split(os.path.sep)[0] + os.path.sep
         for root, _, _ in os.walk(path):
             if QThread.currentThread().isInterruptionRequested():
-                print('Interrupt')
                 return
             self.progress.emit(os.path.basename(root))
 
@@ -29,6 +29,8 @@ class Window(QWidget):
     def __init__(self):
 
         super().__init__()
+        
+        QThread.currentThread().setObjectName('Main thread')
         
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -63,7 +65,7 @@ class Window(QWidget):
         
     @Slot()
     def on_cancel_button_clicked(self):
-        print('cancel')
+        
         self.start_button.setEnabled(True)
         self.cancel_button.setDisabled(True)
         
