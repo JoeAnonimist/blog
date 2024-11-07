@@ -3,22 +3,21 @@
 
 import sys
 
-from PySide6.QtCore import (QObject, QThread,
-    Slot, Signal, Qt)
-from PySide6.QtWidgets import (QApplication,
-    QPushButton, QLabel, QWidget, QVBoxLayout)
+from PySide6.QtCore import QObject, QThread, Slot, Signal, Qt
+from PySide6.QtWidgets import (QApplication, QPushButton,
+    QLabel, QWidget, QVBoxLayout)
 
 
 class WorkerThread(QThread):
     
-    working = Signal()
+    progress = Signal()
     error = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
         
     def run(self):
-        self.working.emit()
+        self.progress.emit()
         print('Hello World')
 
 
@@ -49,7 +48,7 @@ class Window(QWidget):
         
         self.worker_thread.error.connect(self.on_error)
         self.worker_thread.started.connect(self.on_started)
-        self.worker_thread.working.connect(self.on_working)
+        self.worker_thread.progress.connect(self.on_progress)
         
         self.worker_thread.start()
     
@@ -58,7 +57,7 @@ class Window(QWidget):
         print('thread started')
         
     @Slot()
-    def on_working(self):
+    def on_progress(self):
         print('working')
     
     @Slot()
