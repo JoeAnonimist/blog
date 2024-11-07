@@ -2,7 +2,7 @@
 title: QObject.moveToThread() Template
 layout: default
 nav_order: 1
-parent: 11 Multithreading
+parent: 01 Move QObject to Thread
 ---
 
 ## QObject.moveToThread() Template
