@@ -3,7 +3,7 @@
 
 import sys
 
-from PySide6.QtCore import QObject, QThread, Slot, Signal, Qt
+from PySide6.QtCore import QThread, Slot, Signal, Qt
 from PySide6.QtWidgets import (QApplication, QPushButton,
     QLabel, QWidget, QVBoxLayout)
 
@@ -15,8 +15,10 @@ class WorkerThread(QThread):
     
     def __init__(self, parent=None):
         super().__init__(parent)
+        print('Init in', QThread.currentThread().objectName())
         
     def run(self):
+        print('Running in', QThread.currentThread().objectName())
         self.progress.emit()
         print('Hello World')
 
@@ -26,6 +28,8 @@ class Window(QWidget):
     def __init__(self):
 
         super().__init__()
+        
+        QThread.currentThread().setObjectName('Main thread')
         
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -43,6 +47,7 @@ class Window(QWidget):
     def on_button_clicked(self):
         
         self.worker_thread = WorkerThread()
+        self.worker_thread.setObjectName('Worker thread')
         
         self.worker_thread.finished.connect(self.on_finished)
         
