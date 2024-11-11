@@ -6,8 +6,8 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QApplication,
-    QWidget, QVBoxLayout, QSplitter, QGroupBox, QRadioButton)
+from PySide6.QtWidgets import (QApplication, QWidget,
+    QVBoxLayout, QSplitter, QGroupBox, QRadioButton)
 
 
 class Window(QWidget):
@@ -29,7 +29,7 @@ class Window(QWidget):
         groupbox_1 = QGroupBox('Orientation')
         groupbox_1.setLayout(QVBoxLayout())
         
-        # The radiobuttons are just to demonstrate
+        # The radio buttons are just to demonstrate
         # splitter orientation. I don't think changing
         # splitter orientation at run time is that common.
         
@@ -57,9 +57,11 @@ class Window(QWidget):
     def on_toggled(self):
         
         if self.button_horizontal.isChecked():
-            self.splitter.setOrientation(Qt.Orientation.Horizontal)
+            self.splitter.setOrientation(
+                Qt.Orientation.Horizontal)
         else:
-            self.splitter.setOrientation(Qt.Orientation.Vertical)
+            self.splitter.setOrientation(
+                Qt.Orientation.Vertical)
 
 
 if __name__ == '__main__':
