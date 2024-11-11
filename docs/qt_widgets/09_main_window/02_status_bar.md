@@ -12,3 +12,4 @@ parent: 09 Main Window
 ```python
 {% include src/qtwidgetsexamples/09_main_window/02_status_bar.py %}
 ```
+
