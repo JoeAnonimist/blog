@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow,
     QTextEdit, QLabel, QMessageBox)
 
 
-class QEditor(QMainWindow):
+class Editor(QMainWindow):
     
     def __init__(self):
 
@@ -38,22 +38,24 @@ class QEditor(QMainWindow):
         
         # 2 - Create a QAction instance.
         #     Connect a slot to its triggered signal.
-        #     I set QEditor as QAction's parent.
+        #     Set Editor as QAction's parent.
         
         exit_action = QAction(self)
-        exit_action.setText('&Exit')
+        exit_action.setText('Exit')
+        exit_action.setShortcut('Alt+X')
         exit_action.triggered.connect(QApplication.quit)
         
         # 3 - Add action to the menu.
         
         file_menu.addAction(exit_action)
         
-        # Repeat the steps for each menu item ...
+        
+        # Repeat the steps for each menu item
         
         help_menu = menu_bar.addMenu('&Help')
         
         about_action = QAction(self)
-        about_action.setText('&About')
+        about_action.setText('About')
         about_action.triggered.connect(self.show_messagebox)
         
         help_menu.addAction(about_action)
@@ -79,7 +81,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
 
-    editor = QEditor()
+    editor = Editor()
     editor.show()
 
     sys.exit(app.exec())
