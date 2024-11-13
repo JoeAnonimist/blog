@@ -29,7 +29,7 @@ class QEditor(QMainWindow):
         
         # You can add icons to QActions.
         # Icons are shown both in the menu and in the toolbar.
-        # I used icons from the Tango project.
+        # The icons used here are from the Tango project.
         
         exit_action = QAction(self)
         exit_action.setText('&Exit')
@@ -51,13 +51,13 @@ class QEditor(QMainWindow):
         
         file_toolbar = self.addToolBar('File')
         
-        # 2 - Add actions to it. I reuse the same actions
-        #     that I used for the menu.
+        # 2 - Add actions to it. We reuse the same actions
+        #     that we used for the menu.
         
         file_toolbar.addAction(exit_action)
         file_toolbar.addAction(about_action)
         
-        # 3 - ... and that's about it. Here I just
+        # 3 - ... and that's about it. Here we just
         #     set the icons to be displayed besides the text.
         
         file_toolbar.setToolButtonStyle(
