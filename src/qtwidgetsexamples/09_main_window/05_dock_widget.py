@@ -50,6 +50,8 @@ class QEditor(QMainWindow):
         file_toolbar.addAction(about_action)
         file_toolbar.setToolButtonStyle(
             Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        
+        # 1. Create the dock widget
             
         dock_widget = QDockWidget()
         dock_widget.setMaximumWidth(50)
@@ -85,6 +87,8 @@ class QEditor(QMainWindow):
         
         dock_widget.setWidget(container)
         
+        # 2. Add the dock widget to the main window
+        
         self.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, dock_widget)
     
     def on_text_changed(self):
@@ -102,7 +106,9 @@ class QEditor(QMainWindow):
         messagebox = QMessageBox()
         messagebox.setText('PyQt menu example')
         messagebox.exec()
-        
+    
+    # 3. Handle the dock widget children signals
+    
     def on_button_bold_clicked(self):
 
         sender = self.sender()
@@ -142,10 +148,7 @@ class QEditor(QMainWindow):
 
 if __name__ == '__main__':
 
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
+    app = QApplication(sys.argv)
 
     editor = QEditor()
     editor.show()
