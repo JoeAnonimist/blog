@@ -63,14 +63,12 @@ class QEditor(QMainWindow):
         button_bold = QPushButton()
         button_bold.setIcon(QIcon('./icons/bold.png'))
         button_bold.setCheckable(True)
-        button_bold.setProperty('style', 'bold')
-        button_bold.clicked.connect(self.on_button_bold_clicked)
+        button_bold.toggled.connect(self.on_button_bold_toggled)
         
         button_italic = QPushButton()
         button_italic.setIcon(QIcon('./icons/italic.png'))
         button_italic.setCheckable(True)
-        button_italic.setProperty('style', 'italic')
-        button_italic.clicked.connect(self.on_button_italic_clicked)
+        button_italic.toggled.connect(self.on_button_italic_toggled)
         
         font_size_spinbox = QSpinBox()
         font_size_spinbox.setMinimum(1)
@@ -109,12 +107,11 @@ class QEditor(QMainWindow):
     
     # 3. Handle the dock widget children signals
     
-    def on_button_bold_clicked(self):
+    def on_button_bold_toggled(self, checked):
 
-        sender = self.sender()
         format = QTextCharFormat()
         
-        if sender.isChecked():
+        if checked:
             format.setFontWeight(QFont.Weight.Bold)
         else:
             format.setFontWeight(QFont.Weight.Normal)
@@ -123,12 +120,11 @@ class QEditor(QMainWindow):
         self.text_edit.mergeCurrentCharFormat(format)
         self.text_edit.setFocus(Qt.FocusReason.OtherFocusReason)
         
-    def on_button_italic_clicked(self):
+    def on_button_italic_toggled(self, checked):
         
-        sender = self.sender()
         format = QTextCharFormat()
         
-        if self.sender().isChecked():
+        if checked:
             format.setFontItalic(True)
         else:
             format.setFontItalic(False)
