@@ -8,12 +8,18 @@ from PySide6.QtWidgets import (QApplication,
 
 class Task(QObject):
     
-    started = Signal()
-    done = Signal()
     progress = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
+    
+    # 1. Create a long running task
+    #    We search for a file using os.walk()
+    #    using a tight (blocking) for loop.
+    #    The loop blocks the Qt event loop
+    #    so no signals are send or events
+    #    processed until the loop exits.
+    #    This effectively freezes the Gui.
     
     @Slot()
     def do_work(self):
@@ -34,6 +40,8 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
+        # 2. Create a push button
+        
         self.button = QPushButton('Start working')
         self.label = QLabel()
         
@@ -41,7 +49,9 @@ class Window(QWidget):
         
         layout.addWidget(self.button)
         layout.addWidget(self.label)
-        
+    
+    # 3. Execute the long running task.
+    
     def do_work(self):
         self.task = Task()
         self.task.progress.connect(self.label.setText)
