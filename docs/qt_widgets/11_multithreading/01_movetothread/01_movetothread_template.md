@@ -22,4 +22,8 @@ In the main window class
 3. Create a `Worker` object and use `QObject.moveToThread()` to move it to `background_thread`. Now `process()` will be executed in `background_thread`.
 
 4. Connect the appropriate signals and slots:
-    - connect the `background_thread.started` signal with the `worker.process()` slot. This means that `process()` will be executed as soon as the background thread is started,
+    - connect the `background_thread.started` signal with the `worker.process()` slot. This means that `Worker.process()` will be executed as soon as the background thread is started,
+    - connect the `Worker.finished` signal with the `background_thread.quit` method. This means that the background thread will quit as soon as the `Worker.process()` method returns,
+    - connect the `Worker.finished` signal with the `Worker.deleteLater()` method. This means that the worker object will be deleted some time after it emits the `finished` signal.
+    - connect the `background_thread.finished` signal with the `background_thread.deleteLater()` method. This means that the background thread will be deleted some time after it finishes.
+    With the above setup the method is executed as soon as the thread is started, the thread quits as soon as the method returns and both the worker object and the thread object are destroyed.
