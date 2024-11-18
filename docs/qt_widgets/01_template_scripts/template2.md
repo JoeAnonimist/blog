@@ -14,7 +14,7 @@ nav_order: 3
 {% include src/qtwidgetsexamples/01_script_template/helloworld1.py %}
 ```
 
-In [the previous post]({% link docs/qt_widgets/01_template_scripts/template1.md %}) I described a simple PySide6 scripts that shows an empty  window on the screen. Now let's start adding widgets to that window.
+In [the previous example]({% link docs/qt_widgets/01_template_scripts/template1.md %}) I described a simple PySide6 scripts that shows an empty  window on the screen. Now let's start adding widgets to that window.
 
 1. Create a class inherited from `QWidget`. This class is used as the application main window. In the class' `__init__()` method
 
