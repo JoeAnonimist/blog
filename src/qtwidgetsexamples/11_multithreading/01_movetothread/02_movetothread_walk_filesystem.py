@@ -25,7 +25,6 @@ class Worker(QObject):
         path = os.path.abspath('.').split(os.path.sep)[0] + os.path.sep
         for root, _, _ in os.walk(path):
             if QThread.currentThread().isInterruptionRequested():
-                self.finished.emit()
                 return
             self.progress.emit(os.path.basename(root))
         self.finished.emit()
@@ -96,6 +95,8 @@ class Window(QWidget):
         
         if hasattr(self, 'background_thread'):
             self.background_thread.requestInterruption()
+            self.background_thread.quit()
+            self.background_thread.wait()
     
     @Slot()
     def on_finished(self):
@@ -111,6 +112,8 @@ class Window(QWidget):
     def closeEvent(self, event):        
         try:
             self.background_thread.requestInterruption()
+            self.background_thread.quit()
+            self.background_thread.wait()
         except Exception as e:
             print(e) 
 
