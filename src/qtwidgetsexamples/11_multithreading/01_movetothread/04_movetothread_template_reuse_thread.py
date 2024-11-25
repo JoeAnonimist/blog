@@ -32,7 +32,7 @@ class Controller(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        button = QPushButton('Start worker thread')
+        button = QPushButton('Start background thread')
         button.clicked.connect(self.on_button_clicked)
         
         self.label = QLabel()
