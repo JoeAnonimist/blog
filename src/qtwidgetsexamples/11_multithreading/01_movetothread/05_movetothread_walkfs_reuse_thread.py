@@ -57,7 +57,7 @@ class Controller(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        self.start_button = QPushButton('Start background thread')
+        self.start_button = QPushButton('Start worker thread')
         self.start_button.clicked.connect(self.on_start_button_clicked)
         
         self.cancel_button = QPushButton('Cancel')
