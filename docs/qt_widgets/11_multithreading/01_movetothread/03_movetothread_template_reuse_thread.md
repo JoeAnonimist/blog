@@ -25,4 +25,4 @@ In the first two examples the background/worker thread is created each time we w
 
 6. On the button click emit the `operate` signal. This executes the `Worker.do_work()` method.
 
-7. Override `QWidget.closeEvent()` to quit the thread using the `QThread.quit()` and `QThread.wait()` pair. If `Worker.do_work()` can be interrupted add `QThread.requestInterruption()` before them.
+7. Override `QWidget.closeEvent()` to quit the thread using the `QThread.quit()` and `QThread.wait()` pair.
