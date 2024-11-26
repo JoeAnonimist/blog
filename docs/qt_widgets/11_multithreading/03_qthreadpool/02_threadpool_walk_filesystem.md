@@ -8,5 +8,5 @@ parent: 03 QThreadPool
 ## QThreadPool Walk the Filesystem
 
 ```python
-{% include src/qtwidgetsexamples/11_multithreading/03_qthreadpool/02_qthreadpool_walk_filesystem.py %}
+{% include src/qtwidgetsexamples/11_multithreading/03_qthreadpool/02_threadpool_walk_filesystem.py %}
 ```
