@@ -6,6 +6,10 @@ from PySide6.QtWidgets import (QApplication, QPushButton,
     QLabel, QWidget, QVBoxLayout)
 
 
+# 1. Create a QThread subclass
+#    and subclass its run() method.
+#    Add signals as needed.
+
 class WorkerThread(QThread):
     
     progress = Signal(str)
@@ -15,8 +19,12 @@ class WorkerThread(QThread):
         print('Init it', QThread.currentThread().objectName())
         
     def run(self):
-        print('Running in: ', QThread.currentThread().objectName())
-        print('event loop level: ', QThread.currentThread().loopLevel())
+        
+        print('Running in: ',
+            QThread.currentThread().objectName())
+        print('event loop level: ',
+            QThread.currentThread().loopLevel())
+
         path = os.path.abspath('.').split(os.path.sep)[0] + os.path.sep
         for root, _, _ in os.walk(path):
             if QThread.currentThread().isInterruptionRequested():
@@ -51,18 +59,30 @@ class Window(QWidget):
     
     @Slot()
     def on_start_button_clicked(self):
-        print('Main thread loop level', QThread.currentThread().loopLevel())
+        
+        print('Main thread loop level', 
+            QThread.currentThread().loopLevel())
+        
+        # 2. Create the WorkerThread object
+
         self.worker_thread = WorkerThread()
         self.worker_thread.setObjectName('Worker thread')
 
-        self.worker_thread.started.connect(self.on_started)
+        # 3. Connect the signals with the slots
+
         self.worker_thread.progress.connect(self.on_progress)
+        self.worker_thread.finished.connect(
+            self.worker_thread.deleteLater)
         
         self.start_button.setDisabled(True)
         self.cancel_button.setEnabled(True)
         
-        self.worker_thread.start()
+        # 5. Start the worker thread
         
+        self.worker_thread.start()
+    
+    # 4. Handle the signals
+    
     @Slot()
     def on_cancel_button_clicked(self):
         
@@ -72,10 +92,6 @@ class Window(QWidget):
         if hasattr(self, 'worker_thread'):
             self.worker_thread.requestInterruption()
             self.worker_thread.wait()
-    
-    @Slot()
-    def on_started(self):
-        print('thread started')
         
     @Slot()
     def on_progress(self, msg):
@@ -99,4 +115,3 @@ if __name__ == '__main__':
     main_window.show()
 
     sys.exit(app.exec())
-
