@@ -15,7 +15,6 @@ class Worker(QObject):
     
     result_ready = Signal()
     progress = Signal(str)
-    stop_signal = Signal()
     
     def __init__(self, parent=None):
         super().__init__(parent)
