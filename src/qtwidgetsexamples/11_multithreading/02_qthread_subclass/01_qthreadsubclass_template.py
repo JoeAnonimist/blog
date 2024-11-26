@@ -1,5 +1,4 @@
-# https://mayaposch.wordpress.com/2011/11/01/how-to-really-truly-use-qthreads-the-full-explanation/
-# SImilar to the above article but with a QThread subclass
+# https://doc.qt.io/qt-6/qthread.html
 
 import sys
 
@@ -8,19 +7,27 @@ from PySide6.QtWidgets import (QApplication, QPushButton,
     QLabel, QWidget, QVBoxLayout)
 
 
+# 1. Create a QThread subclass
+#    and subclass its run() method.
+#    Add signals as needed.
+
 class WorkerThread(QThread):
     
-    progress = Signal()
-    error = Signal(str)
+    result_ready = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        print('Init in', QThread.currentThread().objectName())
+        print('Init in', QThread.currentThread().objectName(),
+            ', Loop level', QThread.currentThread().loopLevel())
         
     def run(self):
-        print('Running in', QThread.currentThread().objectName())
-        self.progress.emit()
-        print('Hello World')
+        
+        print('Running in', QThread.currentThread().objectName(),
+            ', Loop level', QThread.currentThread().loopLevel())
+
+        result = 'Hello World'
+        print(result)
+        self.result_ready.emit(result)
 
 
 class Window(QWidget):
@@ -35,7 +42,7 @@ class Window(QWidget):
         self.setLayout(layout)
         
         button = QPushButton('Start background thread')
-        button.clicked.connect(self.on_button_clicked)
+        button.clicked.connect(self.start_work_in_a_thread)
         
         self.label = QLabel()
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -44,34 +51,30 @@ class Window(QWidget):
         layout.addWidget(self.label)
     
     @Slot()
-    def on_button_clicked(self):
+    def start_work_in_a_thread(self):
+        
+        print('Button click in', QThread.currentThread().objectName(),
+            ', Loop level', QThread.currentThread().loopLevel())
+        
+        # 2. Create the WorkerThread object
         
         self.worker_thread = WorkerThread()
         self.worker_thread.setObjectName('Worker thread')
         
-        self.worker_thread.finished.connect(self.on_finished)
+        # 3. Connect the signals with the slots
         
-        self.worker_thread.error.connect(self.on_error)
-        self.worker_thread.started.connect(self.on_started)
-        self.worker_thread.progress.connect(self.on_progress)
+        self.worker_thread.result_ready.connect(self.on_result_ready)
+        self.worker_thread.finished.connect(self.worker_thread.deleteLater)
+        
+        # 5. Start the worker thread
         
         self.worker_thread.start()
     
-    @Slot()
-    def on_started(self):
-        print('thread started')
-        
-    @Slot()
-    def on_progress(self):
-        print('working')
+    # 4. Handle the worker thread signals
     
     @Slot()
-    def on_finished(self):
-        self.label.setText('Worker finished')
-    
-    @Slot()
-    def on_error(self, message):
-        print(message)
+    def on_result_ready(self, result):
+        self.label.setText(result)
 
 
 if __name__ == '__main__':
