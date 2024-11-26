@@ -23,4 +23,4 @@ In [the `moveToThread()` template]({% link docs/qt_widgets/11_multithreading/01_
 
 5. Finally start the background thread. All this happens in the `Window.on_start_button_clicked()` slot which means a new `QThread` and `Worker` objects are created each time the start button is clicked.
 
-One thing to note is that we override the `QWidget.close()` slot to interrupt the background thread which makes sure the thread and the worker are deleted if the user closes the main window while the thread is still running.
+One thing to note is that we override the `QWidget.close()` slot to interrupt the background thread which makes sure the thread and the worker are deleted if the user closes the main window while the thread is still running. The same sequence, `QThread.requestInterruption()` + `QThread.quit()` + `QThread.wait()`, is used in `Window.on_cancel_button_clicked()` to make sure that the background thread exits cleanly when interrupted.

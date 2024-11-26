@@ -53,7 +53,10 @@ class Worker(QObject):
                     if QThread.currentThread().isInterruptionRequested():
                         source.close()
                         destination.close()
-                        #os.remove(destination_path)
+                        try:
+                            os.remove(destination_path)
+                        except Exception as e:
+                            print(e)
                         return
                     destination.write(chunk)
                     step += 1
