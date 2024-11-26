@@ -9,6 +9,8 @@ from PySide6.QtWidgets import (QApplication,
     QPushButton, QLabel, QWidget, QVBoxLayout)
 
 
+# 1. Create the worker class
+
 class Worker(QObject):
     
     result_ready = Signal()
@@ -71,17 +73,28 @@ class Controller(QWidget):
         layout.addWidget(self.cancel_button)
         layout.addWidget(self.label)
         
+        # 2. Create the thread
+        
         self.worker_thread = QThread()
+        
+        # 3. Create the worker and move it to the thread
+        
         self.worker = Worker()
         self.worker.moveToThread(self.worker_thread)
+        
+        # 4. Connect the signals with the slots
         
         self.worker_thread.finished.connect(self.worker.deleteLater)
         self.operate.connect(self.worker.do_work)
         self.worker.result_ready.connect(self.handle_results)
         
         self.worker.progress.connect(self.label.setText)
+        
+        # 5. Start the thread
 
         self.worker_thread.start()
+    
+    # 6. On the start button click emit the operate signal
     
     @Slot()
     def on_start_button_clicked(self):
@@ -91,8 +104,9 @@ class Controller(QWidget):
         
         self.worker.reset()
         self.operate.emit()
-        
-        
+    
+    # 7. On the cancel button click stop the worker
+    
     @Slot()
     def on_cancel_button_clicked(self):
         
@@ -103,7 +117,9 @@ class Controller(QWidget):
     @Slot()
     def handle_results(self):
         self.label.setText('Worker finished')
-        
+    
+    # 8. Quit the thread when the main window is closed
+    
     def closeEvent(self, event):        
         try:
             self.worker.stop()
