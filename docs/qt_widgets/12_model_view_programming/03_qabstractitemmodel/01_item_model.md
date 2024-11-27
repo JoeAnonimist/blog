@@ -8,6 +8,6 @@ parent: 03 QAbstractItemModel Examples
 ## QAbstractItemModel Basic Example
 
 ```python
-{% include src/qtwidgetsexamples/12_model_view_programming/03_qabstracttablemodel/01_item_model.py %}
+{% include src/qtwidgetsexamples/12_model_view_programming/03_qabstractitemmodel/01_item_model.py %}
 ```
 

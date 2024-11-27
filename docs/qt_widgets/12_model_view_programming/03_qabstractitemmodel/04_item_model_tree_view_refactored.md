@@ -8,6 +8,6 @@ parent: 03 QAbstractItemModel Examples
 ## QAbstractItemModel QTreeView Example Refactored
 
 ```python
-{% include src/qtwidgetsexamples/12_model_view_programming/03_qabstracttablemodel/04_item_model_tree_view_refactored.py %}
+{% include src/qtwidgetsexamples/12_model_view_programming/03_qabstractitemmodel/04_item_model_tree_view_refactored.py %}
 ```
 
