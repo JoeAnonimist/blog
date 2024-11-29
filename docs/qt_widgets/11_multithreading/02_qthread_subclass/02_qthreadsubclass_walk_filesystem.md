@@ -23,4 +23,4 @@ Now let's walk the filesystem using a `QThread` subclass:
 
 5. Start the worker thread each time the start button is clicked.
 
-To make sure the thread is deleted when the user closes the main window we also override `Qwidget.closeEvent()`. Note that we didn't need to call `QThread.quit()` because the thread event loop is not running but just `QThread.wait()`.
+To make sure the thread is deleted when the user closes the main window we also override `Qwidget.closeEvent()`. Note that we didn't need to call `QThread.quit()` but only `QThread.wait()` because the thread event loop is not running.
