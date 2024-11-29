@@ -11,6 +11,9 @@ class Signals(QObject):
     progress = Signal(str)
     error = Signal(str)
 
+# 1. Create a QRunnable subclass
+#    and implement its run() method
+
 class Runnable(QRunnable):
     
     signals = Signals()
@@ -19,21 +22,25 @@ class Runnable(QRunnable):
         super().__init__(parent)
         self.do_work = True
         QThread.currentThread().setObjectName('Worker thread')
-        
+    
+    # Enumerate fs objects while self.do_work flag is True
+    
     def run(self):
         path = os.path.abspath('.').split(os.path.sep)[0] + os.path.sep
         for root, _, _ in os.walk(path):
             if not self.do_work:
                 return
             self.signals.progress.emit(os.path.basename(root))
-            
+    
+    @Slot()
     def on_cancel_emitted(self):
-        print(QThread.currentThread().objectName())
-        print(QThread.currentThread().loopLevel())
         self.do_work = False
 
 
 class Window(QWidget):
+    
+    # 2. add a custom signal to be emitted
+    #    when we want to cancel the task. 
     
     cancel_runnable = Signal()
     
@@ -61,10 +68,17 @@ class Window(QWidget):
     @Slot()
     def on_start_button_clicked(self):
         
+        # 3. Create a Runnable object
+        #    and connect the signals and the slots
+        
         runnable = Runnable()
+        
         runnable.signals.progress.connect(self.label.setText)
         runnable.signals.error.connect(self.on_error)
         self.cancel_runnable.connect(runnable.on_cancel_emitted)
+        
+        # 4. Run the task.
+        
         QThreadPool.globalInstance().start(runnable)
         
         self.start_button.setDisabled(True)
@@ -72,16 +86,22 @@ class Window(QWidget):
         
     @Slot()
     def on_cancel_button_clicked(self):
-        QApplication.instance().beep()
-        print('in cancel button click')
         self.cancel_runnable.emit()
         self.start_button.setEnabled(True)
         self.cancel_button.setDisabled(True)
-        
     
     @Slot()
     def on_error(self, message):
         print(message)
+    
+    # Emit the cancel_runnable signal to interrupt
+    # the runnable on the main window close 
+
+    def closeEvent(self, event):        
+        try:
+            self.cancel_runnable.emit()
+        except Exception as e:
+            print(e) 
 
 
 if __name__ == '__main__':
