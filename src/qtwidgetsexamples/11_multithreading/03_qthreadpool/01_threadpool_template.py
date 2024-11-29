@@ -10,13 +10,19 @@ class Signals(QObject):
     progress = Signal(str)
     error = Signal(str)
 
+# 1. Create a QRunnable subclass
+#    and implement its run() method.
+
 class Runnable(QRunnable):
     
     signals = Signals()
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        
+    
+    # The run method will be executed
+    # in the worker thread.
+    
     def run(self):
         self.signals.progress.emit('Progress emitted')
         print('Hello World')
@@ -40,11 +46,21 @@ class Window(QWidget):
         layout.addWidget(button)
         layout.addWidget(self.label)
     
+    # When the button is clicked:
+    
     @Slot()
     def on_button_clicked(self):
+        
+        # 2. Create a Runnable object
+        
         runnable = Runnable()
+
         runnable.signals.progress.connect(self.label.setText)
         runnable.signals.error.connect(self.on_error)
+        
+        # 3. Access the QThreadPool global instance
+        #    and run the task. 
+        
         QThreadPool.globalInstance().start(runnable)
     
     @Slot()
