@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (QApplication, QPushButton,
 
 
 # 1. Create a QThread subclass
-#    and subclass its run() method.
+#    and override its run() method.
 #    Add signals as needed.
 
 class WorkerThread(QThread):
