@@ -45,4 +45,6 @@ When you create a `QThread` object without subclassing it (like we did in the `m
 
 (Remember how in the `moveToThread` examples we connected the `QThread.started` signal with a worker object slot so that the slot was executed immediately on `QThread.start()`; and also connected the worker `finished` signal with `QThread.quit()` so that the `QThread` finishes as soon as the worker object slot returned)
 
-When you subclass `QThread`, the subclass does not run its local event loop unless you explicitly call `QThread.exec()` in your `QThread.run()` implementation. If your `QThread` subclass runs without an event loop it won't be able to use the classes that need one (like `QTimer`, `QTcpSocket` and `QProcess`). It will be able to emit and receive signals however.
+When you subclass `QThread`, the subclass does not run its local event loop unless you explicitly call `QThread.exec()` in your `QThread.run()` implementation. If your `QThread` subclass runs without an event loop it won't be able to use the classes that need one (like `QTimer`, `QTcpSocket` and `QProcess`). It will be able to emit signals however.
+
+In the example, `Window.start_work_in_a_thread()` is executed in the main thread and `QThread.loopLevel()` is one which means that the main thread event loop is running. `WorkerThread.__init__()` is also executed in the main loop while only `WorkerThread.run()` is executed in the worker thread and `QThread.loopLevel()` is equal to zero which means that the worker thread event loop is not running.
