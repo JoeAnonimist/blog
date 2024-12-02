@@ -5,7 +5,7 @@ nav_order: 2
 parent: 02 QThread Subclass
 ---
 
-## QThread Subclass Walk the Filesystem
+## Walk the Filesystem by Creating a `QThread` Subclass
 
 ```python
 {% include src/qtwidgetsexamples/11_multithreading/02_qthread_subclass/02_qthreadsubclass_walk_filesystem.py %}

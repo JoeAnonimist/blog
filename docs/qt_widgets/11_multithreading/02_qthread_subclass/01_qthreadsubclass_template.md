@@ -5,7 +5,7 @@ nav_order: 1
 parent: 02 QThread Subclass
 ---
 
-## QThread Subclass Template
+## A Minimal `QThread` Subclass Example
 
 Perhaps the most important thing to remember about `QThread` is that **a `QThread` object does not represent an operating system thread - it is a thread manager**. What this means in practice is that only the `QThread.run()` method will be executed in the new thread. All other `QThread` methods are executed in the thread that created the `QThread` object.
 

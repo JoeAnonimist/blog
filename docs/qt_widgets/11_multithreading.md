@@ -5,4 +5,4 @@ parent: Qt Widgets
 nav_order: 11
 ---
 
-## PySide6 Multithreading
+## Multithreading
