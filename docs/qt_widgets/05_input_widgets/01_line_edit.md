@@ -1,5 +1,5 @@
 ---
-title: QLineEdit Example
+title: QLineEdit
 layout: default
 nav_order: 1
 parent: 05 Input Widgets

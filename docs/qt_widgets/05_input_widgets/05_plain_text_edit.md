@@ -1,5 +1,5 @@
 ---
-title: QPlainTextEdit Example
+title: QPlainTextEdit
 layout: default
 nav_order: 5
 parent: 05 Input Widgets

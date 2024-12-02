@@ -1,5 +1,5 @@
 ---
-title: QHBoxLayout Demo
+title: QHBoxLayout
 layout: default
 nav_order: 2
 parent: 03 Layouts

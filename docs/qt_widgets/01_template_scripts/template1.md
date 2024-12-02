@@ -1,5 +1,5 @@
 ---
-title: PySide6 template script - empty
+title: A Simple Script to Display an Empty Window
 layout: default
 nav_order: 2
 tags: templates

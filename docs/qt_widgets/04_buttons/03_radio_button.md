@@ -1,5 +1,5 @@
 ---
-title: QRadioButton Example
+title: QRadioButton
 layout: default
 nav_order: 3
 parent: 04 Buttons
