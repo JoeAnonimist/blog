@@ -5,7 +5,7 @@ nav_order: 1
 parent: 04 Buttons
 ---
 
-## PySide6 QPushButton Example
+## `QPushButton`
 
 ![QPushButton](/blog/images/qtwidgetsexamples/04_buttons/01_push_button.png)
 

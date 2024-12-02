@@ -5,7 +5,7 @@ nav_order: 3
 parent: 04 Buttons
 ---
 
-## PySide6 QRadioButton Example
+## `QRadioButton`
 
 ![QRadioButton](/blog/images/qtwidgetsexamples/04_buttons/03_radio_button.png)
 
