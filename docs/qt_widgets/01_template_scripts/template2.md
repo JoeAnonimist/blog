@@ -6,7 +6,7 @@ tags: templates
 nav_order: 3
 ---
 
-## PySide6 starter script that shows a QLabel
+## Script to Show a QLabel in a Window
 
 ![Template 1](/blog/images/qtwidgetsexamples/01_template_scripts/02_helloworld1.png)
 

@@ -5,7 +5,7 @@ nav_order: 3
 parent: 01 Move QObject to Thread
 ---
 
-## Use the Same QThread Object Multiple Times
+## Use the Same `QThread` Object Multiple Times
 
 ```python
 {% include src/qtwidgetsexamples/11_multithreading/01_movetothread/03_movetothread_template_reuse_thread.py %}

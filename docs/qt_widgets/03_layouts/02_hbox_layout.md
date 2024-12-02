@@ -5,7 +5,7 @@ nav_order: 2
 parent: 03 Layouts
 ---
 
-## PySide6 QHBoxLayout Example
+## `QHBoxLayout`
 
 ![QHBoxLayout](/blog/images/qtwidgetsexamples/03_layouts/02_hbox_layout.png)
 
