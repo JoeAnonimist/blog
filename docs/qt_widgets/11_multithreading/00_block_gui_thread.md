@@ -5,7 +5,7 @@ parent: 11 Multithreading
 nav_order: 0
 ---
 
-## Block the Qt GUI Thread or how not to do things
+## Block the Qt GUI Thread or How Not to Do Things
 
 ```python
 {% include src/qtwidgetsexamples/11_multithreading/00_block_gui_thread.py %}
