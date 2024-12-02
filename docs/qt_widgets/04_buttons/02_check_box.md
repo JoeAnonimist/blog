@@ -1,5 +1,5 @@
 ---
-title: QCheckBox Example
+title: QCheckBox
 layout: default
 nav_order: 2
 parent: 04 Buttons

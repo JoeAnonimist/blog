@@ -1,5 +1,5 @@
 ---
-title: QComboBox Example
+title: QComboBox
 layout: default
 nav_order: 2
 parent: 05 Input Widgets

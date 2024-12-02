@@ -1,12 +1,12 @@
 ---
-title: A Signal and Slot Example Using Python Lambdas
+title: Signals and Slots Example with Lambdas
 layout: default
 nav_order: 2
 tags: "signals-and-slots"
 parent: 02 Signals and Slots
 ---
 
-## Signal and Slot Example with Lambdas
+## Signals and Slots Example with Lambdas
 
 ![Using lambdas](/blog/images/qtwidgetsexamples/02_signals_and_slots/02_using_lambdas.png)
 

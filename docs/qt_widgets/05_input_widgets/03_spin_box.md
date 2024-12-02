@@ -1,5 +1,5 @@
 ---
-title: QSpinBox and QDial Example
+title: QSpinBox and QDial
 layout: default
 nav_order: 3
 parent: 05 Input Widgets

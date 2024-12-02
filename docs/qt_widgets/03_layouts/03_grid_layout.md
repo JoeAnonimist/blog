@@ -1,5 +1,5 @@
 ---
-title: QGridLayout Demo
+title: QGridLayout
 layout: default
 nav_order: 3
 parent: 03 Layouts
