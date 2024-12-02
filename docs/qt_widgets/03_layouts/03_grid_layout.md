@@ -5,7 +5,7 @@ nav_order: 3
 parent: 03 Layouts
 ---
 
-## PySide6 QGridLayout Example
+## `QGridLayout`
 
 ![QGridLayout](/blog/images/qtwidgetsexamples/03_layouts/03_grid_layout.png)
 

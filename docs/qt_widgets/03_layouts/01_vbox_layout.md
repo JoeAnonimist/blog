@@ -5,7 +5,7 @@ nav_order: 1
 parent: 03 Layouts
 ---
 
-## PySide6 QVBoxLayout Example
+## `QVBoxLayout`
 
 ![QVBoxLayout](/blog/images/qtwidgetsexamples/03_layouts/01_vbox_layout.png)
 
