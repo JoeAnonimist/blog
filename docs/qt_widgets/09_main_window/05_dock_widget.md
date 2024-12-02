@@ -1,11 +1,11 @@
 ---
-title: QMainWindow Dock Widget Example
+title: Dock Widget
 layout: default
 nav_order: 5
 parent: 09 Main Window
 ---
 
-## PySide6 QMainWindow Dock Widget Example
+## `QDockWidget`
 
 ![QMainWindow dock widget](/blog/images/qtwidgetsexamples/09_main_window/05_dock_widget.png)
 

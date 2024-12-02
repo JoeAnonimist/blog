@@ -1,11 +1,11 @@
 ---
-title: QMainWindow Menus Example
+title: Menus
 layout: default
 nav_order: 3
 parent: 09 Main Window
 ---
 
-## PySide6 QMainWindow Menus Example
+## Menus
 
 ![QMainWindow menus](/blog/images/qtwidgetsexamples/09_main_window/03_menus.png)
 
