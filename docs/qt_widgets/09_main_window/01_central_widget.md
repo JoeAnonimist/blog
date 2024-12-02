@@ -1,11 +1,11 @@
 ---
-title: QMainWindow Central Widget Example
+title: Main Window's Central Widget
 layout: default
 nav_order: 1
 parent: 09 Main Window
 ---
 
-## PySide6 QMainWindow Central Widget Example
+## Main Window's Central Widget
 
 ![QMainWindow central widget](/blog/images/qtwidgetsexamples/09_main_window/01_central_widget.png)
 
