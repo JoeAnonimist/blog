@@ -1,11 +1,11 @@
 ---
-title: QGroupBox Example
+title: QGroupBox
 layout: default
 nav_order: 1
 parent: 08 Containers
 ---
 
-## PySide6 QGroupBox Example
+## `QGroupBox`
 
 ![QGroupBox](/blog/images/qtwidgetsexamples/08_containers/01_group_box.png)
 

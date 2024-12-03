@@ -1,11 +1,11 @@
 ---
-title: QTextEdit Example
+title: QTextEdit
 layout: default
 nav_order: 4
 parent: 05 Input Widgets
 ---
 
-## PySide6 QTextEdit Example
+## `QTextEdit`
 
 ![QTextEdit](/blog/images/qtwidgetsexamples/05_input_widgets/04_text_edit.png)
 

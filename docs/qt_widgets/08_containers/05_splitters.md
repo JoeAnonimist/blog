@@ -1,11 +1,11 @@
 ---
-title: QSplitter Example
+title: QSplitter
 layout: default
 nav_order: 5
 parent: 08 Containers
 ---
 
-## PySide6 QSplitter Example
+## `QSplitter`
 
 ![QSplitter](/blog/images/qtwidgetsexamples/08_containers/05_splitters.png)
 

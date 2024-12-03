@@ -4,3 +4,5 @@ layout: default
 parent: 12 Model-View Programming
 nav_order: 1
 ---
+
+## `QAbstractListModel`

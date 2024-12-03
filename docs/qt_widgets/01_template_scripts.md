@@ -4,3 +4,5 @@ layout: default
 parent: Qt Widgets
 nav_order: 1
 ---
+
+## Two Simple Template Scripts

@@ -1,11 +1,11 @@
 ---
-title: QMainWindow Toolbar Example
+title: QToolBar
 layout: default
 nav_order: 4
 parent: 09 Main Window
 ---
 
-## PySide6 QMainWindow Toolbar Example
+## `QToolBar`
 
 ![QMainWindow toolbar](/blog/images/qtwidgetsexamples/09_main_window/04_toolbar.png)
 
