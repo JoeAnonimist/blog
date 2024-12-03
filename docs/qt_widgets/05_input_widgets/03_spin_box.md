@@ -1,11 +1,11 @@
 ---
-title: QSpinBox and QDial Example
+title: QSpinBox and QDial
 layout: default
 nav_order: 3
 parent: 05 Input Widgets
 ---
 
-## PySide6 QSpinBox and QDial Example
+## `QSpinBox` and `QDial`
 
 ![QSpinBox](/blog/images/qtwidgetsexamples/05_input_widgets/03_spin_box.png)
 

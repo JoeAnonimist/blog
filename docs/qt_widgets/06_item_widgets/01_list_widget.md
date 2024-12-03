@@ -1,11 +1,11 @@
 ---
-title: QListWidget Example
+title: QListWidget
 layout: default
 nav_order: 1
 parent: 06 Item Widgets
 ---
 
-## PySide6 QListWidget Example
+## `QListWidget`
 
 ![QListWidget](/blog/images/qtwidgetsexamples/06_item_widgets/01_list_widget.png)
 

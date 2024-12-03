@@ -1,12 +1,12 @@
 ---
-title: A Basic Signal and Slot Example
+title:Basic Signal-Slot Mechanism Examplee
 layout: default
 nav_order: 1
 tags: "signals-and-slots"
 parent: 02 Signals and Slots
 ---
 
-## PySide6 Basic Signal and Slot Example
+## Basic Signal-Slot Mechanism Example
 
 ![Basic example](/blog/images/qtwidgetsexamples/02_signals_and_slots/01_basic_example.png)
 

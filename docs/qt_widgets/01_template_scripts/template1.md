@@ -1,12 +1,12 @@
 ---
-title: PySide6 template script - empty
+title: A Simple Script to Display an Empty Window
 layout: default
 nav_order: 2
 tags: templates
 parent: 01 Template Scripts
 ---
 
-## PySide6 script that shows an empty window
+## A Simple Script to Display an Empty Window
 
 ![Template](/blog/images/qtwidgetsexamples/01_template_scripts/01_helloworld.png)
 

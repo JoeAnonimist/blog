@@ -5,7 +5,7 @@ nav_order: 4
 parent: 01 Move QObject to Thread
 ---
 
-## QObject.moveToThread() Walk the Filesystem Reusing the Thread
+## Walk the Filesystem While Reusing the Thread
 
 ```python
 {% include src/qtwidgetsexamples/11_multithreading/01_movetothread/04_movetothread_walkfs_reuse_thread.py %}

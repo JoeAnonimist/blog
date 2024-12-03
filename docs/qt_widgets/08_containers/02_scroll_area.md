@@ -1,11 +1,11 @@
 ---
-title: QScrollArea Example
+title: QScrollArea
 layout: default
 nav_order: 2
 parent: 08 Containers
 ---
 
-## PySide6 QScrollArea Example  
+## `QScrollArea`
 
 ![QScrollArea](/blog/images/qtwidgetsexamples/08_containers/02_scroll_area.jpg)
 

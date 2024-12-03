@@ -1,11 +1,11 @@
 ---
-title: QFormLayout Demo
+title: QFormLayout
 layout: default
 nav_order: 4
 parent: 03 Layouts
 ---
 
-## PySide6 QFormLayout Example
+## `QFormLayout`
 
 ![QFormLayout](/blog/images/qtwidgetsexamples/03_layouts/04_form_layout.png)
 

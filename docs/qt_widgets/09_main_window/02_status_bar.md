@@ -1,11 +1,11 @@
 ---
-title: QMainWindow Status Bar Example
+title: QStatusBar
 layout: default
 nav_order: 2
 parent: 09 Main Window
 ---
 
-## PySide6 QMainWindow Status Bar Example
+## Main Window's Status Bar
 
 ![QMainWindow status bar](/blog/images/qtwidgetsexamples/09_main_window/02_status_bar.png)
 
