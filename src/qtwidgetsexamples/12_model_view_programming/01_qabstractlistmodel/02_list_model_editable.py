@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
-# 1. Create a QAbstractListView subclass
+# 1. Create a QAbstractListModel subclass
 #    and make the data available to it.
 
 class CsvModel(QAbstractListModel):
