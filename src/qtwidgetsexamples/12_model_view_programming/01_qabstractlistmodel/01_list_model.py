@@ -36,9 +36,8 @@ class CsvModel(QAbstractListModel):
             return self.csv_data[index.row()]
     
     # 4. Optionally, implement the headerData() method
-    
-    # QListView does not have a header
-    # so this is never executed!
+    #    QListView does not have a header
+    #    so this is never executed!
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Orientation.Horizontal:
