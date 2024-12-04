@@ -11,3 +11,4 @@ parent: 01 QAbstractListModel Examples
 {% include src/qtwidgetsexamples/12_model_view_programming/01_qabstractlistmodel/03_list_model_datawidgetmapper.py %}
 ```
 
+`QDataWidgetMapper` lets you map a set of widgets to model row (or column)
