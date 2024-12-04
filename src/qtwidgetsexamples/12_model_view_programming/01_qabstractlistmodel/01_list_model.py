@@ -7,26 +7,36 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
+# 1. Create a QAbstractListModel subclass.
+#    The data is read from a csv file
+#    and stored in a Python list.
+
 class CsvModel(QAbstractListModel):
     
     def __init__(self, source, parent=None):
         
         super().__init__(parent)
-        
+
         self.csv_data = []
         with open(source) as csv_file:
             reader = csv.reader(csv_file)
             self.header = ', '.join(next(reader))
             for row in reader:
                 self.csv_data.append(', '.join(row))
-                
+    
+    # 2. Implement the rowCount() method
+    
     def rowCount(self, parent):
         return len(self.csv_data)
+    
+    # 3. Implement the data() method
     
     def data(self, index, role):
         if role == Qt.ItemDataRole.DisplayRole:
             return self.csv_data[index.row()]
-        
+    
+    # 4. Optionally, implement the headerData() method
+    
     # QListView does not have a header
     # so this is never executed!
 
