@@ -1,5 +1,5 @@
 ---
-title:Basic Signals and Slots Mechanism Example
+title: Basic Signals and Slots Mechanism Example
 layout: default
 nav_order: 1
 tags: "signals-and-slots"
