@@ -1,12 +1,12 @@
 ---
-title:Basic Signal-Slot Mechanism Example
+title:Basic Signals and Slots Mechanism Example
 layout: default
 nav_order: 1
 tags: "signals-and-slots"
 parent: 02 Signals and Slots
 ---
 
-## Basic Signal-Slot Mechanism Example
+## Basic Signals and Slots Mechanism Example
 
 ![Basic example](/blog/images/qtwidgetsexamples/02_signals_and_slots/01_basic_example.png)
 
