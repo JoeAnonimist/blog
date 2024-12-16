@@ -8,6 +8,8 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
+# 1. Create the model class
+
 class CsvModel(QAbstractListModel):
     
     def __init__(self, source, parent=None):
@@ -29,9 +31,7 @@ class CsvModel(QAbstractListModel):
             return self.csv_data[index.row()]
         elif role == Qt.ItemDataRole.EditRole:
             return self.csv_data[index.row()]
-    
-    # Editable models implement setData() and flags()
-    
+
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()] != value:
@@ -46,9 +46,6 @@ class CsvModel(QAbstractListModel):
             Qt.ItemFlags.ItemIsEnabled | \
             Qt.ItemFlags.ItemIsEditable
         return flags
-        
-    # QListView does not have a header
-    # so this is never executed!
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Orientation.Horizontal:
@@ -72,15 +69,24 @@ class Window(QWidget):
         self.view.selectionModel().currentChanged.connect(
             self.on_current_changed)
         
+        # 2. Create the widgets for displaying
+        #    and editing the data
+        
         self.lineedit = QLineEdit()
         self.submit_button = QPushButton('Submit')
         self.submit_button.clicked.connect(self.on_submit)
         
+        # 3. Create the mapper object and set its model
+        
         self.mapper = QDataWidgetMapper()
         self.mapper.setModel(self.model)
+        
+        # 4. Add the mappings
+
+        self.mapper.addMapping(self.lineedit, 0)
+        
         self.mapper.setSubmitPolicy(
             QDataWidgetMapper.SubmitPolicy.ManualSubmit)
-        self.mapper.addMapping(self.lineedit, 0)
         self.mapper.toFirst()
         
         horizontal_layout = QHBoxLayout()
@@ -89,7 +95,9 @@ class Window(QWidget):
         
         layout.addWidget(self.view)
         layout.addLayout(horizontal_layout)
-        
+    
+    # 5. Synchronize 
+    
     def on_current_changed(self, current, previous):
         self.mapper.setCurrentIndex(current.row())
         
