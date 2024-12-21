@@ -96,7 +96,7 @@ class Window(QWidget):
         layout.addWidget(self.view)
         layout.addLayout(horizontal_layout)
     
-    # 5. Synchronize 
+    # 5. Synchronize the model with the mapper
     
     def on_current_changed(self, current, previous):
         self.mapper.setCurrentIndex(current.row())
