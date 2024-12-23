@@ -40,9 +40,9 @@ class CsvModel(QAbstractListModel):
             return False
     
     def flags(self, index):
-        flags = Qt.ItemFlags.ItemIsSelectable | \
-            Qt.ItemFlags.ItemIsEnabled | \
-            Qt.ItemFlags.ItemIsEditable
+        flags = Qt.ItemFlag.ItemIsSelectable | \
+            Qt.ItemFlag.ItemIsEnabled | \
+            Qt.ItemFlag.ItemIsEditable
         return flags
     
     # 2. Implement the insertRows() method
@@ -50,7 +50,7 @@ class CsvModel(QAbstractListModel):
     def insertRows(self, row, count, parent=QModelIndex()):
         if 0 <= row <= self.rowCount():
             self.beginInsertRows(parent, row, row)
-            self.csv_data.insert(row, '')
+            self.csv_data.insert(row, '<insert row data>')
             self.endInsertRows()
             return True
         else:
@@ -60,7 +60,7 @@ class CsvModel(QAbstractListModel):
     
     def removeRows(self, row, count, parent=QModelIndex()):
         if 0 <= row < len(self.csv_data):
-            self.beginRemoveRows(parent, row, row + 1)
+            self.beginRemoveRows(parent, row, row)
             self.csv_data[row:row + 1] = []
             self.endRemoveRows()
             return True
