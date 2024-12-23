@@ -7,6 +7,8 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
+# 1. Create a QAbstractListModel subclass
+
 class CsvModel(QAbstractListModel):
     
     def __init__(self, source, parent=None):
@@ -28,8 +30,6 @@ class CsvModel(QAbstractListModel):
         or role == Qt.ItemDataRole.EditRole:
             return self.csv_data[index.row()]
     
-    # Editable models implement setData() and flags()
-    
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()] != value:
@@ -45,6 +45,8 @@ class CsvModel(QAbstractListModel):
             Qt.ItemFlags.ItemIsEditable
         return flags
     
+    # 2. Implement the insertRows() method
+    
     def insertRows(self, row, count, parent=QModelIndex()):
         if 0 <= row <= self.rowCount():
             self.beginInsertRows(parent, row, row)
@@ -53,7 +55,9 @@ class CsvModel(QAbstractListModel):
             return True
         else:
             return False
-
+    
+    # 3. Implement the removeRows() method
+    
     def removeRows(self, row, count, parent=QModelIndex()):
         if 0 <= row < len(self.csv_data):
             self.beginRemoveRows(parent, row, row + 1)
