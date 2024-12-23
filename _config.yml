@@ -21,6 +21,4 @@ compress_html:
 
 mermaid:
   version: "11.3.0"
-  config:
-    class:
-      hideEmptyMembersBox: true
+
