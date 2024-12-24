@@ -49,7 +49,7 @@ class CsvModel(QAbstractListModel):
     
     def insertRows(self, row, count, parent=QModelIndex()):
         if 0 <= row <= self.rowCount():
-            self.beginInsertRows(parent, row, row)
+            self.beginInsertRows(parent, row, row )
             self.csv_data.insert(row, '<insert row data>')
             self.endInsertRows()
             return True
@@ -104,7 +104,9 @@ class Window(QWidget):
         layout.addWidget(self.insert_button)
         layout.addWidget(self.append_button)
         layout.addWidget(self.remove_button)
-
+    
+    # 4. Use insertRows() and removeRows()
+    
     def on_insert(self):
         row = self.view.selectionModel().currentIndex().row()
         self.model.insertRow(row)
