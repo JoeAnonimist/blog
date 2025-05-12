@@ -8,7 +8,7 @@ nav_order: 12
 ## Model-View Programming
 
 
-| **Base Class**     | ** Type ** | **Must Implement** |
+| **Base Class**     | **Type** | **Must Implement** |
 |---------------------|-----------|-----------------|
 | `QAbstractListModel`  | **Read-Only** | `rowCount()`      |
 |                     |           | `data()`          |
