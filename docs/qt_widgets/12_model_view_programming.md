@@ -10,7 +10,7 @@ nav_order: 12
 
 | **Base Class**     | **Type** | **Must Implement** |
 |---------------------|-----------|-----------------|
-| `QAbstractListModel`  | **Read-Only** | `rowCount()`\n`1231290`      |
+| `QAbstractListModel`  | **Read-Only** | `rowCount()`<br/>`1231290`      |
 |                     |           | `data()`          |
 |                     | **Editable**  | `rowCount()`      |
 |                     |           | `data()`          |
