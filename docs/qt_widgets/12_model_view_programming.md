@@ -16,27 +16,7 @@ nav_order: 12
 | `QAbstractTableModel` | **Read-Only** | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/> |
 |                     | **Editable**  | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()` |
 |                     | **Resizable** | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()`<br/>`insertRows()`<br/>`insertColumns()`<br/>`removeRows()`<br/>`removeColumns()` |
-| `QAbstractItemModel`  | **Read-Only** | `index()`         |
-|                     |           | `parent()`        |
-|                     |           | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     | **Editable**  | `index()`         |
-|                     |           | `parent()`        |
-|                     |           | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     | **Resizable** | `index()`         |
-|                     |           | `parent()`        |
-|                     |           | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     |           | `insertRows()`    |
-|                     |           | `insertColumns()` |
-|                     |           | `removeRows()`    |
-|                     |           | `removeColumns()` |
+| `QAbstractItemModel`  | **Read-Only** | `index()`<br/>`parent()`<br/>`rowCount()`<br/>`columnCount()`<br/>`data()` |
+|                     | **Editable**  | `index()`<br/>`parent()`<br/>`rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()` |
+|                     | **Resizable** | `index()`<br/>`parent()`<br/>`rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()`<br/>`insertRows()`<br/>`insertColumns()`<br/>`removeRows()`<br/>`removeColumns()` |
 
