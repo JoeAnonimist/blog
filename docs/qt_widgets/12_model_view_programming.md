@@ -10,35 +10,12 @@ nav_order: 12
 
 | **Base Class**     | **Type** | **Must Implement** |
 |---------------------|-----------|-----------------|
-| `QAbstractListModel`  | **Read-Only** | `rowCount()`<br/>`1231290`      |
-|                     |           | `data()`          |
-|                     | **Editable**  | `rowCount()`      |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     | **Resizable** | `rowCount()`      |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     |           | `insertRows()`    |
-|                     |           | `removeRows()`    |
-| `QAbstractTableModel` | **Read-Only** | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     | **Editable**  | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     | **Resizable** | `rowCount()`      |
-|                     |           | `columnCount()`   |
-|                     |           | `data()`          |
-|                     |           | `setData()`       |
-|                     |           | `flags()`         |
-|                     |           | `insertRows()`    |
-|                     |           | `insertColumns()` |
-|                     |           | `removeRows()`    |
-|                     |           | `removeColumns()` |
+| `QAbstractListModel`  | **Read-Only** | `rowCount()`<br/>`data()` |
+|                     | **Editable**  | `rowCount()`<br/>`data()`<br/>`setData()`<br/>`flags()` |
+|                     | **Resizable** | `rowCount()`<br/>`data()`<br/>`setData()`<br/>`flags()`<br/>`insertRows()`<br/>`removeRows()` |
+| `QAbstractTableModel` | **Read-Only** | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/> |
+|                     | **Editable**  | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()` |
+|                     | **Resizable** | `rowCount()`<br/>`columnCount()`<br/>`data()`<br/>`setData()`<br/>`flags()`<br/>`insertRows()`<br/>`insertColumns()`<br/>`removeRows()`<br/>`removeColumns()` |
 | `QAbstractItemModel`  | **Read-Only** | `index()`         |
 |                     |           | `parent()`        |
 |                     |           | `rowCount()`      |
