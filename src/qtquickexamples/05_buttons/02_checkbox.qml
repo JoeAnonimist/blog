@@ -8,24 +8,30 @@ ApplicationWindow {
     visible: true
     width: 200
     height:80
-    title: "Button Example"
+    title: "CheckBox example"
     
-    function generateRandNumber () {
-        label.text = Math.floor(
-            Math.random() * 100 + 1)
+    function getState (cbox) {
+        console.log(cbox.text)
     }
     
     ColumnLayout {
         
         anchors.fill: parent
             
-        Button {
+        CheckBox {
+            text: "Windows"
+            onCheckedChanged: getState(this)
+        }
         
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            text: "Generate random number"
-            
-            onClicked: generateRandNumber()
+        CheckBox {
+            text: "Linux"
+            onCheckedChanged: getState(this)
+        }
+        
+        CheckBox {
+            text: "macOs"
+            tristate: true
+            onCheckedChanged: getState(this)
         }
         
         Label {
