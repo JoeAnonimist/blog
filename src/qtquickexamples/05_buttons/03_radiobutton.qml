@@ -22,16 +22,19 @@ ApplicationWindow {
         anchors.fill: parent
             
         RadioButton {
+            Layout.fillWidth: true
             text: "red"
             onToggled: getState(this)
         }
         
         RadioButton {
+            Layout.fillWidth: true
             text: "green"
             onToggled: getState(this)
         }
         
         RadioButton {
+            Layout.fillWidth: true
             text: "blue"
             onToggled: getState(this)
         }

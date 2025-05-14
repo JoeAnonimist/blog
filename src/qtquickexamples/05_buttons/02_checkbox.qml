@@ -24,16 +24,19 @@ ApplicationWindow {
         anchors.fill: parent
             
         CheckBox {
+            Layout.fillWidth: true
             text: "Windows"
             onCheckStateChanged: getState(this)
         }
         
         CheckBox {
+            Layout.fillWidth: true
             text: "Linux"
             onCheckStateChanged: getState(this)
         }
         
         CheckBox {
+            Layout.fillWidth: true
             text: "macOs"
             tristate: true
             onCheckStateChanged: getState(this)
