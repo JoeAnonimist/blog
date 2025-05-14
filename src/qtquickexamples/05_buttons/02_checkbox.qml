@@ -7,11 +7,16 @@ ApplicationWindow {
 
     visible: true
     width: 200
-    height:80
+    height:100
     title: "CheckBox example"
     
     function getState (cbox) {
-        console.log(cbox.text)
+        let stateName = {
+            0: "Unchecked",
+            1: "Partially Checked",
+            2: "Checked"
+        } [cbox.checkState]
+        label.text = cbox.text + "\n" + stateName
     }
     
     ColumnLayout {
@@ -20,18 +25,18 @@ ApplicationWindow {
             
         CheckBox {
             text: "Windows"
-            onCheckedChanged: getState(this)
+            onCheckStateChanged: getState(this)
         }
         
         CheckBox {
             text: "Linux"
-            onCheckedChanged: getState(this)
+            onCheckStateChanged: getState(this)
         }
         
         CheckBox {
             text: "macOs"
             tristate: true
-            onCheckedChanged: getState(this)
+            onCheckStateChanged: getState(this)
         }
         
         Label {
