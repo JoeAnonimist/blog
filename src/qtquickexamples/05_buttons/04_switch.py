@@ -10,7 +10,7 @@ if __name__ == '__main__':
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('04_delaybutton.qml')
+    engine.load('04_switch.qml')
     
     result = app.exec()
     del engine
