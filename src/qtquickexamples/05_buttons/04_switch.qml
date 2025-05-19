@@ -10,11 +10,10 @@ ApplicationWindow {
     visible: true
     width: 200
     height:100
-    title: "RadioButton example"
+    title: "Switch example"
     
-    function getState () {
-        [label.color, labelbg.color] = 
-        [String(labelbg.color), String(label.color)]
+    function switchTheme () {
+        
     }
     
     ColumnLayout {
@@ -25,7 +24,10 @@ ApplicationWindow {
             id: themeSwitch
             Layout.fillWidth: true
             text: "Switch theme"
-            onCheckedChanged: getState(this)
+            onCheckedChanged: {
+                [label.color, labelbg.color] = 
+                [String(labelbg.color), String(label.color)]
+            }
         }
         
         Label {
