@@ -11,7 +11,7 @@ if __name__ == '__main__':
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
     
-    # engine.load('01_group_box.qml')
-    engine.load('01_group_box_stacklayout.qml')
+    engine.load('01_group_box.qml')
+    # engine.load('01_group_box_stacklayout.qml')
     
     sys.exit(app.exec())
