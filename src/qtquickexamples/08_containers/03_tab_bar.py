@@ -28,6 +28,6 @@ if __name__ == '__main__':
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('02_scroll_view.qml')
+    engine.load('03_tab_bar.qml')
 
     sys.exit(app.exec())
