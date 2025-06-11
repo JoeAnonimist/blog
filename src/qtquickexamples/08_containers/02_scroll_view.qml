@@ -7,11 +7,7 @@ ApplicationWindow {
     visible: true
     width: 400
     height:200
-    title: "Template App"
-    
-    Component.onCompleted: {
-        console.log("in qml")
-    }
+    title: "ScrollView"
     
     RowLayout {
         
