@@ -9,6 +9,10 @@ ApplicationWindow {
     height:200
     title: "Template App"
     
+    Component.onCompleted: {
+        console.log("in qml")
+    }
+    
     RowLayout {
         
         anchors.fill: parent
