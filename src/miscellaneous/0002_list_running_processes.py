@@ -1,7 +1,7 @@
 import sys
 import psutil
 
-from PySide6.QtCore import Slot, Qt
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QApplication, QWidget,
     QVBoxLayout, QListWidget, QListWidgetItem, QLabel)
 
