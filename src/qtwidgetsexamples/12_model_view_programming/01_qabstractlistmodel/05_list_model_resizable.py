@@ -29,8 +29,6 @@ class CsvModel(QAbstractListModel):
         or role == Qt.ItemDataRole.EditRole:
             return self.csv_data[index.row()]
     
-    # Editable models implement setData() and flags()
-    
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()] != value:
