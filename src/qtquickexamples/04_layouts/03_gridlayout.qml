@@ -10,10 +10,8 @@ ApplicationWindow {
     height:400
     title: "Grid Layout Example"
     
-    function setLabelText (name, row, column) {
-        label.text = "Button: " + name + "\n" 
-            + "row: " +  row + "\n"
-            + "column: " + column
+    function setLabelText (name) {
+        label.text = name + " clicked"
     }
     
     GridLayout {
@@ -22,63 +20,45 @@ ApplicationWindow {
         columns: 2
             
         Button {
-
-            // Layout.row: 0
-            // Layout.column: 1
         
             Layout.fillWidth: true
             Layout.fillHeight: true
             text: "Button 1"
             
-            onClicked: setLabelText(
-                text, Layout.row, Layout.column)
+            onClicked: setLabelText(text)
         }
         
         Button {
-            
-            // Layout.row: 0
-            // Layout.column: 0
         
             Layout.fillWidth: true
             Layout.fillHeight: true
             text: "Button 2"
-            
-            onClicked: setLabelText(
-                text, Layout.row, Layout.column)
+
+            onClicked: setLabelText(text)
         }
         
         Button {
-            
-            // Layout.row: 1
-            // Layout.column: 1
         
             Layout.fillWidth: true
             Layout.fillHeight: true
             text: "Button 3"
             
-            onClicked: setLabelText(
-                text, Layout.row, Layout.column)
+            onClicked: setLabelText(text)
         }
         
         Button {
-            
-            // Layout.row: 1
-            // Layout.column: 0
         
             Layout.fillWidth: true
             Layout.fillHeight: true
             text: "Button 4"
             
-            onClicked: setLabelText(
-                text, Layout.row, Layout.column)
+            onClicked: setLabelText(text)
         }
         
         Label {
         
             id: label
             
-            // Layout.row: 2
-            // Layout.column: 0
             Layout.columnSpan: 2
             
             Layout.minimumHeight: 200
@@ -89,7 +69,7 @@ ApplicationWindow {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             
-            text: "text"
+            //text: "text"
         }
     }
 }

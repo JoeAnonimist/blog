@@ -7,6 +7,9 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
+# 1. Create a QAbstractTableModel subclass
+#    same as in the read-only subclass example.
+
 class CsvModel(QAbstractTableModel):
     
     def __init__(self, source, parent=None):
@@ -19,7 +22,9 @@ class CsvModel(QAbstractTableModel):
             self.header = next(reader)
             for row in reader:
                 self.csv_data.append(row)
-                
+
+    # 2. Implement rowCount(), columnCount() and data()
+
     def rowCount(self, parent=QModelIndex()):
         return len(self.csv_data)
     
@@ -30,7 +35,7 @@ class CsvModel(QAbstractTableModel):
         if role == Qt.ItemDataRole.DisplayRole:
             return self.csv_data[index.row()][index.column()]
 
-    # Editable models implement setData() and flags()
+    # 3. Implement setData()
     
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
@@ -40,6 +45,8 @@ class CsvModel(QAbstractTableModel):
                 return True
             return False
         return False
+    
+    # 4. Implement flags()
     
     def flags(self, index):
         flags = Qt.ItemFlags.ItemIsSelectable | \
@@ -62,6 +69,10 @@ class Window(QWidget):
 
         layout = QVBoxLayout()
         self.setLayout(layout)
+        
+        # 5. Use the model
+        #    Create the model, create the view
+        #    and assign the model to the view.
 
         model = CsvModel('data.csv')
         QAbstractItemModelTester(model)
