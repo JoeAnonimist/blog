@@ -35,7 +35,7 @@ class CsvModel(QAbstractTableModel):
         if role == Qt.ItemDataRole.DisplayRole:
             return self.csv_data[index.row()][index.column()]
 
-    # 3. Implement setData() and flags()
+    # 3. Implement setData()
     
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
@@ -45,6 +45,8 @@ class CsvModel(QAbstractTableModel):
                 return True
             return False
         return False
+    
+    # 4. Implement flags()
     
     def flags(self, index):
         flags = Qt.ItemFlags.ItemIsSelectable | \
@@ -68,7 +70,7 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        # 4. Use the model
+        # 5. Use the model
         #    Create the model, create the view
         #    and assign the model to the view.
 
