@@ -11,7 +11,7 @@ parent: 01 QAbstractListModel Examples
 {% include src/qtwidgetsexamples/12_model_view_programming/01_qabstractlistmodel/03_list_model_datawidgetmapper.py %}
 ```
 
-`QDataWidgetMapper` lets you map a model row (or column) to a set of widgets and make data viewing/editing more comfortable for the user. To use it in your application
+`QDataWidgetMapper` lets you map a model row (or column) to a set of widgets - this comes in handy when creating forms and makes data viewing/editing more comfortable for the user. To use it in your application
 
 1. Create a `QAbstractListModel` subclass to represent your model, then, in the main window class
 
