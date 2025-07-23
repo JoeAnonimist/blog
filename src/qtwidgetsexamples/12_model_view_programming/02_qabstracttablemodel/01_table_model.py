@@ -26,17 +26,15 @@ class CsvModel(QAbstractTableModel):
             for row in reader:
                 self.csv_data.append(row)
 
-    # 2. Implement the rowCount() method
+    # 2. Implement the rowCount() and columnCount() methods
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.csv_data)
 
-    # 3. Implement the columnCount() method
-
     def columnCount(self, parent=QModelIndex()):
         return 4
     
-    # 4. Implement the data() method
+    # 3. Implement the data() method
     
     def data(self, index, role):
         if role == Qt.ItemDataRole.DisplayRole:
@@ -59,7 +57,7 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        # 5. Use the model:
+        # 4. Use the model:
         #    Create a model instance, create a view instance
         #    and and use view.setModel() to connect them.
 
