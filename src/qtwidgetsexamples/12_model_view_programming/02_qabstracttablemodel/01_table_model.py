@@ -7,6 +7,12 @@ from PySide6.QtWidgets import (QApplication,
 from PySide6.QtTest import QAbstractItemModelTester
 
 
+# 1. Create a QAbstractTableModel subclass.
+#    We read the data from a csv file using Python's csv.reader
+#    Each row in a reader object is a list making self.csv_data
+#    a two-dimensional list suitable for use
+#    with QAbstractTableModel.
+
 class CsvModel(QAbstractTableModel):
     
     def __init__(self, source, parent=None):
@@ -19,18 +25,25 @@ class CsvModel(QAbstractTableModel):
             self.header = next(reader)
             for row in reader:
                 self.csv_data.append(row)
-                
+
+    # 2. Implement the rowCount() method
+
     def rowCount(self, parent=QModelIndex()):
         return len(self.csv_data)
-    
+
+    # 3. Implement the columnCount() method
+
     def columnCount(self, parent=QModelIndex()):
         return 4
+    
+    # 4. Implement the data() method
     
     def data(self, index, role):
         if role == Qt.ItemDataRole.DisplayRole:
             return self.csv_data[index.row()][index.column()]
         
     # QTableView can have a header
+    # but implementing headerData() is still optional.
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Orientation.Horizontal:
@@ -45,10 +58,14 @@ class Window(QWidget):
 
         layout = QVBoxLayout()
         self.setLayout(layout)
+        
+        # 5. Use the model:
+        #    Create a model instance, create a view instance
+        #    and and use view.setModel() to connect them.
 
         model = CsvModel('data.csv')
-        print(model.columnCount(), model.rowCount())
         QAbstractItemModelTester(model)
+        
         view = QTableView()
         view.setModel(model)
         view.resizeColumnsToContents()
