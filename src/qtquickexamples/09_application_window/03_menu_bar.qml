@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 import QtQuick.Layouts
 
 import examples.charcounter
@@ -33,6 +34,41 @@ ApplicationWindow {
                 let char_count = charCounter.char_count(textDocument)
                 charcountLabel.text = char_count
 	        }
+	    }
+	}
+	
+	MessageDialog {
+	    id: aboutDialog
+	    text: "Qml menu example"
+        buttons: MessageDialog.Ok
+	}
+	
+    Action {
+        id: exitAction
+        text: "Exit"
+        shortcut: "Alt+X"
+        onTriggered: Qt.quit()
+    }
+    
+    Action {
+        id: aboutAction
+        text: "About"
+        shortcut: "Alt+A"
+        onTriggered: aboutDialog.open()
+    }
+	
+	menuBar: MenuBar {
+	    Menu {
+	        title: "&File"
+	        MenuItem {
+	            action: exitAction
+	        }
+	    }
+	    Menu {
+	        title: "&Help"
+	        MenuItem {
+                action: aboutAction
+            }
 	    }
 	}
 	
