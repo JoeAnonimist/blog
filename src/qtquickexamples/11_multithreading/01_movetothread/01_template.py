@@ -30,6 +30,10 @@ class Controller(QObject):
     
     finished = Signal()
     
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        QGuiApplication.instance().aboutToQuit.connect(self.cleanup)
+    
     @Slot()
     def start_working(self):
         
@@ -50,6 +54,16 @@ class Controller(QObject):
     @Slot()
     def on_error(self, message):
         print(message)
+        
+    @Slot()
+    def cleanup(self):
+        print("Cleaning up...")
+        try:
+            self.background_thread.requestInterruption()
+            self.background_thread.quit()
+            self.background_thread.wait()
+        except Exception as e:
+            print(e) 
 
 
 if __name__ == '__main__':
