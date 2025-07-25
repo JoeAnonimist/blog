@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (QApplication,
     QPushButton, QLabel, QWidget, QVBoxLayout)
 
 
-# 1. Create the worker class
+# 1. Create the worker_obj class
 
 class Worker(QObject):
     
@@ -51,19 +51,19 @@ class Window(QWidget):
         
         self.background_thread = QThread()
         
-        # 3. Create the worker and move it to the thread
+        # 3. Create the worker_obj and move it to the thread
         
-        self.worker = Worker()
-        self.worker.moveToThread(self.background_thread)
+        self.worker_obj = Worker()
+        self.worker_obj.moveToThread(self.background_thread)
         
-        self.worker.finished.connect(self.on_finished)
+        self.worker_obj.finished.connect(self.on_finished)
         
         # 4. Connect the signals and the slots 
         
-        self.worker.error.connect(self.on_error)
-        self.background_thread.started.connect(self.worker.process)
-        self.worker.finished.connect(self.background_thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
+        self.worker_obj.error.connect(self.on_error)
+        self.background_thread.started.connect(self.worker_obj.process)
+        self.worker_obj.finished.connect(self.background_thread.quit)
+        self.worker_obj.finished.connect(self.worker_obj.deleteLater)
         self.background_thread.finished.connect(self.background_thread.deleteLater)
         
         # 5. Start the thread

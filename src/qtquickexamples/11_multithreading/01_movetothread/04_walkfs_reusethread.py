@@ -1,6 +1,7 @@
+import os
 import sys
 
-from PySide6.QtCore import QObject, QThread, Signal, Slot
+from PySide6.QtCore import QObject, QThread, Signal, Slot, Property, QMutex, QMutexLocker
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine, QmlElement
 
@@ -10,22 +11,48 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 class Worker(QObject):
     
-    result_ready = Signal(str)
+    result_ready = Signal()
+    progress = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
-    
+        self.interruption_requested = False
+        self.mutex = QMutex()
+        
     @Slot()
-    def do_work(self, parameter):
-        print(parameter)
-        self.result_ready.emit(parameter)
+    def do_work(self):
+        
+        self.interruption_requested = False
+        
+        path = os.path.abspath('.').split(os.path.sep)[0] + os.path.sep
+        for root, _, _ in os.walk(path):
+            with QMutexLocker(self.mutex):
+                if self.interruption_requested:
+                    self.progress.emit('Canceled')
+                    self.result_ready.emit()
+                    return
+            self.progress.emit(os.path.basename(root))
+        self.result_ready.emit()
+        
+    @Slot()
+    def stop(self):
+        with QMutexLocker(self.mutex):
+            self.interruption_requested = True
+        
+    @Slot()
+    def reset(self):
+        with QMutexLocker(self.mutex):
+            self.interruption_requested = False
         
         
 @QmlElement
 class Controller(QObject):
     
-    operate = Signal(str)
-    result_ready = Signal(str)
+    operate = Signal()
+    progress = Signal(str)
+    result_ready = Signal()
+    
+    worker = None
     
     def __init__(self, parent=None):
         
@@ -40,8 +67,15 @@ class Controller(QObject):
         self.operate.connect(self.worker_obj.do_work)
         self.worker_obj.result_ready.connect(self.result_ready)
         
+        self.worker_obj.progress.connect(self.progress)
+        
         self.worker_thread.start()
         
+    def getWorker(self):
+        return self.worker_obj
+
+    worker = Property(QObject, fget=getWorker)
+
     @Slot()
     def cleanup(self):
         print("Cleaning up...")
@@ -59,6 +93,6 @@ if __name__ == '__main__':
 
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('03_template_reusethread.qml')
+    engine.load('04_walkfs_reusethread.qml')
 
     sys.exit(app.exec())

@@ -102,25 +102,25 @@ class Window(QWidget):
         self.cancel_button.setEnabled(True)
         
         self.background_thread = QThread()
-        self.worker = Worker()
-        self.worker.moveToThread(self.background_thread)
+        self.worker_obj = Worker()
+        self.worker_obj.moveToThread(self.background_thread)
         
-        self.worker.finished.connect(self.on_finished)
+        self.worker_obj.finished.connect(self.on_finished)
         
         if self.sender().objectName() == 'create':
             self.create_button.setDisabled(True)
             self.copy_button.setDisabled(True)
-            self.background_thread.started.connect(self.worker.create_large_file)
+            self.background_thread.started.connect(self.worker_obj.create_large_file)
         else:
             self.create_button.setDisabled(True)
             self.copy_button.setDisabled(True)
-            self.background_thread.started.connect(self.worker.copy_large_file)
+            self.background_thread.started.connect(self.worker_obj.copy_large_file)
             
-        self.worker.finished.connect(self.background_thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
+        self.worker_obj.finished.connect(self.background_thread.quit)
+        self.worker_obj.finished.connect(self.worker_obj.deleteLater)
         self.background_thread.finished.connect(self.background_thread.deleteLater)
         
-        self.worker.progress.connect(self.progress_bar.setValue)
+        self.worker_obj.progress.connect(self.progress_bar.setValue)
         
         self.background_thread.start()
         

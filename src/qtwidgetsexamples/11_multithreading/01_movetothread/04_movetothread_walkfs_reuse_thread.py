@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (QApplication,
     QPushButton, QLabel, QWidget, QVBoxLayout)
 
 
-# 1. Create the worker class
+# 1. Create the worker_obj class
 
 class Worker(QObject):
     
@@ -76,18 +76,18 @@ class Controller(QWidget):
         
         self.worker_thread = QThread()
         
-        # 3. Create the worker and move it to the thread
+        # 3. Create the worker_obj and move it to the thread
         
-        self.worker = Worker()
-        self.worker.moveToThread(self.worker_thread)
+        self.worker_obj = Worker()
+        self.worker_obj.moveToThread(self.worker_thread)
         
         # 4. Connect the signals with the slots
         
-        self.worker_thread.finished.connect(self.worker.deleteLater)
-        self.operate.connect(self.worker.do_work)
-        self.worker.result_ready.connect(self.handle_results)
+        self.worker_thread.finished.connect(self.worker_obj.deleteLater)
+        self.operate.connect(self.worker_obj.do_work)
+        self.worker_obj.result_ready.connect(self.handle_results)
         
-        self.worker.progress.connect(self.label.setText)
+        self.worker_obj.progress.connect(self.label.setText)
         
         # 5. Start the thread
 
@@ -101,17 +101,17 @@ class Controller(QWidget):
         self.start_button.setDisabled(True)
         self.cancel_button.setEnabled(True)
         
-        self.worker.reset()
+        self.worker_obj.reset()
         self.operate.emit()
     
-    # 7. On the cancel button click stop the worker
+    # 7. On the cancel button click stop the worker_obj
     
     @Slot()
     def on_cancel_button_clicked(self):
         
         self.start_button.setEnabled(True)
         self.cancel_button.setDisabled(True)
-        self.worker.stop()
+        self.worker_obj.stop()
 
     @Slot()
     def handle_results(self):
@@ -121,7 +121,7 @@ class Controller(QWidget):
     
     def closeEvent(self, event):        
         try:
-            self.worker.stop()
+            self.worker_obj.stop()
             self.worker_thread.quit()
             self.worker_thread.wait()
         except Exception as e:
