@@ -72,6 +72,25 @@ ApplicationWindow {
 	    }
 	}
 	
+	header: ToolBar {
+	    RowLayout {
+	        anchors.fill: parent
+	        ToolButton {
+	            text: "Exit"
+		        icon.source: "icons/exit.png"
+		        action: exitAction
+	        }
+	        ToolButton {
+	            text: "About"
+		        icon.source: "icons/about.png"
+		        action: aboutAction
+	        }
+		    Item {
+		        Layout.fillWidth: true
+		    }
+	    }
+	}
+	
 	footer: ToolBar {
 	    RowLayout {
 	        anchors.fill: parent
