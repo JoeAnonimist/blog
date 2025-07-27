@@ -12,6 +12,7 @@ class Worker(QObject):
     auto_signal = Signal()
     direct_signal = Signal()
     queued_signal = Signal()
+    blocking_signal = Signal()
     
     @Slot()
     def auto_slot(self):
@@ -72,12 +73,12 @@ class Window(QWidget):
         self.emitter.auto_signal.connect(self.receiver.auto_slot, Qt.ConnectionType.AutoConnection)
         self.emitter.direct_signal.connect(self.receiver.direct_slot, Qt.ConnectionType.DirectConnection)
         self.emitter.queued_signal.connect(self.receiver.queued_slot, Qt.ConnectionType.QueuedConnection)
+        self.emitter.blocking_signal.connect(self.receiver.blocking_slot, Qt.ConnectionType.BlockingQueuedConnection)
         
         self.button_auto.clicked.connect(self.emitter.auto_signal)
         self.button_direct.clicked.connect(self.emitter.direct_signal)
         self.button_queued.clicked.connect(self.emitter.queued_signal)
-        
-        print(callable(self.emitter.direct_signal))
+        self.button_blocking.clicked.connect(self.emitter.blocking_signal)
         
         self.emitting_thread.start()
         self.receiving_thread.start()
@@ -85,6 +86,7 @@ class Window(QWidget):
         layout.addWidget(self.button_auto)
         layout.addWidget(self.button_direct)
         layout.addWidget(self.button_queued)
+        layout.addWidget(self.button_blocking)
         layout.addWidget(self.label)
     
     @Slot()
