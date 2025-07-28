@@ -15,10 +15,9 @@ class Signals(QObject):
 
 class Runnable(QRunnable):
     
-    signals = Signals()
-    
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.signals = Signals()
     
     # The run method will be executed
     # in the worker thread.
@@ -26,6 +25,7 @@ class Runnable(QRunnable):
     def run(self):
         self.signals.progress.emit('Progress emitted')
         print('Hello World')
+        self.signals.deleteLater()
 
 
 class Window(QWidget):
@@ -60,7 +60,7 @@ class Window(QWidget):
         
         # 3. Access the QThreadPool global instance
         #    and run the task. 
-        
+
         QThreadPool.globalInstance().start(runnable)
     
     @Slot()
