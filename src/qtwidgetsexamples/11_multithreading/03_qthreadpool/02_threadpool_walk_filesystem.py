@@ -16,12 +16,10 @@ class Signals(QObject):
 
 class Runnable(QRunnable):
     
-    signals = Signals()
-    
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.signals = Signals()
         self.do_work = True
-        QThread.currentThread().setObjectName('Worker thread')
     
     # Enumerate fs objects while self.do_work flag is True
     
@@ -31,6 +29,7 @@ class Runnable(QRunnable):
             if not self.do_work:
                 return
             self.signals.progress.emit(os.path.basename(root))
+            print(QThread.currentThread())
     
     @Slot()
     def on_cancel_emitted(self):
