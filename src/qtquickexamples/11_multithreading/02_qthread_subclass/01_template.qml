@@ -14,6 +14,7 @@ ApplicationWindow {
     Component {
         id: wtComponent
         WorkerThread {
+            id: wThread
             onResult_ready: (result) => {
                 print(result)
                 label.text = result
@@ -24,7 +25,7 @@ ApplicationWindow {
                 // for (var prop in workerThread) {
                 //     print("  " + prop)
                 // }
-                d()
+                wThread.cleanup()
             }
         }
     }

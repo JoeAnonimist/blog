@@ -1,6 +1,6 @@
 import sys
 
-from PySide6.QtCore import QObject, QThread, Signal, Slot
+from PySide6.QtCore import QThread, Signal, Slot
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine, QmlElement
 
@@ -26,9 +26,9 @@ class WorkerThread(QThread):
         result = 'Hello World'
         print(result)
         self.result_ready.emit(result)
-        
+    
     @Slot()
-    def d(self):
+    def cleanup(self):
         super().deleteLater()
 
 
