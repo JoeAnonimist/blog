@@ -60,21 +60,24 @@ class Controller(QObject):
         QGuiApplication.instance().aboutToQuit.connect(self.cleanup)
     
         self.worker_thread = QThread()
-        self.worker_obj = Worker()
-        self.worker_obj.moveToThread(self.worker_thread)
+        self.worker = Worker()
+        self.worker.moveToThread(self.worker_thread)
         
-        self.worker_thread.finished.connect(self.worker_obj.deleteLater)
-        self.operate.connect(self.worker_obj.do_work)
-        self.worker_obj.result_ready.connect(self.result_ready)
+        self.worker_thread.finished.connect(self.worker.deleteLater)
+        self.operate.connect(self.worker.do_work)
+        self.worker.result_ready.connect(self.result_ready)
         
-        self.worker_obj.progress.connect(self.progress)
+        self.worker.progress.connect(self.progress)
         
         self.worker_thread.start()
+    
+    @Slot()
+    def reset_worker(self):
+        self.worker.reset()
         
-    def getWorker(self):
-        return self.worker_obj
-
-    worker = Property(QObject, fget=getWorker)
+    @Slot()
+    def stop_worker(self):
+        self.worker.stop()
 
     @Slot()
     def cleanup(self):

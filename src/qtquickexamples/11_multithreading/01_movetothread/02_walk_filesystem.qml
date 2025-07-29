@@ -20,7 +20,6 @@ ApplicationWindow {
 
         onProgress: (file_name) => {
             label.text = file_name
-            console.log(file_name)
         }
     }
 

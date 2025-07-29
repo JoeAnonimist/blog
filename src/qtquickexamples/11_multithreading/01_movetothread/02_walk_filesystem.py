@@ -33,51 +33,43 @@ class Controller(QObject):
     
     finished = Signal()
     progress = Signal(str)
+    error = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        QGuiApplication.instance().aboutToQuit.connect(self.cleanup)
+        QGuiApplication.instance().aboutToQuit.connect(self.stop_working)
     
     @Slot()
     def start_working(self):
         
         self.background_thread = QThread()
-        self.worker_obj = Worker()
-        self.worker_obj.moveToThread(self.background_thread)
+        self.worker = Worker()
+        self.worker.moveToThread(self.background_thread)
         
-        self.worker_obj.finished.connect(self.finished)
-        self.worker_obj.error.connect(self.on_error)
+        self.worker.finished.connect(self.finished)
+        self.worker.error.connect(self.on_error)
+        self.worker.progress.connect(self.progress)
         
-        self.background_thread.started.connect(self.worker_obj.process)
-        self.worker_obj.finished.connect(self.background_thread.quit)
-        self.worker_obj.finished.connect(self.worker_obj.deleteLater)
+        self.background_thread.started.connect(self.worker.process)
+        self.worker.finished.connect(self.background_thread.quit)
+        self.worker.finished.connect(self.worker.deleteLater)
         self.background_thread.finished.connect(self.background_thread.deleteLater)
-        
-        self.worker_obj.progress.connect(self.progress)
-        
+
         self.background_thread.start()
         
     @Slot()
     def stop_working(self):
-        
-        if hasattr(self, 'background_thread'):
-            self.background_thread.requestInterruption()
-            self.background_thread.quit()
-            self.background_thread.wait()
-        
-    @Slot()
-    def on_error(self, message):
-        print(message)
-        
-    @Slot()
-    def cleanup(self):
-        print("Cleaning up...")
+        print("Cleaning up...", end='')
         try:
             self.background_thread.requestInterruption()
             self.background_thread.quit()
             self.background_thread.wait()
         except Exception as e:
             print(e) 
+        
+    @Slot()
+    def on_error(self, message):
+        print(message)
 
 
 if __name__ == '__main__':

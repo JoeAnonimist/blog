@@ -1,4 +1,3 @@
-import os
 import sys
 
 from PySide6.QtCore import QObject, QThread, Signal, Slot
@@ -29,6 +28,7 @@ class Worker(QObject):
 class Controller(QObject):
     
     finished = Signal()
+    error = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)

@@ -28,7 +28,6 @@ ApplicationWindow {
             
             onClicked: {
                 controller.operate("Hello World")
-                console.log("operate emitted")
             }
         }
         

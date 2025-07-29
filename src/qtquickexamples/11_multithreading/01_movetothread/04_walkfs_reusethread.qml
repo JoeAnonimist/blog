@@ -17,7 +17,6 @@ ApplicationWindow {
         }
         onProgress: (file_name) => {
             label.text = file_name
-            console.log(file_name)
         }
     }
 
@@ -35,7 +34,7 @@ ApplicationWindow {
             onClicked: {
                 enabled = false
                 cancelButton.enabled = true
-                controller.worker.reset()
+                controller.reset_worker()
                 controller.operate()
             }
         }
@@ -50,7 +49,7 @@ ApplicationWindow {
             onClicked: {
                 enabled = false
                 startButton.enabled = true
-                controller.worker.stop()
+                controller.stop_worker()
             }
         }
         
