@@ -11,26 +11,15 @@ ApplicationWindow {
     visible: true
     title: "moveToThread Example"
     
-    property var workerThread: null
-    
-    Component {
-        id: wtComponent
-        WorkerThread {
-            onProgress: (file_name) => {
-                label.text = file_name
-            }
-            onFinished: {
-                cleanup()
-            }
+    Controller {
+        id: controller
+        onProgress: (fileName) => {
+            label.text = fileName
         }
     }
-    
+
     onClosing: (closeEvent) => {
-        if (workerThread !== null) {
-            workerThread.safelyRequestInterruption()
-            workerThread.destroy()
-            workerThread = null
-        }
+        controller.request_interruption()
     }
 
     ColumnLayout {
@@ -44,14 +33,9 @@ ApplicationWindow {
             text: "Start background thread"
             
             onClicked: {
-                workerThread = wtComponent.createObject(root)
-                workerThread.objectName = "Worker thread " + Qt.formatDateTime(new Date(), "hhmmss")
-                workerThread.start()
+                controller.start_thread()
                 enabled = false
                 cancelButton.enabled = true
-                print(root)
-                print(root.children)
-                //enumerateChildren(root)
             }
         }
         
@@ -62,12 +46,9 @@ ApplicationWindow {
             text: "Cancel"
             enabled: false
             onClicked: {
-                workerThread.safelyRequestInterruption()
-                workerThread.destroy()
-                workerThread = null
+                controller.request_interruption()
                 enabled = false
                 startButton.enabled = true
-                print("canceled")
             }
         }
         
