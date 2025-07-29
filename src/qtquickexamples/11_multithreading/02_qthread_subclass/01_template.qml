@@ -10,24 +10,15 @@ ApplicationWindow {
     id: root
     visible: true
     title: "moveToThread Example"
+    
     /*
-    Component {
-        id: wtComponent
-        WorkerThread {
-            id: workerThread
-            onResult_ready: (result) => {
-                print(result)
-                label.text = result
-            }
-            onFinished: {
-                // Log available members
-                // print("WorkerThread members:")
-                // for (var prop in workerThread) {
-                //     print("  " + prop)
-                // }
-                workerThread.cleanup()
-            }
-        }
+    onFinished: {
+        // Log available members
+        // print("WorkerThread members:")
+        // for (var prop in workerThread) {
+        //     print("  " + prop)
+        // }
+        workerThread.cleanup()
     }*/
     
     Controller {
