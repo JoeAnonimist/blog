@@ -10,11 +10,11 @@ ApplicationWindow {
     id: root
     visible: true
     title: "moveToThread Example"
-    
+    /*
     Component {
         id: wtComponent
         WorkerThread {
-            id: wThread
+            id: workerThread
             onResult_ready: (result) => {
                 print(result)
                 label.text = result
@@ -25,8 +25,15 @@ ApplicationWindow {
                 // for (var prop in workerThread) {
                 //     print("  " + prop)
                 // }
-                wThread.cleanup()
+                workerThread.cleanup()
             }
+        }
+    }*/
+    
+    Controller {
+        id: controller
+        onResult_ready: (result) => {
+            label.text = result
         }
     }
 
@@ -40,9 +47,7 @@ ApplicationWindow {
             text: "Start background thread"
             
             onClicked: {
-                var workerThread = wtComponent.createObject(root)
-                workerThread.objectName = "Worker thread " + Qt.formatDateTime(new Date(), "hhmmss")
-                workerThread.start()
+                controller.start_thread()
             }
         }
         
