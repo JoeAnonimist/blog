@@ -15,7 +15,7 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        # 1. Create a QListWidget
+        # 1. Create a QListWidget +++
 
         self.list_widget = QListWidget()
         
