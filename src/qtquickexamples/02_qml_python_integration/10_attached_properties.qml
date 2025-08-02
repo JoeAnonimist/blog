@@ -14,6 +14,7 @@ ApplicationWindow {
     Logger {
     
         id: logger
+        objectName: "myLogger"
         message: "Log message"
         Logger.severity: 1
         Logger.filename: "filename.qml"
@@ -21,16 +22,14 @@ ApplicationWindow {
         onMessageChanged: function (msg) {
             console.log("Message changed: ", msg);
         }
-    }
-    
-    Connections {
-        target: logger.Logger // The attached LogDetails instance
-        function onSeverityChanged(severity) {
-            console.log("Severity changed: ", severity)
+        
+        Logger.onFilenameChanged: (filename) => {
+            console.log("In filename handler: ", filename)
         }
-        function onFilenameChanged(filename) {
-            console.log("File name changed: ", filename)
-        }
+
+        Logger.onSeverityChanged: (severity) => {
+                console.log("In severity event handler: ", severity)
+            }
     }
 
     RowLayout {
@@ -45,13 +44,11 @@ ApplicationWindow {
             
             font.pointSize:24
             font.bold: true
-
             onClicked: {
                 logger.message = "Some message";
-                Logger.severity = Logger.severity + 1
-                Logger.filename = "10_attached_properties.qml";
-                console.log(Logger.severity);
-                console.log(logger.message);
+                logger.Logger.severity = logger.Logger.severity + 1
+                logger.Logger.filename = "10_attached_properties.qml";
+                console.log(logger.Logger.severity);
             }
         }
     }

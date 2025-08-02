@@ -24,7 +24,7 @@ class LogDetails(QObject):
     
     def setSeverity(self, value):
         if value != self.severity_value:
-            print('Severity changed')
+            print('in severity')
             self.severity_value = value
             self.severityChanged.emit(value)
     
@@ -33,7 +33,6 @@ class LogDetails(QObject):
     
     def setFilename(self, value):
         if value != self.fname_value:
-            print('File Name changed')
             self.fname_value = value
             self.filenameChanged.emit(value)
     
@@ -64,6 +63,7 @@ class Logger(QObject):
     
     @staticmethod
     def qmlAttachedProperties(self, obj):
+        print("qmlAttachedProperties called for", obj)
         return LogDetails(obj)
 
 if __name__ == '__main__':
