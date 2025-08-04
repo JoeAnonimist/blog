@@ -1,5 +1,5 @@
 ---
-title: 04 QtQuick.Controls Module
+title: 04 The QtQuick.Controls Module
 layout: default
 parent: Qt Quick
 nav_order: 4
