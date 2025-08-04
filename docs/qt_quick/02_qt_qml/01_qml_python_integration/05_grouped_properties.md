@@ -2,7 +2,7 @@
 title: Create QML Grouped Properties in PySide6
 layout: default
 nav_order: 5
-parent: 02 Qml Python Integration
+parent: 01 Qml Python Integration
 ---
 
 ## Create QML Grouped Properties in PySide6

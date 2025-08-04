@@ -2,7 +2,7 @@
 title: QtQuick Row Layout
 layout: default
 nav_order: 2
-parent: 04 QtQuick Layouts
+parent: 01 QtQuick Layouts
 ---
 
 ## QtQuick Row Layout

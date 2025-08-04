@@ -2,7 +2,7 @@
 title: PySide6 Signal - QtQuick Slot Using QQmlApplicationEngine.setInitialProperties()
 layout: default
 nav_order: 2
-parent: 03 QtQuick Signals and Slots
+parent: 02 QtQuick Signals and Slots
 ---
 
 ## PySide6 Signal - QtQuick Slot Using QQmlApplicationEngine.setInitialProperties()

@@ -1,6 +1,6 @@
 ---
-title: 04 QtQuick Layouts
+title: 02 The QtQml Module
 layout: default
 parent: Qt Quick
-nav_order: 4
+nav_order: 2
 ---

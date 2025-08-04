@@ -2,7 +2,7 @@
 title: Exposing a PySide6 Property to QML
 layout: default
 nav_order: 3
-parent: 02 Qml Python Integration
+parent: 01 Qml Python Integration
 ---
 
 ## Exposing a PySide6 Property to QML

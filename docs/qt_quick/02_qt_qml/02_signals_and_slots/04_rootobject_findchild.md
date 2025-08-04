@@ -2,7 +2,7 @@
 title: Qml Signal - PySide6 Slot Using QObject.findChild()
 layout: default
 nav_order: 4
-parent: 03 QtQuick Signals and Slots
+parent: 02 QtQuick Signals and Slots
 ---
 
 ## Qml Signal - PySide6 Slot Using QObject.findChild()

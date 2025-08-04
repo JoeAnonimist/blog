@@ -2,7 +2,7 @@
 title: PySide6 Signal - QtQuick Slot Using QObject.findChild()
 layout: default
 nav_order: 1
-parent: 03 QtQuick Signals and Slots
+parent: 02 QtQuick Signals and Slots
 ---
 
 ## PySide6 Signal - QtQuick Slot Using QObject.findChild()

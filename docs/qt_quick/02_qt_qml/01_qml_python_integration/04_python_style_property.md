@@ -2,7 +2,7 @@
 title: Create a Python Style Property
 layout: default
 nav_order: 4
-parent: 02 Qml Python Integration
+parent: 01 Qml Python Integration
 ---
 
 ## Creating a Python Style Property

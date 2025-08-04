@@ -2,7 +2,7 @@
 title: Expose a PySide6 object to QML using `QQMlApplicationEngine.setInitialProperties()`
 layout: default
 nav_order: 6
-parent: 02 Qml Python Integration
+parent: 01 Qml Python Integration
 ---
 
 ## Expose a PySide6 object to QML using `QQMlApplicationEngine.setInitialProperties()`
