@@ -8,9 +8,9 @@ parent: 01 Qml Python Integration
 ## Creating a Python Style Property
 
 ```python
-{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/04_python_style_property.py %}
+{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/04_python_style_property.py %}
 ```
 
 ```qml
-{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/04_python_style_property.qml %}
+{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/04_python_style_property.qml %}
 ```

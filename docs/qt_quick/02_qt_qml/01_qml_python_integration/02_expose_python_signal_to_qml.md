@@ -8,9 +8,9 @@ parent: 01 Qml Python Integration
 ## Exposing a Python Signal to QML
 
 ```python
-{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/02_signal.py %}
+{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/02_signal.py %}
 ```
 
 ```qml
-{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/02_signal.qml %}
+{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/02_signal.qml %}
 ```
