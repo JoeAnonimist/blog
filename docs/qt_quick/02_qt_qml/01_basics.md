@@ -1,8 +1,8 @@
 ---
-title: Qml Basics
+title: 01 Qml Basics
 layout: default
 nav_order: 1
-parent: Qt Quick
+parent: 02 The QtQml Module
 ---
 
 ## Template
