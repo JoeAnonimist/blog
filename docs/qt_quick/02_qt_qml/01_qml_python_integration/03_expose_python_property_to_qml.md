@@ -8,9 +8,9 @@ parent: 01 Qml Python Integration
 ## Exposing a PySide6 Property to QML
 
 ```python
-{% include src/qtquickexamples/02_qml_python_integration/03_property.py %}
+{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/03_property.py %}
 ```
 
 ```qml
-{% include src/qtquickexamples/02_qml_python_integration/03_property.qml %}
+{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/03_property.qml %}
 ```

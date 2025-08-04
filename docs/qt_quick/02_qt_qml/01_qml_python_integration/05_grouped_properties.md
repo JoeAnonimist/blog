@@ -8,7 +8,7 @@ parent: 01 Qml Python Integration
 ## Create QML Grouped Properties in PySide6
 
 ```python
-{% include src/qtquickexamples/02_qml_python_integration/05_grouped_properties.py %}
+{% include src/qtquickexamples/02_qt_qml_/01_qml_python_integration/05_grouped_properties.py %}
 ```
 
 ```qml
