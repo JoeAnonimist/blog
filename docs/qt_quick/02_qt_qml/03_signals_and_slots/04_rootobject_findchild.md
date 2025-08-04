@@ -10,11 +10,11 @@ parent: 02 QtQuick Signals and Slots
 Finally, we have a Qml signal, a PySide6 slow and the connection is established in PySide6 code. To do this
 
 ```qml
-{% include src/qtquickexamples/02_qt_qml/02_signals_and_slots/04_rootobject_findchild.qml %}
+{% include src/qtquickexamples/02_qt_qml/03_signals_and_slots/04_rootobject_findchild.qml %}
 ```
 
 ```python
-{% include src/qtquickexamples/02_qt_qml/02_signals_and_slots/04_rootobject_findchild.py %}
+{% include src/qtquickexamples/02_qt_qml/03_signals_and_slots/04_rootobject_findchild.py %}
 ```
 
 1. Add a Qml `Button` to the main window and set its `objectName` so you can find in in the PySide6 code.

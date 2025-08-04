@@ -8,9 +8,9 @@ parent: 01 Qml Python Integration
 ## Exposing a Python Method to QML
 
 ```python
-{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/01_method.py %}
+{% include src/qtquickexamples/02_qt_qml/02_qml_python_integration/01_method.py %}
 ```
 
 ```qml
-{% include src/qtquickexamples/02_qt_qml/01_qml_python_integration/01_method.qml %}
+{% include src/qtquickexamples/02_qt_qml/02_qml_python_integration/01_method.qml %}
 ```
