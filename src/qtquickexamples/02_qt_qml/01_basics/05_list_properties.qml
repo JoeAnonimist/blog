@@ -29,9 +29,7 @@ ApplicationWindow {
         Button {
         
             text: appWindow.title + " example"
-            
-            x: (appWindow.width - width) / 2
-            y: (appWindow.height - height) / 2
+            anchors.centerIn: parent
             
             width: implicitWidth + 10
             height: 50
