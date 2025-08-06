@@ -15,6 +15,8 @@ ApplicationWindow {
         id: myLogger
         
         message: "Some message"
+        details.severity: 3
+        details.filename: "list_properties.qml" 
         
         targets: [
             ConsoleLogTarget {},
@@ -37,12 +39,15 @@ ApplicationWindow {
             
             width: implicitWidth + 10
             height: 50
-
+            
+            onClicked: () => {
+                let currTime = Qt.formatTime(
+                    new Date() , "hh:mm:ss") 
+                myLogger.log(
+                    myLogger.details.severity,
+                    "Logging at: " + currTime, 
+                    myLogger.details.filename)
+            }
         }
-    }
-    
-    Component.onCompleted: {
-        myLogger.details.severity = 3
-        myLogger.log("Some message")
     }
 }

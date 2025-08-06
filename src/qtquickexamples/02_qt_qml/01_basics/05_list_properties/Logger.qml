@@ -3,15 +3,17 @@ import QtQml
 QtObject {
 
     property string message
-    property list<QtObject> targets
-    
-    property QtObject details: QtObject {
+    property list<LogTarget> targets
+
+    component Details: QtObject {
         property int severity
         property string filename
     }
+    
+    property Details details: Details {}
 
-    function log (message) {
+    function log (severity, message, filename) {
         targets.forEach(target =>
-            target.write(details.severity, message))
+            target.write(severity, message, filename))
     }
 }
