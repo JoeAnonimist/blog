@@ -12,6 +12,9 @@ ApplicationWindow {
     
     Logger {
         id: myLogger
+        message: "Some message"
+        details.severity: 5
+        details.filename: "grouped_proeprties.qml"
     }
     
     Rectangle {
@@ -30,11 +33,6 @@ ApplicationWindow {
     }
 
 	Component.onCompleted: () => {
-
-	    myLogger.message = "Some message"
-	    myLogger.details.severity = 5
-	    myLogger.details.filename = "grouped_properties.qml"
-	    
 	    print(myLogger.message)
 	    print(myLogger.details.severity)
 	    print(myLogger.details.filename)

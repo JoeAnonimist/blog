@@ -4,8 +4,10 @@ QtObject {
 
     property string message
     
-    property QtObject details: QtObject {
+    component Details: QtObject {
         property int severity
         property string filename
     }
+    
+    property Details details: Details {}
 }
