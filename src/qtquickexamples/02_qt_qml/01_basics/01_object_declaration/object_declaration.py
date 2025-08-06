@@ -10,6 +10,6 @@ if __name__ == '__main__':
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('01_object_declaration.qml')
+    engine.load('object_declaration.qml')
 
     sys.exit(app.exec())

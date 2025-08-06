@@ -7,6 +7,9 @@ ApplicationWindow {
     width: 200
     height:200
     title: "QML Object Declaration"
+    
+    Logger {
+    }
             
     Rectangle {
 
