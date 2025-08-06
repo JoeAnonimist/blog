@@ -9,6 +9,10 @@ ApplicationWindow {
     width: 300
     height:200
     title: "QML id attribute"
+    
+    Logger {
+        id: myLogger
+    }
             
     Rectangle {
 
@@ -17,11 +21,19 @@ ApplicationWindow {
         color: "ghostwhite"
         
         Button {
+        
             text: appWindow.title + " example"
+
             x: (appWindow.width - width) / 2
             y: (appWindow.height - height) / 2
+
             width: implicitWidth + 10
             height: 50
         }
+    }
+    
+    Component.onCompleted: () => {
+        print(myLogger)
+        print(myLogger.id)
     }
 }
