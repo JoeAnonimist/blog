@@ -14,6 +14,10 @@ ApplicationWindow {
 	    if (width > height) "mistyrose"
 	    else if (width < height) "honeydew"
 	    else "aliceblue"
+	    
+	Logger {
+	    id: myLogger
+	}
 
     Rectangle {
 
@@ -22,10 +26,17 @@ ApplicationWindow {
         color: appWindow.backgroundColor
         
         Button {
+        
             text: appWindow.title + " example"
             anchors.centerIn: parent
             width: implicitWidth + 10
             height: 50
         }
     }
+    
+	Component.onCompleted: () => {
+	    print(myLogger.filename)
+	    myLogger.filename = "properties.gml"
+	    print("myLogger.filename = ", myLogger.filename)
+	}
 }
