@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 300
     height:200
-    title: "QML object properties"
+    title: "QML list properties"
     
     Logger {
     

@@ -8,13 +8,13 @@ ApplicationWindow {
     visible: true
     width: 300
     height:200
-    title: "QML object properties"
+    title: "QML grouped properties"
     
     Logger {
         id: myLogger
         message: "Some message"
         details.severity: 5
-        details.filename: "grouped_proeprties.qml"
+        details.filename: "grouped_properties.qml"
     }
     
     Rectangle {
@@ -23,18 +23,21 @@ ApplicationWindow {
         color: "ghostwhite"
         
         Button {
+        
             text: appWindow.title + " example"
             anchors.centerIn: parent
+
             font.pixelSize: 14
             font.bold: true
+
             width: implicitWidth + 10
             height: 50
+
+            onClicked: () => {
+                console.log(myLogger.message)
+                console.log(myLogger.details.severity)
+                console.log(myLogger.details.filename)
+            }
         }
     }
-
-	Component.onCompleted: () => {
-	    print(myLogger.message)
-	    print(myLogger.details.severity)
-	    print(myLogger.details.filename)
-	}
 }

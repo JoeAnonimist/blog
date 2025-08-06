@@ -9,33 +9,30 @@ ApplicationWindow {
     width: 300
     height:200
     title: "QML object properties"
-    
-	property color backgroundColor:
-	    if (width > height) "mistyrose"
-	    else if (width < height) "honeydew"
-	    else "aliceblue"
 	    
 	Logger {
 	    id: myLogger
+	    severity: 4
+	    filename: "properties.qml"
 	}
 
     Rectangle {
 
         anchors.fill: parent
-        color: appWindow.backgroundColor
+        color: "ghostwhite"
         
         Button {
         
             text: appWindow.title + " example"
             anchors.centerIn: parent
+            
             width: implicitWidth + 10
             height: 50
+            
+            onClicked: () => {
+                console.log(myLogger.severity)
+                console.log(myLogger.filename)
+            }
         }
     }
-    
-	Component.onCompleted: () => {
-	    print(myLogger.filename)
-	    myLogger.filename = "properties.gml"
-	    print("myLogger.filename = ", myLogger.filename)
-	}
 }

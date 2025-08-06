@@ -29,11 +29,11 @@ ApplicationWindow {
 
             width: implicitWidth + 10
             height: 50
+            
+            onClicked: () => {
+                print(myLogger)
+                print(myLogger.id)
+            }
         }
-    }
-    
-    Component.onCompleted: () => {
-        print(myLogger)
-        print(myLogger.id)
     }
 }
