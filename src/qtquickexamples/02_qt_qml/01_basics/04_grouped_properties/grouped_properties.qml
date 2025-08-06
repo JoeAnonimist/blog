@@ -20,7 +20,11 @@ ApplicationWindow {
 	    if (width > height) myColors.mistyRose
 	    else if (width < height) myColors.honeyDew
 	    else myColors.aliceBlue
-
+    
+    Logger {
+        id: myLogger
+    }
+    
     Rectangle {
 
         width: appWindow.width
@@ -36,4 +40,15 @@ ApplicationWindow {
             height: 50
         }
     }
+
+	Component.onCompleted: () => {
+
+	    myLogger.message = "Some message"
+	    myLogger.details.severity = 5
+	    myLogger.details.filename = "grouped_properties.qml"
+	    
+	    print(myLogger.message)
+	    print(myLogger.details.severity)
+	    print(myLogger.details.filename)
+	}
 }
