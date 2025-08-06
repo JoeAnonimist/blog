@@ -10,26 +10,14 @@ ApplicationWindow {
     height:200
     title: "QML object properties"
     
-    property QtObject myColors: QtObject {
-        property color mistyRose: "mistyrose"
-        property color honeyDew: "honeydew"
-        property color aliceBlue: "aliceblue"
-    }
-    
-	property color backgroundColor:
-	    if (width > height) myColors.mistyRose
-	    else if (width < height) myColors.honeyDew
-	    else myColors.aliceBlue
-    
     Logger {
         id: myLogger
     }
     
     Rectangle {
 
-        width: appWindow.width
-        height: appWindow.height
-        color: appWindow.backgroundColor
+        anchors.fill: parent
+        color: "ghostwhite"
         
         Button {
             text: appWindow.title + " example"

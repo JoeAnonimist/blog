@@ -21,8 +21,7 @@ ApplicationWindow {
 
     Rectangle {
 
-        width: appWindow.width
-        height: appWindow.height
+        anchors.fill: parent
         color: appWindow.backgroundColor
         
         Button {
