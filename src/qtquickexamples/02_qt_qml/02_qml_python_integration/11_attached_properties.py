@@ -72,7 +72,7 @@ if __name__ == '__main__':
     
     engine = QQmlApplicationEngine()
     engine.quit.connect(app.quit)
-    engine.load('10_attached_properties.qml')
+    engine.load('11_attached_properties.qml')
 
     result = app.exec()
     del engine

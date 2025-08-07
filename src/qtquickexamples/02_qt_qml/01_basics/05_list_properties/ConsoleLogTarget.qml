@@ -1,8 +1,8 @@
 import QtQml
 
 LogTarget {
-    function write(severity, message) {
+    function write(severity, message, filename) {
         console.log("Logging to console: ", 
-            "Severity: ", severity, message)
+            "Severity: ", severity, message, filename)
     }
 }

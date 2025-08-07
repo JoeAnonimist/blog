@@ -1,6 +1,6 @@
 import QtQml
 
 QtObject {
-    function write(message) {
+    function write(severity, message, filename) {
     }
 }

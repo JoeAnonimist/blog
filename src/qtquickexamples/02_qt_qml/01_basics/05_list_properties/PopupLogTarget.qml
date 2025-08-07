@@ -3,8 +3,8 @@ import QtQuick.Dialogs
 
 LogTarget {
 
-    function write(severity, message) {
+    function write(severity, message, filename) {
         console.log("Message box: ", 
-        "Severity: ", severity, message)
+        "Severity: ", severity, message, filename)
     }
 }
