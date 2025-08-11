@@ -7,8 +7,7 @@ parent: 01 Move QObject to Thread
 
 ## Signals and Slots Across Threads
 
-
-<div style="font-size: 90%; table-layout: auto; width: auto;">
+{: .shrink-table }
 | Connection Type | Emitter Thread | Receiver Thread |       Invoked                                    | Executed In           | Blocks | Unique |
 |-----------------|----------------|-----------------|--------------------------------------------|-----------------------|--------|--------|
 | Auto            |        A       |        A        | immediately when the signal is emitted |        A              |        | No     |
@@ -18,7 +17,6 @@ parent: 01 Move QObject to Thread
 | Blocking Queued |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | No     |
 | Unique          |        A       |        A        | immediately when the signal is emitted |        A              |        | Yes    |
 | Unique          |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | Yes    |
-</div>
 
 ```python
 {% include src/qtwidgetsexamples/11_multithreading/01_movetothread/05_signals_and_slots_across_threads.py %}
