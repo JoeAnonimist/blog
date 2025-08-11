@@ -8,7 +8,7 @@ parent: 01 Move QObject to Thread
 ## Signals and Slots Across Threads
 
 {: .shrink-table }
-| Connection Type | Emitter Thread | Receiver Thread |       Invoked                                    | Executed In           | Blocks | Unique |
+| Connection Type | Emitter Thread | Receiver Thread |       Slot Invoked                                    | Executed In           | Blocks | Unique |
 |-----------------|----------------|-----------------|--------------------------------------------|-----------------------|--------|--------|
 | Auto            |        A       |        A        | immediately when the signal is emitted |        A              |        | No     |
 | Auto            |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | No     |
