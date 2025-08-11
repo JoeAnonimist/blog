@@ -7,3 +7,8 @@ img {
 img {
   margin-top: 20px;
 }
+
+.shrink-table {
+  table-layout: auto !important;
+  width: auto !important;
+}
