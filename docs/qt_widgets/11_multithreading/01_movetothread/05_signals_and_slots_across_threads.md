@@ -1,5 +1,5 @@
 ---
-title: QObject.moveToThread() Reuse Thread  - Walk the Filesystem
+title: Signals and Slots Across Threads
 layout: default
 nav_order: 5
 parent: 01 Move QObject to Thread
@@ -8,15 +8,15 @@ parent: 01 Move QObject to Thread
 ## Signals and Slots Across Threads
 
 
-| Connection Type | Emitter Thread | Receiver Thread | Invoked                                    | Executed In           | Blocks | Unique |
+| Connection Type | Emitter Thread | Receiver Thread |       Invoked                                    | Executed In           | Blocks | Unique |
 |-----------------|----------------|-----------------|--------------------------------------------|-----------------------|--------|--------|
-| Auto            | Thread A       | Thread A        | immediately when<br/>the signal is emitted | Thread A              |        | No     |
-| Auto            | Thread A       | Thread B        | when control returns to the<br/>event loop of the receiver's thread | Thread B              |        | No     |
-| Direct          | Thread A       | Thread B        | immediately when<br/>the signal is emitted | Thread A              |        | No     |
-| Queued          | Thread A       | Thread B        | when control returns to the<br/>event loop of the receiver's thread | Thread B              |        | No     |
-| Blocking Queued | Thread A       | Thread B        | when control returns to the<br/>event loop of the receiver's thread | Thread B              |        | No     |
-| Unique          | Thread A       | Thread A        | immediately when<br/>the signal is emitted | Thread A              |        | Yes    |
-| Unique          | Thread A       | Thread B        | when control returns to the<br/>event loop of the receiver's thread | Thread B              |        | Yes    |
+| Auto            |        A       |        A        | immediately when the signal is emitted |        A              |        | No     |
+| Auto            |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | No     |
+| Direct          |        A       |        B        | immediately when the signal is emitted |        A              |        | No     |
+| Queued          |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | No     |
+| Blocking Queued |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | No     |
+| Unique          |        A       |        A        | immediately when the signal is emitted |        A              |        | Yes    |
+| Unique          |        A       |        B        | when control returns to the event loop of the receiver's thread |        B              |        | Yes    |
 
 
 ```python
