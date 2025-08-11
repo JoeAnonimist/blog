@@ -11,4 +11,7 @@ img {
 .shrink-table {
   table-layout: auto !important;
   width: auto !important;
+  max-width: 100% !important;  /* prevent growing too large */
+  overflow-wrap: break-word;   /* force cell content to wrap */
+  word-break: break-word;      /* ensure words break if too long */
 }
