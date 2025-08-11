@@ -7,7 +7,6 @@ parent: 01 Move QObject to Thread
 
 ## Signals and Slots Across Threads
 
-
 {: .shrink-table }
 | Connection Type | Emitter Thread | Receiver Thread |       Invoked                                    | Executed In           | Blocks | Unique |
 |-----------------|----------------|-----------------|--------------------------------------------|-----------------------|--------|--------|
