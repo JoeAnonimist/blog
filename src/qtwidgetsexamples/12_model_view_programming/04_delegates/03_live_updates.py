@@ -1,10 +1,10 @@
 import sys
 import csv
 
-from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
-from PySide6.QtGui import QStandardItemModel, QStandardItem
+from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt, Property, Signal
 from PySide6.QtWidgets import (QApplication,
-    QWidget, QTableView, QVBoxLayout, QStyledItemDelegate, QComboBox)
+    QWidget, QTableView, QVBoxLayout, QStyledItemDelegate,
+    QSlider, QLabel, QHBoxLayout)
 
 
 class CsvModel(QAbstractTableModel):
@@ -28,24 +28,19 @@ class CsvModel(QAbstractTableModel):
         return len(self.header)
     
     def data(self, index, role):
-        
-        if role == Qt.ItemDataRole.DisplayRole:
-            if index.column() == 1:
-                return Qt.AnchorPoint(self.csv_data[index.row()][1]).name
-            else:
-                return self.csv_data[index.row()][index.column()]
-        
-        if role == Qt.ItemDataRole.EditRole:
+        if (role == Qt.ItemDataRole.DisplayRole or
+            role == Qt.ItemDataRole.EditRole):
             return self.csv_data[index.row()][index.column()]
-
+    
     def setData(self, index, value, role):
-        
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()][index.column()] != value:
                 self.csv_data[index.row()][index.column()] = value
                 self.dataChanged.emit(index, index)
+                return True
+            return False
         return False
-
+    
     def flags(self, index):
         flags = Qt.ItemFlags.ItemIsSelectable | \
             Qt.ItemFlags.ItemIsEnabled | \
@@ -58,46 +53,59 @@ class CsvModel(QAbstractTableModel):
                 return self.header[section]
 
 
-class ComboBoxDelegate(QStyledItemDelegate):
+class Editor(QWidget):
+    
+    valueChanged = Signal(int)
+    
+    def __init__(self, parent):
+        
+        super().__init__(parent)
+        
+        self.label = QLabel()
+        self.label.setFixedWidth(30)
+        
+        self.slider = QSlider(Qt.Orientation.Horizontal, parent)
+        self.slider.setMinimum(0)
+        self.slider.setMaximum(100)
+        self.slider.valueChanged.connect(self.on_value_changed)
+        
+        self.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.label)
+        self.layout().addWidget(self.slider)
+        
+    def on_value_changed(self, value):
+        print('in value changed')
+        self.label.setText(str(value))
+        
+    def getValue(self):
+        return self.slider.value()
+    
+    def setValue(self, value):
+        if value != self.slider.value():
+            self.slider.setValue(value)
+            self.valueChanged.emit(value)
+
+    value = Property(int, getValue, setValue, notify=valueChanged)
+
+
+class SpinBoxDelegate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
         super().__init__(parent)
         
-        data = [(point.name, point.value) for point in Qt.AnchorPoint]
-        self.combobox_model = QStandardItemModel()
-        
-        for name, value in data:
-            name_item = QStandardItem(name)
-            name_item.setData(name, Qt.ItemDataRole.UserRole)
-            value_item = QStandardItem(value)
-            value_item.setData(value, Qt.ItemDataRole.UserRole)
-            self.combobox_model.appendRow([name_item, value_item])        
-        
     def createEditor(self, parent, option, index):
-        
-        editor = QComboBox(parent)
-        editor.setFrame(False)
-        
-        editor.setModel(self.combobox_model)
-        editor.setModelColumn(0)
-        
+        editor = Editor(parent)
+        print(option, option.rect)
+        editor.setGeometry(option.rect)
         return editor
     
     def setEditorData(self, editor, index):
-
-        current_value = index.model().data(
-            index, Qt.ItemDataRole.EditRole)
-
-        for row in range(self.combobox_model.rowCount()):
-            item = self.combobox_model.item(row, 0)
-            if item.data(Qt.ItemDataRole.UserRole) == current_value:
-                editor.setCurrentIndex(row)
-                break
-
+        value = index.model().data(
+            index, Qt.ItemDataRole.EditRole) 
+        editor.setValue(value)
         
     def setModelData(self, editor, model, index):
-        item = self.combobox_model.item(editor.currentIndex(), 1)
-        value = item.data(Qt.ItemDataRole.UserRole)
+        value = editor.value
         model.setData(index, value, Qt.ItemDataRole.EditRole)
 
 
@@ -110,13 +118,14 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        model = CsvModel('02_data.csv')
+        model = CsvModel('03_data.csv')
         
         view = QTableView()
         view.setModel(model)
         view.resizeColumnsToContents()
+        view.setColumnWidth(1, 120)
         
-        delegate = ComboBoxDelegate()
+        delegate = SpinBoxDelegate()
         view.setItemDelegateForColumn(1, delegate)
         
         layout.addWidget(view)
@@ -127,8 +136,6 @@ class Window(QWidget):
         print(f'Model changed, r: {topLeft.row()}, c: {topLeft.column()}')
         data = topLeft.model().data(topLeft, Qt.ItemDataRole.DisplayRole)
         print(f'Data: {data} in row: {topLeft.model().csv_data[topLeft.row()]}')
-
-
 
 if __name__ == '__main__':
 
