@@ -60,9 +60,10 @@ class Editor(QWidget):
     def __init__(self, parent):
         
         super().__init__(parent)
+        self.setAutoFillBackground(True)
         
         self.label = QLabel()
-        self.label.setFixedWidth(30)
+        self.label.setFixedWidth(20)
         
         self.slider = QSlider(Qt.Orientation.Horizontal, parent)
         self.slider.setMinimum(0)
@@ -72,6 +73,9 @@ class Editor(QWidget):
         self.setLayout(QHBoxLayout())
         self.layout().addWidget(self.label)
         self.layout().addWidget(self.slider)
+        self.layout().addStretch()
+        
+        self.layout().setContentsMargins(2, 0, 2, 0)
         
     def on_value_changed(self, value):
         print('in value changed')
