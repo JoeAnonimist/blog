@@ -32,7 +32,7 @@ class CsvModel(QAbstractTableModel):
             role == Qt.ItemDataRole.EditRole):
             return self.csv_data[index.row()][index.column()]
     
-    def setData(self, index, value, role):
+    def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()][index.column()] != value:
                 self.csv_data[index.row()][index.column()] = value
@@ -55,11 +55,13 @@ class CsvModel(QAbstractTableModel):
 
 class Editor(QWidget):
     
-    valueChanged = Signal(int)
+    valueChanged = Signal(int, QModelIndex)
     
-    def __init__(self, parent):
+    def __init__(self, parent, index):
         
         super().__init__(parent)
+        
+        self.index = index
         self.setAutoFillBackground(True)
         
         self.label = QLabel()
@@ -78,8 +80,8 @@ class Editor(QWidget):
         self.layout().setContentsMargins(2, 0, 2, 0)
         
     def on_value_changed(self, value):
-        print('in value changed')
         self.label.setText(str(value))
+        self.valueChanged.emit(value, self.index)
         
     def getValue(self):
         return self.slider.value()
@@ -87,7 +89,6 @@ class Editor(QWidget):
     def setValue(self, value):
         if value != self.slider.value():
             self.slider.setValue(value)
-            self.valueChanged.emit(value)
 
     value = Property(int, getValue, setValue, notify=valueChanged)
 
@@ -98,20 +99,26 @@ class SpinBoxDelegate(QStyledItemDelegate):
         super().__init__(parent)
         
     def createEditor(self, parent, option, index):
-        editor = Editor(parent)
-        print(option, option.rect)
-        editor.setGeometry(option.rect)
+        editor = Editor(parent, index)
+        #editor.valueChanged.connect(self.on_value_changed)
         return editor
     
     def setEditorData(self, editor, index):
         value = index.model().data(
             index, Qt.ItemDataRole.EditRole) 
-        editor.setValue(value)
+        editor.setValue(int(value))
         
     def setModelData(self, editor, model, index):
+        print('in set model data')
         value = editor.value
         model.setData(index, value, Qt.ItemDataRole.EditRole)
-
+        self.commitData(self)
+    '''
+    def on_value_changed(self, value, index):
+        print('on value changed')
+        model = index.model()
+        model.setData(index, value, Qt.ItemDataRole.EditRole)
+    '''
 
 class Window(QWidget):
     
