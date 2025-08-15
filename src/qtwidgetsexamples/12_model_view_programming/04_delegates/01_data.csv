@@ -1,6 +1,7 @@
-Indicator,Quantity
-Inflation Rate,3
-Unemployment Rate,5
-Consumer Confidence,75
-Export Growth,12
-Retail Sales,40
+Year,GDP_Growth,Recession
+2020,-45,1
+2021,72,0
+2022,38,0
+2023,55,0
+2024,-12,1
+2025,81,0

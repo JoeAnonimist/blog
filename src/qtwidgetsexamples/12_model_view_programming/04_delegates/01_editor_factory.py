@@ -1,99 +1,115 @@
+
 import sys
 import csv
 
-from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
-from PySide6.QtWidgets import (QApplication,
-    QWidget, QTableView, QVBoxLayout, QStyledItemDelegate, QSpinBox)
+from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt, QMetaType
+from PySide6.QtGui import QBrush
+from PySide6.QtWidgets import (QApplication, QPushButton,
+QWidget, QTableView, QVBoxLayout, QItemEditorCreatorBase, QItemEditorFactory)
 
 
 class CsvModel(QAbstractTableModel):
-    
     def __init__(self, source, parent=None):
-        
         super().__init__(parent)
-        
         self.csv_data = []
         with open(source) as csv_file:
             reader = csv.reader(csv_file)
             self.header = next(reader)
             for row in reader:
                 row[1] = int(row[1])
-                self.csv_data.append(row)
+                self.csv_data.append(
+                    [row[0], int(row[1]), bool(int(row[2]))])
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.csv_data)
     
     def columnCount(self, parent=QModelIndex()):
         return len(self.header)
-    
+
     def data(self, index, role):
-        if (role == Qt.ItemDataRole.DisplayRole or
-            role == Qt.ItemDataRole.EditRole):
+        if role == Qt.ItemDataRole.DisplayRole:
+            if index.column() == 2:
+                if self.csv_data[index.row()][index.column()] == 0:
+                    return 'Yes'
+                else:
+                    return 'No'
+            else:
+                return self.csv_data[index.row()][index.column()]
+        if role == Qt.ItemDataRole.EditRole:
             return self.csv_data[index.row()][index.column()]
+        if role == Qt.ItemDataRole.BackgroundRole:
+            if index.column() == 2:
+                if self.csv_data[index.row()][index.column()] == 0:
+                    brush = QBrush(Qt.GlobalColor.green)
+                    return brush
+                else:
+                    brush = QBrush(Qt.GlobalColor.red)
+                    return brush
+        if role == Qt.ItemDataRole.TextAlignmentRole:
+            if index.column() == 2:
+                return Qt.AlignmentFlag.AlignCenter
     
     def setData(self, index, value, role):
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()][index.column()] != value:
                 self.csv_data[index.row()][index.column()] = value
                 self.dataChanged.emit(index, index)
+                print(self.csv_data)
                 return True
             return False
         return False
-    
+
     def flags(self, index):
-        flags = Qt.ItemFlags.ItemIsSelectable | \
+        if index.column() == 0:
+            flags = Qt.ItemFlags.ItemIsSelectable
+        else:
+            flags = Qt.ItemFlags.ItemIsSelectable | \
             Qt.ItemFlags.ItemIsEnabled | \
             Qt.ItemFlags.ItemIsEditable
         return flags
-
+    
     def headerData(self, section, orientation, role):
         if orientation == Qt.Orientation.Horizontal:
             if role == Qt.ItemDataRole.DisplayRole:
                 return self.header[section]
 
 
-class SpinBoxDelegate(QStyledItemDelegate):
+class BoolEditorCreator(QItemEditorCreatorBase):
+
+    def createWidget(self, parent):
+        self.button = QPushButton(parent)
+        self.button.setCheckable(True)
+        self.button.clicked.connect(self.on_clicked)
+        return self.button
+
+    def valuePropertyName(self):
+        return b'checked'
     
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        
-    def createEditor(self, parent, option, index):
-        editor = QSpinBox(parent)
-        editor.setMinimum(0)
-        editor.setMaximum(100)
-        editor.setFrame(False)
-        return editor
-    
-    def setEditorData(self, editor, index):
-        value = index.model().data(
-            index, Qt.ItemDataRole.EditRole) 
-        editor.setValue(value)
-        
-    def setModelData(self, editor, model, index):
-        value = editor.value()
-        model.setData(index, value, Qt.ItemDataRole.EditRole)
+    def on_clicked(self, checked):
+        if checked:
+            self.button.setText('YES')
+        else:
+            self.button.setText('NO')
 
 
 class Window(QWidget):
-    
-    def __init__(self):
 
+    def __init__(self):
+        
         super().__init__()
 
         layout = QVBoxLayout()
         self.setLayout(layout)
 
         model = CsvModel('01_data.csv')
-        
         view = QTableView()
         view.setModel(model)
         view.resizeColumnsToContents()
-        
-        delegate = SpinBoxDelegate()
-        view.setItemDelegateForColumn(1, delegate)
-        
+        factory = QItemEditorFactory()
+        factory.registerEditor(QMetaType.Type.Bool, BoolEditorCreator())
+        delegate = view.itemDelegate()
+        delegate.setItemEditorFactory(factory)
         layout.addWidget(view)
-        
         model.dataChanged.connect(self.on_data_changed)
         
     def on_data_changed(self, topLeft, bottomRight, roles):
@@ -104,9 +120,9 @@ class Window(QWidget):
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-
+    
     main_window = Window()
     main_window.show()
-
+    
     sys.exit(app.exec())
 
