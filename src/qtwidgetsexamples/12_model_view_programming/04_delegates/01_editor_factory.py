@@ -83,8 +83,7 @@ class Window(QWidget):
         view.resizeColumnsToContents()
         
         factory = QItemEditorFactory()
-        factory.registerEditor(
-            QMetaType.Type.Bool, BoolEditorCreator())
+        factory.registerEditor(QMetaType(QMetaType.Type.Bool).id(), BoolEditorCreator())
         
         delegate = view.itemDelegate()
         delegate.setItemEditorFactory(factory)
