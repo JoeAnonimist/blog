@@ -64,7 +64,7 @@ class BoolEditorCreator(QItemEditorCreatorBase):
         return editor
     
     def valuePropertyName(self):
-        return b'checked'
+        return b'checkState'
 
 
 class Window(QWidget):
