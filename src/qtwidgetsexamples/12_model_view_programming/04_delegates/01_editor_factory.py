@@ -33,6 +33,7 @@ class CsvModel(QAbstractTableModel):
         if role == Qt.ItemDataRole.DisplayRole:
             return value
         if role == Qt.ItemDataRole.EditRole:
+            print(value)
             return value
 
     def setData(self, index, value, role):
@@ -64,7 +65,7 @@ class BoolEditorCreator(QItemEditorCreatorBase):
         return editor
     
     def valuePropertyName(self):
-        return b'checkState'
+        return b'checked'
 
 
 class Window(QWidget):
