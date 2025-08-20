@@ -33,11 +33,9 @@ class CsvModel(QAbstractTableModel):
         if role == Qt.ItemDataRole.DisplayRole:
             return value
         if role == Qt.ItemDataRole.EditRole:
-            print('In data() - edit role')
             return value
 
     def setData(self, index, value, role):
-        print('In setData()')
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()][index.column()] != value:
                 self.csv_data[index.row()][index.column()] = value
@@ -46,13 +44,11 @@ class CsvModel(QAbstractTableModel):
             return False
         return False
     
-    def flags(self, index):        
-        if index.column() == 0:
-            flags = Qt.ItemFlags.ItemIsSelectable
-        else:    
-            flags = Qt.ItemFlags.ItemIsSelectable | \
-                Qt.ItemFlags.ItemIsEnabled | \
-                Qt.ItemFlags.ItemIsEditable 
+    def flags(self, index):
+        flags = Qt.ItemFlags.ItemIsSelectable
+        if index.column() != 0:
+            flags = flags | Qt.ItemFlags.ItemIsEnabled | \
+                            Qt.ItemFlags.ItemIsEditable 
         return flags
 
     def headerData(self, section, orientation, role):
@@ -63,18 +59,12 @@ class CsvModel(QAbstractTableModel):
 class BoolEditorCreator(QItemEditorCreatorBase):
         
     def createWidget(self, parent):
-        print('create widget')
         editor = QCheckBox(parent)
-        #editor.setCheckable(True)
-        #editor.setAutoFillBackground(True)
-        editor.clicked.connect(lambda checked: editor.setText('True' if checked else 'False'))
-        editor.checkStateChanged.connect(lambda state: print(state))
-        
+        editor.setAutoFillBackground(True)
         return editor
     
     def valuePropertyName(self):
-        print('value property name')
-        return b'checked'
+        return b'checkState'
 
 
 class Window(QWidget):
@@ -92,12 +82,10 @@ class Window(QWidget):
         view.setModel(model)
         view.resizeColumnsToContents()
         
-        delegate = view.itemDelegate()
-        
         factory = QItemEditorFactory()
-        factory.registerEditor(
-            QMetaType.Type.Bool, BoolEditorCreator())
+        factory.registerEditor(QMetaType(QMetaType.Type.Bool).id(), BoolEditorCreator())
         
+        delegate = view.itemDelegate()
         delegate.setItemEditorFactory(factory)
         
         layout.addWidget(view)
