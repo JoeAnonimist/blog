@@ -4,39 +4,103 @@ import sys
 from PySide6.QtCore import Qt, QAbstractTableModel, QRect, QSize, QModelIndex
 from PySide6.QtGui import QColor, QPainter, QBrush, QMouseEvent, QPalette
 from PySide6.QtWidgets import QApplication, QTableView, QStyledItemDelegate, QWidget, QVBoxLayout
+from PySide6.QtTest import QAbstractItemModelTester
+
+class CsvModel(QAbstractTableModel):
+    
+    def __init__(self, parent=None):
+        
+        super().__init__(parent)
+        
+        self.header = ['Indicator', 'Value (%)', 
+            'Aggregate', 'Include in report']
+        self.csv_data = [
+            ['GDP', 3, 1, True],
+            ['CPI', 6, 1, True],
+            ['Jobs', 5, 0, True],
+            ['Confidence', 75, 0, True],
+            ['Industry', 92, 0, True],
+            ['Retail', 4, 1, True],
+        ]
+
+    def rowCount(self, parent=QModelIndex()):
+        return len(self.csv_data)
+    
+    def columnCount(self, parent=QModelIndex()):
+        return len(self.header)
+    
+    def data(self, index, role):
+        
+        value = self.csv_data[index.row()][index.column()]
+
+        if role == Qt.ItemDataRole.DisplayRole:
+            return value
+        if role == Qt.ItemDataRole.EditRole:
+            if index.column() == 2:
+                return value == 1
+            else:
+                return value
+    
+    def setData(self, index, value, role):
+        
+        if role == Qt.ItemDataRole.EditRole:
+            if index.column() == 2:
+                value = 1 if value else 0
+            if self.csv_data[index.row()][index.column()] != value:
+                self.csv_data[index.row()][index.column()] = value
+                self.dataChanged.emit(index, index)
+                return True
+            return False
+        return False
+    
+    def flags(self, index):
+        flags = Qt.ItemFlags.ItemIsSelectable | \
+            Qt.ItemFlags.ItemIsEnabled | \
+            Qt.ItemFlags.ItemIsEditable
+        return flags
+
+    def headerData(self, section, orientation, role):
+        if orientation == Qt.Orientation.Horizontal:
+            if role == Qt.ItemDataRole.DisplayRole:
+                return self.header[section]
 
 
-class BooleanSwitchDelegate(QStyledItemDelegate):
+class SwitchDelegate(QStyledItemDelegate):
+    
+    def createEditor(self, parent, option, index):
+        return None
     
     def paint(self, painter, option, index):
         
-        value = index.model().data(index, Qt.DisplayRole)
+        value = index.model().data(index, Qt.ItemDataRole.DisplayRole)
 
-        # Switch dimensions
         rect = option.rect
         switch_width = 40
-        switch_height = 20
-        margin = (rect.height() - switch_height) // 2
-        switch_rect = QRect(rect.x() + margin, rect.y() + margin, switch_width, switch_height)
+        switch_height = 16
+        margin_y = (rect.height() - switch_height) // 2
+        margin_x = (rect.width() - switch_width) // 2
+        switch_rect = QRect(
+            rect.x() + margin_x, rect.y() + margin_y,
+            switch_width, switch_height)
 
-        # Background
         bg_color = option.palette.color(QPalette.ColorRole.Mid)
-        thumb_color = option.palette.color(QPalette.ColorRole.Accent) if value else option.palette.color(QPalette.ColorRole.Button)
+        thumb_color = option.palette.color(
+            QPalette.ColorRole.Accent) if value else option.palette.color(QPalette.ColorRole.Button)
 
-        # Thumb position
+        # Thumb larger than switch height
+        thumb_diameter = switch_height + 4  # Thumb is 4 pixels larger than switch_height
+        thumb_y = switch_rect.y() - (thumb_diameter - switch_height) // 2  # Center thumb vertically
         if value:
-            thumb_x = switch_rect.right() - switch_height
+            thumb_x = switch_rect.right() - thumb_diameter
         else:
             thumb_x = switch_rect.left()
+        thumb_rect = QRect(thumb_x, thumb_y, thumb_diameter, thumb_diameter)
 
-        thumb_rect = QRect(thumb_x, switch_rect.y(), switch_height, switch_height)
-
-        # Draw switch
         painter.save()
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         painter.setBrush(QBrush(bg_color))
-        painter.setPen(Qt.NoPen)
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.drawRoundedRect(switch_rect, switch_height / 2, switch_height / 2)
 
         painter.setBrush(QBrush(thumb_color))
@@ -45,62 +109,52 @@ class BooleanSwitchDelegate(QStyledItemDelegate):
         painter.restore()
 
     def sizeHint(self, option, index):
-        return QSize(50, 30)  # Slight padding for visual clarity
+        return QSize(50, 30)
 
     def editorEvent(self, event, model, option, index):
         if event.type() == QMouseEvent.MouseButtonRelease:
             if option.rect.contains(event.position().toPoint()):
-                current_value = index.model().data(index, Qt.EditRole)
-                model.setData(index, not current_value, Qt.EditRole)
+                current_value = index.model().data(index, Qt.ItemDataRole.EditRole)
+                model.setData(index, not current_value, Qt.ItemDataRole.EditRole)
                 return True
         return False
 
-
-class BoolTableModel(QAbstractTableModel):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self._data = [True, False, True, False, True]
-
-    def rowCount(self, parent=QModelIndex()):
-        return len(self._data)
-
-    def columnCount(self, parent=QModelIndex()):
-        return 1
-
-    def data(self, index, role):
-        if role in (Qt.DisplayRole, Qt.EditRole):
-            return self._data[index.row()]
-        return None
-
-    def setData(self, index, value, role):
-        if role == Qt.EditRole:
-            self._data[index.row()] = value
-            self.dataChanged.emit(index, index, [Qt.DisplayRole])
-            return True
-        return False
-
-    def flags(self, index):
-        return Qt.ItemIsEnabled | Qt.ItemIsEditable | Qt.ItemIsSelectable
-
-
-class MainWindow(QWidget):
+class Window(QWidget):
+    
     def __init__(self):
+
         super().__init__()
-        layout = QVBoxLayout(self)
-        table = QTableView()
-        model = BoolTableModel()
-        table.setModel(model)
 
-        delegate = BooleanSwitchDelegate()
-        table.setItemDelegateForColumn(0, delegate)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
 
-        layout.addWidget(table)
+        model = CsvModel()
+        QAbstractItemModelTester(model)
+
+        delegate = SwitchDelegate()
+        
+        view = QTableView()
+        view.setModel(model)
+        
+        view.setItemDelegateForColumn(3, delegate)
+        
+        view.resizeColumnsToContents()
+        layout.addWidget(view)
+        
+        model.dataChanged.connect(self.on_data_changed)
+        
+    def on_data_changed(self, topLeft, bottomRight, roles):
+        for row in topLeft.model().csv_data:
+            print(row)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+
     app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
+
+    main_window = Window()
+    main_window.show()
+
     sys.exit(app.exec())
 
 
