@@ -77,6 +77,7 @@ class SliderDelegate(QStyledItemDelegate):
         editor.setMaximum(100)
         editor.setOrientation(Qt.Orientation.Horizontal)
         editor.setMinimumWidth(self.min_width)
+        editor.setAutoFillBackground(True)
         return editor
     
     def setEditorData(self, editor, index):

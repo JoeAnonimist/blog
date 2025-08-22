@@ -73,6 +73,7 @@ class SliderCreator(QItemEditorCreatorBase):
     def createWidget(self, parent):
         
         editor = QSlider(parent)
+        editor.setAutoFillBackground(True)
         
         editor.setMinimum(-100)
         editor.setMaximum(100)
@@ -81,7 +82,8 @@ class SliderCreator(QItemEditorCreatorBase):
         editor.setMinimumWidth(self.min_width)
         
         # If we don't implement valuePropertyName()
-        # the widget's user property is used (in this case 'value')
+        # the widget's user property is used
+        # (in this case 'value')
         print(editor.metaObject().userProperty().name())
         
         return editor

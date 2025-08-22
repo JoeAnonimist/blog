@@ -73,6 +73,7 @@ class SwitchWidget(QWidget):
         
         super().__init__(parent)
         
+        self.setAutoFillBackground(True)
         self._value = False
         
         self.true_radio = QRadioButton('Yes')
