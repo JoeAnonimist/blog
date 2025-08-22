@@ -87,6 +87,9 @@ class SliderDelegate(QStyledItemDelegate):
     def setModelData(self, editor, model, index):
         value = editor.value()
         model.setData(index, value, Qt.ItemDataRole.EditRole)
+        
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
 
 
 class Window(QWidget):
