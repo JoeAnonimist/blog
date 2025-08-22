@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import (QAbstractTableModel, QModelIndex,
-    Qt, QMetaType, Property, Signal)
+    Qt, QMetaType, Property)
 from PySide6.QtWidgets import (QApplication, 
     QRadioButton, QWidget, QTableView, QVBoxLayout, 
     QItemEditorFactory, QHBoxLayout, QStyledItemDelegate,
