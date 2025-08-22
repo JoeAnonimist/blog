@@ -1,6 +1,8 @@
+# https://stackoverflow.com/questions/14780517/toggle-switch-in-qt
+
 import sys
 from PySide6.QtCore import Qt, QAbstractTableModel, QRect, QSize, QModelIndex
-from PySide6.QtGui import QColor, QPainter, QBrush, QMouseEvent
+from PySide6.QtGui import QColor, QPainter, QBrush, QMouseEvent, QPalette
 from PySide6.QtWidgets import QApplication, QTableView, QStyledItemDelegate, QWidget, QVBoxLayout
 
 
@@ -18,8 +20,8 @@ class BooleanSwitchDelegate(QStyledItemDelegate):
         switch_rect = QRect(rect.x() + margin, rect.y() + margin, switch_width, switch_height)
 
         # Background
-        bg_color = QColor("#4cd964") if value else QColor("#ccc")
-        thumb_color = QColor("#fff")
+        bg_color = option.palette.color(QPalette.ColorRole.Mid)
+        thumb_color = option.palette.color(QPalette.ColorRole.Accent) if value else option.palette.color(QPalette.ColorRole.Button)
 
         # Thumb position
         if value:
