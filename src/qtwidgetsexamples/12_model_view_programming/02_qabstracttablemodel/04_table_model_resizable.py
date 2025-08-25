@@ -4,7 +4,7 @@ import sys
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PySide6.QtTest import QAbstractItemModelTester
 from PySide6.QtWidgets import (QApplication, QWidget,
-    QTableView, QVBoxLayout, QLineEdit, QPushButton)
+    QTableView, QVBoxLayout, QPushButton)
 
 
 class CsvModel(QAbstractTableModel):
@@ -90,16 +90,7 @@ class Window(QWidget):
         self.view.setModel(self.model)
         self.model.rowsInserted.connect(self.on_rows_inserted)
         self.view.resizeColumnsToContents()
-        
-        self.fname_edit = QLineEdit()
-        self.lname_edit = QLineEdit()
-        self.prof_edit = QLineEdit()
-        self.submit_button = QPushButton('Submit')
-        self.submit_button.clicked.connect(self.on_submit)
-        
-        self.submit_button = QPushButton('Submit')
-        self.submit_button.clicked.connect(self.on_submit)
-        
+
         self.insert_button = QPushButton('Insert new')
         self.insert_button.clicked.connect(self.on_insert)
         
@@ -115,9 +106,6 @@ class Window(QWidget):
         layout.addWidget(self.remove_button)
         
         self.model.dataChanged.connect(self.on_data_changed)
-        
-    def on_submit(self):
-        self.mapper.submit()
         
     def on_insert(self):
         row = self.view.selectionModel().currentIndex().row()
