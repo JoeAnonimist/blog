@@ -1,6 +1,6 @@
 import sys
 
-from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt, QItemSelectionModel
+from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PySide6.QtWidgets import (QApplication, QWidget,
     QTableView, QVBoxLayout, QPushButton)
 from PySide6.QtTest import QAbstractItemModelTester
