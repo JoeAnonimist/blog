@@ -42,7 +42,7 @@ class Window(QWidget):
     
         combo = QKeyCombination(modifiers, key)
         key_seq = QKeySequence(combo)
-        key_str = key_seq.toString(QKeySequence.NativeText)
+        key_str = key_seq.toString()
         
         print(key_str)
         self.label.setText(key_str)
