@@ -84,11 +84,11 @@ class Window(QWidget):
 
         for index in selected.indexes():
             value = self.model.data(index)
-            self.selection_sum += value
+            self.cumulative_sum += value
         for index in deselected.indexes():
             value = self.model.data(index)
-            self.selection_sum -= value            
-        self.selection_sum.setText(str(self.selection_sum))
+            self.cumulative_sum -= value            
+        self.selection_sum.setText(str(self.cumulative_sum))
 
 
 if __name__ == '__main__':
