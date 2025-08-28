@@ -58,7 +58,8 @@ class Window(MyCustomWindow):
         button1.setObjectName('button1')
         
         self.filter_obj = ResizeEventFilter()
-        self.filter_obj.setObjectName('MyCustomButton event filter')
+        self.filter_obj.setObjectName('MyCustomWindow event filter')
+        self.installEventFilter(self.filter_obj)  # Fix: Install filter on Main Window
         button1.installEventFilter(self.filter_obj)
         
         layout.addWidget(button1)
@@ -76,6 +77,6 @@ if __name__ == '__main__':
     main_window = Window()
     main_window.show()
     main_window.resize(400, 300)  # Trigger Resize event
-    app.processEvents()  # Ensure Resize is processed before exec
+    app.processEvents()  # Ensure Resize is processed
 
     sys.exit(app.exec())
