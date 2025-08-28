@@ -1,8 +1,8 @@
 import sys
 
 from PySide6.QtCore import QObject, QEvent
-from PySide6.QtWidgets import (QApplication, 
-    QWidget, QPushButton, QVBoxLayout)
+from PySide6.QtWidgets import (QApplication, QWidget, 
+    QPushButton, QVBoxLayout)
 
 
 class MousePressFilter(QObject):
@@ -10,8 +10,10 @@ class MousePressFilter(QObject):
     def eventFilter(self, watched, event):
         if event.type() == QEvent.Type.MouseButtonPress:
             print('Filter mouse press for: ', watched.objectName())
-            if watched.objectName() == 'button2':
-                return True
+            if isinstance(watched, QPushButton):
+                if not watched.isEnabled():
+                    watched.clicked.emit()
+                    return True
         return super().eventFilter(watched, event)
 
 
@@ -21,24 +23,22 @@ class Window(QWidget):
 
         super().__init__()
         
+        self.setObjectName('Main Window')
+        
         layout = QVBoxLayout()
         self.setLayout(layout)
         
         button1 = QPushButton('Button 1')
         button1.setObjectName('button1')
+        button1.clicked.connect(self.on_button_clicked)
+        
         button2 = QPushButton('Button 2')
         button2.setObjectName('button2')
+        button2.clicked.connect(self.on_button_clicked)
+        button2.setDisabled(True)
+        
         button3 = QPushButton('Button 3')
         button3.setObjectName('button3')
-        
-        event_filter = MousePressFilter(self)
-        
-        button1.installEventFilter(event_filter)
-        button2.installEventFilter(event_filter)
-        button3.installEventFilter(event_filter)
-        
-        button1.clicked.connect(self.on_button_clicked)
-        button2.clicked.connect(self.on_button_clicked)
         button3.clicked.connect(self.on_button_clicked)
         
         layout.addWidget(button1)
@@ -53,6 +53,9 @@ class Window(QWidget):
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
+    
+    filter_obj = MousePressFilter()
+    app.installEventFilter(filter_obj)
 
     main_window = Window()
     main_window.show()
