@@ -1,8 +1,8 @@
 import sys
 
-from PySide6.QtCore import QObject, QEvent
+from PySide6.QtCore import QObject, QEvent, Qt
 from PySide6.QtWidgets import (QApplication, QWidget, 
-    QPushButton, QGroupBox, QVBoxLayout)
+    QLineEdit, QGroupBox, QVBoxLayout)
 
 
 class MyCustomApplication(QApplication):
@@ -38,21 +38,21 @@ class TargetEventFilter(QObject):
         return super().eventFilter(watched, event)
 
 
-class MyCustomButton(QPushButton):
+class MyCustomLineEdit(QLineEdit):
     
     def event(self, event):
         if event.type() == QEvent.Type.KeyPress:
-            print('4. - MyCustomButton.event() for: ',
+            print('4. - MyCustomLineEdit.event() for: ',
                   self.objectName(),
                   id(event))
             #return True
         return super().event(event)
     
     def keyPressEvent(self, event):
-        print('5. - MyCustomButton.keyPressEvent() for: ',
+        print('5. - MyCustomLineEdit.keyPressEvent() for: ',
               self.objectName(),
               id(event))
-        super().mousePressEvent(event)
+        super().keyPressEvent(event)
         #return True
 
 
@@ -70,14 +70,15 @@ class Window(QWidget):
         group_box = QGroupBox()
         group_box.setTitle('Parent groupbox')
         
-        button1 = MyCustomButton('Button 1')
-        button1.setObjectName('button1')
+        lineedit1 = MyCustomLineEdit('Press a key')
+        lineedit1.setObjectName('lineedit1')
+
         group_box.setLayout(QVBoxLayout())
-        group_box.layout().addWidget(button1)
+        group_box.layout().addWidget(lineedit1)
         
         self.target_filter = TargetEventFilter()
         self.target_filter.setObjectName('Target event filter')
-        button1.installEventFilter(self.target_filter)
+        lineedit1.installEventFilter(self.target_filter)
         
         layout.addWidget(group_box)
         layout.addStretch()

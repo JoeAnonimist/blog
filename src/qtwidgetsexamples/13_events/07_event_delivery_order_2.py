@@ -53,7 +53,6 @@ class MyCustomButton(QPushButton):
               self.objectName(),
               id(event))
         super().mousePressEvent(event)
-        #return True
 
 
 class Window(QWidget):

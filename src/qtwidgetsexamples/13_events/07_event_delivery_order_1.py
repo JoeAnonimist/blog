@@ -42,7 +42,6 @@ class Window(QWidget):
     def showEvent(self, event):
         print('5. - Window.showEvent() for: ', self.objectName())
         super().showEvent(event)
-        return True
 
 
 if __name__ == '__main__':
