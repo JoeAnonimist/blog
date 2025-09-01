@@ -42,3 +42,14 @@ if __name__ == '__main__':
     main_window.show()
     
     sys.exit(app.exec())
+    
+    
+'''
+Direct .connect() - sender.signal.connect(slot)
+Connection type - signal.connect(slot, type=Qt.QueuedConnection)
+Overloads - signal[type].connect(slot)
+Inline - lambda / functools.partial
+Typed - @Slot(...)
+Signal forwarding - connect signal - signal
+Automatic (Designer/UI) - QMetaObject.connectSlotsByName
+'''
