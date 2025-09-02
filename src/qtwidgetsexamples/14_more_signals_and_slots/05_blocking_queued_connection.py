@@ -21,8 +21,7 @@ class Worker(QObject):
         
     def event(self, event):
         if event.type() == QEvent.Type.MetaCall:
-            print(f"Queued signal (MetaCallEvent) intercepted")
-            print(event)
+            print('Queued signal (MetaCallEvent) intercepted: ', id(event))
         return QObject.event(self, event)
 
 
@@ -67,8 +66,13 @@ class Controller(QWidget):
     @Slot()
     def handle_results(self):
         self.label.setText('Worker finished')
+        
+    def event(self, event):
+        if event.type() == QEvent.Type.MetaCall:
+            print('Queued signal (MetaCallEvent) intercepted: ', id(event))
+        return QWidget.event(self, event)
     
-    def closeEvent(self, event):        
+    def closeEvent(self, event):
         try:
             self.worker_thread.quit()
             self.worker_thread.wait()
