@@ -69,6 +69,7 @@ class Controller(QWidget):
         
     def event(self, event):
         if event.type() == QEvent.Type.MetaCall:
+            # should catch self.result_ready.emit(parameter)
             print('Queued signal (MetaCallEvent) intercepted: ', id(event))
         return QWidget.event(self, event)
     
