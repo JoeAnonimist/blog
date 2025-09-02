@@ -48,7 +48,7 @@ class Window(QWidget):
         self.checkbox_1.checkStateChanged.connect(
             self.on_state_changed)
         self.checkbox_2.checkStateChanged.connect(
-            self.on_state_changed)
+            self.on_state_changed, Qt.ConnectionType.UniqueConnection)
         self.checkbox_3.checkStateChanged.connect(
             self.on_checkbox3_state_changed)
         
@@ -61,7 +61,7 @@ class Window(QWidget):
         self.checkbox_2.checkStateChanged.disconnect(
             self.on_state_changed)
         self.checkbox_3.checkStateChanged.disconnect(
-            self.on_checkbox3_state_changed)
+            self.on_checkbox3_state_chenged)
 
         '''
         QObject.disconnect(
