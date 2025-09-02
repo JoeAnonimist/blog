@@ -15,12 +15,9 @@ class Window(QWidget):
         self.button = QPushButton('Click me!')
         layout.addWidget(self.button)
         
-        self.conn = self.button.clicked.connect(
-            self.on_button_clicked_1)
-        self.conn = self.button.clicked.connect(
-            self.on_button_clicked_2)
-        self.conn = self.button.clicked.connect(
-            self.on_button_clicked_3)
+        self.button.clicked.connect(self.on_button_clicked_1)
+        self.button.clicked.connect(self.on_button_clicked_2)
+        self.button.clicked.connect(self.on_button_clicked_3)
     
     def on_button_clicked_1(self):
         print('Executed first')
