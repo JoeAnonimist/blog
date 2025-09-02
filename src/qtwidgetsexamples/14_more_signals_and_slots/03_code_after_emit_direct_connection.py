@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import Signal, QThread
+from PySide6.QtCore import Signal, QEvent
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QPushButton, QVBoxLayout)
 
@@ -25,22 +25,24 @@ class Window(QWidget):
         self.custom_signal.connect(self.on_custom_signal_3)
     
     def on_button_clicked(self):
-        print('Emitting custom signal')
+        print('on_button_clicked: Emitting custom signal\n')
         self.custom_signal.emit()
-        print('Continue the button click slot execution')
+        print('on_button_clicked: Returning')
         
     def on_custom_signal_1(self):
         print('First custom slot executed')
-        QThread.sleep(1)
         
     def on_custom_signal_2(self):
         print('Second custom slot executed')
-        QThread.sleep(1)
         
         
     def on_custom_signal_3(self):
-        print('Third custom slot executed')
-        QThread.sleep(1)
+        print('Third custom slot executed\n')
+        
+    def event(self, event):
+        if event.type() == QEvent.Type.MetaCall:
+            print(f"Queued signal (MetaCallEvent) intercepted")
+        return QWidget.event(self, event)
 
 
 if __name__ == '__main__':
