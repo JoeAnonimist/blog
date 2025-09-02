@@ -45,7 +45,6 @@ if __name__ == '__main__':
     
     
 '''
-Direct .connect() - sender.signal.connect(slot)
 Connection type - signal.connect(slot, type=Qt.QueuedConnection)
 Overloads - signal[type].connect(slot)
 Inline - lambda / functools.partial
