@@ -46,12 +46,8 @@ class Window(QWidget):
         print('Button clicked')
         
     def update_label(self):
-        self.label.setText('Button: ' +
-            str(self.receiver_count(self.button)) + 
-            ' receivers')
-        
-    def receiver_count(self, button):
-        return button.receivers(SIGNAL('clicked(bool)'))
+        count = self.button.receivers(SIGNAL('clicked(bool)'))
+        self.label.setText(f'Button: {count} receivers')
 
 
 if __name__ == '__main__':
