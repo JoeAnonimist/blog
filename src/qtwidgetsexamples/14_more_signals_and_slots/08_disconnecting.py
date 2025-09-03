@@ -32,11 +32,19 @@ class Window(QWidget):
         self.disconnect_2 = QPushButton('Disconnect 2')
         self.disconnect_2.clicked.connect(self.on_disconnect_2)
         
+        self.disconnect_3 = QPushButton('Disconnect 3')
+        self.disconnect_3.clicked.connect(self.on_disconnect_3)
+        
+        self.disconnect_4 = QPushButton('Disconnect 4')
+        self.disconnect_4.clicked.connect(self.on_disconnect_4)
+        
         h_layout.addWidget(self.connect_btn)
         
         v_layout = QVBoxLayout()
         v_layout.addWidget(self.disconnect_1)
         v_layout.addWidget(self.disconnect_2)
+        v_layout.addWidget(self.disconnect_3)
+        v_layout.addWidget(self.disconnect_4)
         h_layout.addLayout(v_layout)
         layout.addLayout(h_layout)
 
@@ -53,8 +61,15 @@ class Window(QWidget):
         self.update_label()
         
     def on_disconnect_2(self):
-        #self.button.disconnect(self, SLOT('slot_1(bool)'))
-        self.button.disconnect(self)
+        QObject.disconnect(self.button, None, None, None)
+        self.update_label()
+        
+    def on_disconnect_3(self):
+        QObject.disconnect(self.button, SIGNAL('clicked(bool)'), None, None)
+        self.update_label()
+        
+    def on_disconnect_4(self):
+        QObject.disconnect(self.button, None, self, None)
         self.update_label()
         
     @Slot(bool)
