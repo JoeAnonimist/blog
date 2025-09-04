@@ -4,7 +4,9 @@ from PySide6.QtWidgets import (QApplication, QWidget,
 
 
 class Window(QWidget):
+    
     def __init__(self):
+
         super().__init__()
         
         layout = QVBoxLayout()
@@ -36,6 +38,9 @@ class Window(QWidget):
         button = QPushButton('Process Form')
         button.clicked.connect(self.processForm)
         layout.addWidget(button)
+        
+        for name in self.title_edit.dynamicPropertyNames():
+            print(name.toStdString())
     
     def processForm(self):
 
@@ -46,6 +51,7 @@ class Window(QWidget):
 
 
 if __name__ == '__main__':
+
     if not QApplication.instance():
         app = QApplication(sys.argv)
     else:
