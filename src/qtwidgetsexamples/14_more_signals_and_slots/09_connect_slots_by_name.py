@@ -15,26 +15,23 @@ class Window(QWidget):
         self.button_2 = QPushButton('Click me too!')
         self.button_2.setObjectName('myButton')
         
-        layout.addWidget(self.button_1)  # Add button_1
-        layout.addWidget(self.button_2)  # Add button_2 (fixed)
+        layout.addWidget(self.button_1)
+        layout.addWidget(self.button_2)
         
-        QMetaObject.connectSlotsByName(self)  # Auto-connect signals to slots
+        QMetaObject.connectSlotsByName(self)
+
+    @Slot()
+    def on_myButton_clicked(self):
+        print('Slot without the argument')
+        
+    # If this is commented out the above slot gets connected.
+    # If this is not commented out the above slot
+    # is skipped and this one gets connected.
 
     @Slot(bool)
     def on_myButton_clicked(self, checked):
-        print(checked)
-        print(self.sender())
+        print('Slot with the argument')
 
-    '''
-    @Slot()
-    def on_myButton_clicked(self):
-        print(self.sender())
-    '''   
-    '''
-    @Slot()
-    def on_button1_clicked(self):  # Slot for button_2 (objectName="button1")
-        print('Button 2 (button1) clicked')
-    '''
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
