@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (QApplication, QWidget,
 
 class MyLabel(QLabel):
     
+    # Double curlies for str.format()
     STYLE = 'MyLabel {{background-color: {}; color: {};}}'
     
     colorChanged = Signal(str, str)
