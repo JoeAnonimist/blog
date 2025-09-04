@@ -43,10 +43,22 @@ class MyLabel(QLabel):
             self._color = color
             self.colorChanged.emit(old_color, color)
             
+    def resetColor(self):
+        if self._color != 'black':
+            old_color = self._color
+            self._color = 'black'
+            self.colorChanged.emit(old_color, 'black')
+            
         
-    color = Property(str, fget=color, fset=setColor, notify=colorChanged)
+    color = Property(str, fget=color, fset=setColor,
+                     notify=colorChanged, freset=resetColor)
+
+    def resetBackgroundColor(self):
+        if self._background_color != 'lightgrey':
+            self._background_color = 'lightgrey'
+            self.bgColorChanged.emit()
         
-    @Property(str, notify=bgColorChanged)
+    @Property(str, notify=bgColorChanged, freset=resetBackgroundColor)
     def backgroundColor(self):
         return self._background_color
     
@@ -66,7 +78,7 @@ class MyLabel(QLabel):
         self.setStyleSheet(self._style)
         self.styleChanged.emit(self._style)
                 
-    style = Property(str, fget=getStyle, notify=styleChanged)
+    style = Property(str, fget=getStyle, notify=styleChanged, stored=False)
 
 
 class Window(QWidget):
@@ -89,6 +101,13 @@ class Window(QWidget):
         layout.addWidget(button)
         button.clicked.connect(self.on_button_clicked)
         
+        reset_button = QPushButton('Reset colors')
+        layout.addWidget(reset_button)
+        
+        # reset_button.clicked.connect(self.label.resetColor)
+        # reset_button.clicked.connect(self.label.resetBackgroundColor)
+        reset_button.clicked.connect(self.on_reset_clicked)
+        
     def on_color_changed(self, old, new):
         print('color changed: ', old, new)
         
@@ -101,6 +120,13 @@ class Window(QWidget):
     def on_button_clicked(self):
         self.label.color = '#fff'
         self.label.backgroundColor = 'steelblue'
+        
+    def on_reset_clicked(self):
+
+        for i in range(self.label.metaObject().propertyCount()):
+            prop = self.label.metaObject().property(i)
+            if prop.name() in ['color', 'backgroundColor']:
+                prop.reset(self.label)
 
 
 if __name__ == '__main__':
