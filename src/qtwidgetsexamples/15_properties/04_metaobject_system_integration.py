@@ -64,19 +64,16 @@ class Window(QWidget):
         layout.addWidget(button)
         button.clicked.connect(self.on_button_clicked)
         
-        reset_button = QPushButton('Reset colors')
-        layout.addWidget(reset_button)
-
-        reset_button.clicked.connect(self.on_reset_clicked)
-        
     def on_button_clicked(self):
         
         count = self.label.metaObject().propertyCount()
-        print(f"{'Name':<20} {'Type':<25} {'Index':<8} {'Resettable':<12} {'Scriptable':<12} {'Stored':<8}")
+        print(f"{'Name':<20} {'Type':<25} "
+              f"{'Scriptable':<12} {'Stored':<8}")
         for i  in range(count):
             property = self.label.metaObject().property(i)
-            print(f"{property.name():<20} {property.metaType().name():<25} {property.propertyIndex():<8} "
-                f"{str(property.isResettable()):<12} {str(property.isScriptable()):<12} "
+            print(f"{property.name():<20} "
+                f"{property.metaType().name():<25} "
+                f"{str(property.isScriptable()):<12} "
                 f"{str(property.isStored()):<8}")
     
     def on_reset_clicked(self):
