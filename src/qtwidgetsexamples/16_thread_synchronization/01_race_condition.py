@@ -15,8 +15,7 @@ class SharedResource(QObject):
         
         file_name = 'temp_file.txt'
         with open(file_name, 'w+') as f:
-            for _ in range(100):
-                f.write('Some text\n')
+            f.writelines('Shared file:\n')
 
 
 class Worker(QObject):
@@ -30,12 +29,13 @@ class Worker(QObject):
     @Slot()
     def process(self):
 
-        for _ in range(200):
-            local_var = self.shared_resource.counter
-            with open('temp_file.txt', 'r') as f:
-                f.read()
-            local_var += 1
-            self.shared_resource.counter = local_var
+        while self.shared_resource.counter < 100:
+            
+            with open('temp_file.txt', 'a') as f:
+                self.shared_resource.counter += 1
+                f.write(QThread.currentThread().objectName() 
+                    + ' ' + str(self.shared_resource.counter) + '\n')
+            
         print(QThread.currentThread().objectName(),
             'Counter value: ', self.shared_resource.counter)
         
@@ -67,6 +67,11 @@ class Window(QWidget):
         
         print('Counter value: ', self.shared_resource.counter)
         self.shared_resource.counter = 0
+        
+        file_name = 'temp_file.txt'
+        with open(file_name, 'w+') as f:
+            f.writelines('Shared file:\n')
+            
         self.workers = []
         
         for i in range(5):
@@ -91,7 +96,7 @@ class Window(QWidget):
     def on_finished(self):
         self.label.setText('Final counter value: ' +
             str(self.shared_resource.counter) +
-            ' of 1000 expected.')
+            ' of 100 expected.')
 
 
 if __name__ == '__main__':
