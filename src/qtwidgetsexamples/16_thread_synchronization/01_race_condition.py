@@ -36,8 +36,8 @@ class Worker(QObject):
                 f.read()
             local_var += 1
             self.shared_resource.counter = local_var
-        print('Thread: ', QThread.currentThread().objectName(),
-              'Counter value: ', self.shared_resource.counter)
+        print(QThread.currentThread().objectName(),
+            'Counter value: ', self.shared_resource.counter)
         
         self.finished.emit()
 
@@ -51,7 +51,7 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         
-        button = QPushButton('Start background thread')
+        button = QPushButton('Start background threads')
         button.clicked.connect(self.on_button_clicked)
         
         self.label = QLabel()
@@ -72,8 +72,8 @@ class Window(QWidget):
         for i in range(5):
             
             background_thread = QThread(self)
-            background_thread.setObjectName(str(i))
-            
+            background_thread.setObjectName(f'Thread {i}')
+
             worker_obj = Worker(self.shared_resource)
             self.workers.append(worker_obj)
             worker_obj.moveToThread(background_thread)
@@ -90,7 +90,8 @@ class Window(QWidget):
     @Slot()
     def on_finished(self):
         self.label.setText('Final counter value: ' +
-            str(self.shared_resource.counter))
+            str(self.shared_resource.counter) +
+            ' of 1000 expected.')
 
 
 if __name__ == '__main__':
@@ -101,4 +102,3 @@ if __name__ == '__main__':
     main_window.show()
 
     sys.exit(app.exec())
-
