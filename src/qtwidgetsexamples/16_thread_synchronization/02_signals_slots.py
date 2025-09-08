@@ -28,7 +28,7 @@ class Balance(QObject):
 
     def do_some_work(self):
         total = 0
-        print()
+        print('Doing work')
 
 
 
@@ -46,6 +46,7 @@ class Worker(QObject):
         local_var = self.balance.get()
         local_var += self.amount
         self.balance.deposit(local_var)
+        print(QThread.currentThread().objectName())
         self.finished.emit()
 
 
@@ -110,8 +111,6 @@ class Window(QWidget):
             
     @Slot(int)
     def on_value_changed(self, value):
-        
-        print(f'Balance updated to: {value}')
         
         if self.completed == self.thread_count:
             print('\nExpected: ', self.thread_count * self.amount)
