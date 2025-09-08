@@ -1,5 +1,4 @@
 import sys
-from random import randint
 from PySide6.QtCore import QObject, QThread, Signal, Slot
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
 
@@ -10,7 +9,7 @@ class Worker(QObject):
 
     def __init__(self):
         super().__init__()
-        self.value = 123
+        self.value = 0
 
     @Slot()
     def handleRequest(self):
@@ -21,6 +20,25 @@ class Worker(QObject):
     def updateValue(self, value):
         print('[Worker] Received update request: ', value)
         self.value = value
+        
+    def do_something(self):
+        QThread.sleep(0)
+        
+class Updater(QObject):
+    
+    finished = Signal()
+
+    def __init__(self, worker, parent=None):
+        super().__init__(parent)
+        self.worker = worker
+    
+    def update(self):
+        local_val = self.worker.value
+        local_val += 1000
+        print('updating')
+        self.worker.do_something()
+        self.worker.value = local_val
+        self.finished.emit()
 
 
 class MainWindow(QWidget):
@@ -32,7 +50,9 @@ class MainWindow(QWidget):
         
         super().__init__()
 
-        self.setMinimumSize(300, 100)
+        self.thread_count = 5
+        self.amount = 1000
+        self.updaters = []
 
         self.label = QLabel('Click to get value', self)
         
@@ -41,11 +61,15 @@ class MainWindow(QWidget):
         
         self.update_button = QPushButton('Update value', self)
         self.update_button.clicked.connect(self.on_update_clicked)
+        
+        self.race_button = QPushButton('Test race condition', self)
+        self.race_button.clicked.connect(self.startRace)
 
         layout = QVBoxLayout(self)
         layout.addWidget(self.label)
         layout.addWidget(self.request_button)
         layout.addWidget(self.update_button)
+        layout.addWidget(self.race_button)
 
         self.thread = QThread(self)
         self.worker = Worker()
@@ -68,9 +92,30 @@ class MainWindow(QWidget):
         
     @Slot()
     def on_update_clicked(self):
-        value = randint(0, 200)
+        value = 0
         self.requestUpdate.emit(value)
         self.label.setText('Click to get value')
+        
+    @Slot()
+    def startRace(self):
+        
+        self.updaters.clear()
+
+        for i in range(self.thread_count):
+            background_thread = QThread(self)
+            background_thread.setObjectName(f'Thread {i}')
+
+            updater = Updater(self.worker)
+            self.updaters.append(updater)
+            updater.moveToThread(background_thread)
+    
+            background_thread.started.connect(updater.update)
+            updater.finished.connect(background_thread.quit)
+            updater.finished.connect(updater.deleteLater)
+            background_thread.finished.connect(background_thread.deleteLater)
+            
+            background_thread.start()
+        
 
     def closeEvent(self, event):
 
