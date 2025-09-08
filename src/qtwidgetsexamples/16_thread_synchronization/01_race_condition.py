@@ -1,44 +1,51 @@
 import sys
-
-from PySide6.QtCore import (QObject, QThread,
-    Slot, Signal, Qt)
-from PySide6.QtWidgets import (QApplication,
-    QPushButton, QLabel, QWidget, QVBoxLayout)
+from PySide6.QtWidgets import (QApplication, QWidget,
+    QVBoxLayout, QPushButton, QLabel)
+from PySide6.QtCore import QObject, QThread, QTimer, Signal, Slot
 
 
-class SharedResource(QObject):
+class Balance(QObject):
     
-    def __init__(self, parent=None):
+    value_changed = Signal(int)
+    
+    def __init__(self):
+        super().__init__()
+        self.amount = 0
+
+    @Slot(result=int)
+    def get(self):
+        return self.amount
+
+    @Slot(int)
+    def deposit(self, amount):
+        self.do_some_work()
+        self.amount = amount
+        self.value_changed.emit(self.amount)
         
-        super().__init__(parent)
-        self.counter = 0
-        
-        file_name = 'temp_file.txt'
-        with open(file_name, 'w+') as f:
-            f.writelines('Shared file:\n')
+    @Slot()
+    def report(self):
+        self.value_changed.emit(self.amount)
+
+    def do_some_work(self):
+        total = 0
+        print()
+
+
 
 
 class Worker(QObject):
     
     finished = Signal()
-    
-    def __init__(self, shared_resource, parent=None):
-        super().__init__(parent)
-        self.shared_resource = shared_resource
-        
-    @Slot()
-    def process(self):
 
-        while self.shared_resource.counter < 100:
-            
-            with open('temp_file.txt', 'a') as f:
-                self.shared_resource.counter += 1
-                f.write(QThread.currentThread().objectName() 
-                    + ' ' + str(self.shared_resource.counter) + '\n')
-            
-        print(QThread.currentThread().objectName(),
-            'Counter value: ', self.shared_resource.counter)
-        
+    def __init__(self, balance, amount, parent=None):
+        super().__init__(parent)
+        self.balance = balance
+        self.amount = amount
+
+    def process(self):
+        local_var = self.balance.get()
+        local_var += self.amount
+        self.balance.deposit(local_var)
         self.finished.emit()
 
 
@@ -48,42 +55,44 @@ class Window(QWidget):
 
         super().__init__()
         
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.thread_count = 5
+        self.amount = 1000
         
-        button = QPushButton('Start background threads')
-        button.clicked.connect(self.on_button_clicked)
-        
-        self.label = QLabel()
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        
-        layout.addWidget(button)
+        self.setWindowTitle("Race Condition Demo")
+
+        self.label = QLabel("Click to start", self)
+        self.button = QPushButton("Start Threads", self)
+        self.button.clicked.connect(self.start_threads)
+
+        layout = QVBoxLayout(self)
         layout.addWidget(self.label)
-        
-        self.shared_resource = SharedResource()
-    
-    @Slot()
-    def on_button_clicked(self):
-        
-        print('Counter value: ', self.shared_resource.counter)
-        self.shared_resource.counter = 0
-        
-        file_name = 'temp_file.txt'
-        with open(file_name, 'w+') as f:
-            f.writelines('Shared file:\n')
-            
+        layout.addWidget(self.button)
+
         self.workers = []
-        
-        for i in range(5):
-            
+
+    def start_threads(self):
+
+        self.button.setEnabled(False)
+
+        self.balance = Balance()
+        self.balance_thread = QThread()
+        self.balance.moveToThread(self.balance_thread)
+        self.balance.value_changed.connect(self.on_value_changed)
+        self.balance_thread.start()
+
+        self.completed = 0
+
+        self.workers.clear()
+
+        for i in range(self.thread_count):
             background_thread = QThread(self)
             background_thread.setObjectName(f'Thread {i}')
 
-            worker_obj = Worker(self.shared_resource)
+            worker_obj = Worker(self.balance, self.amount)
             self.workers.append(worker_obj)
             worker_obj.moveToThread(background_thread)
             
-            worker_obj.finished.connect(self.on_finished)
+            worker_obj.finished.connect(self.on_worker_done)
     
             background_thread.started.connect(worker_obj.process)
             worker_obj.finished.connect(background_thread.quit)
@@ -91,19 +100,34 @@ class Window(QWidget):
             background_thread.finished.connect(background_thread.deleteLater)
             
             background_thread.start()
+
+    def on_worker_done(self):
+        
+        self.completed += 1
+
+        if self.completed == self.thread_count:
+            QTimer.singleShot(0, self.balance.report)
+            
+    @Slot(int)
+    def on_value_changed(self, value):
+        
+        print(f'Balance updated to: {value}')
+        
+        if self.completed == self.thread_count:
+            print('\nExpected: ', self.thread_count * self.amount)
+            print('Got:', value)
+            self.label.setText(f"Final counter: {value}")
+            self.button.setEnabled(True)
+            self.balance_thread.quit()
+            self.balance_thread.wait()
+
+
+if __name__ == "__main__":
     
-    @Slot()
-    def on_finished(self):
-        self.label.setText('Final counter value: ' +
-            str(self.shared_resource.counter) +
-            ' of 100 expected.')
-
-
-if __name__ == '__main__':
-
     app = QApplication(sys.argv)
-
-    main_window = Window()
-    main_window.show()
-
+    
+    win = Window()
+    win.show()
+    
     sys.exit(app.exec())
+
