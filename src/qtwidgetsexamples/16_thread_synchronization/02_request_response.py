@@ -1,46 +1,38 @@
 import sys
-from PySide6.QtCore import QObject, Slot, Signal, QThread
+from PySide6.QtCore import QObject, Slot, Signal, QThread, QTimer
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QPushButton, QVBoxLayout, QLabel)
 
 
 class BankAccount(QObject):
     
-    sendValue = Signal(int)
-    
     def __init__(self, balance, parent=None):
         super().__init__(parent)
         self.balance = balance
-
-    @Slot(int)
-    def handleRequest(self):
-        self.sendValue.emit(self.balance)
     
     @Slot(int)
     def withdraw(self, amount):
-        if self.balance > 0:
-            balance = self.balance
+        print('---withdraw start---', self.thread().objectName())
+        balance = self.balance
+        if balance >= amount:
             balance -= amount
-            QThread.sleep(0)
-            QThread.yieldCurrentThread()
+            QThread.msleep(1)
             self.balance = balance
+        print('---withdraw end---', self.thread().objectName())
             
             
 class Worker(QObject):
     
     finished = Signal()
-    requestValue = Signal()
     requestUpdate = Signal(int)
 
     def __init__(self, bank_account, amount, parent=None):
         super().__init__(parent)
         self.bank_account = bank_account
         self.amount = amount
-        self.requestValue.connect(self.bank_account.handleRequest)
         self.requestUpdate.connect(self.bank_account.withdraw)
 
     def process(self):
-        self.requestValue.emit()
         self.requestUpdate.emit(self.amount)
         self.finished.emit()
 
@@ -51,7 +43,7 @@ class Window(QWidget):
 
         super().__init__()
         
-        self.thread_count = 20
+        self.thread_count = 5
         self.amount = 100
         
         self.setWindowTitle("Race Condition Demo")
@@ -70,7 +62,7 @@ class Window(QWidget):
 
         self.button.setEnabled(False)
 
-        self.bank_account = BankAccount(2000)
+        self.bank_account = BankAccount(self.thread_count * self.amount)
         self.completed = 0
 
         self.workers.clear()
