@@ -1,7 +1,8 @@
 import sys
 from random import randint
 from PySide6.QtCore import QObject, QThread, Signal, Slot
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from PySide6.QtWidgets import (QApplication, QWidget,
+    QVBoxLayout, QPushButton, QLabel)
 
 
 class Worker(QObject):
