@@ -6,14 +6,17 @@ from PySide6.QtWidgets import (QApplication,
 
 class BankAccount(QObject):
     
+    sendValue = Signal(int)
+    
     def __init__(self, balance, parent=None):
         super().__init__(parent)
         self.balance = balance
+
+    @Slot(int)
+    def handleRequest(self):
+        self.sendValue.emit(self.balance)
     
-    @Slot(result=int)
-    def get_balance(self):
-        return self.balance
-    
+    @Slot(int)
     def withdraw(self, amount):
         if self.balance > 0:
             balance = self.balance
@@ -26,14 +29,19 @@ class BankAccount(QObject):
 class Worker(QObject):
     
     finished = Signal()
+    requestValue = Signal()
+    requestUpdate = Signal(int)
 
     def __init__(self, bank_account, amount, parent=None):
         super().__init__(parent)
         self.bank_account = bank_account
         self.amount = amount
+        self.requestValue.connect(self.bank_account.handleRequest)
+        self.requestUpdate.connect(self.bank_account.withdraw)
 
     def process(self):
-        self.bank_account.withdraw(self.amount)
+        self.requestValue.emit()
+        self.requestUpdate.emit(self.amount)
         self.finished.emit()
 
 
