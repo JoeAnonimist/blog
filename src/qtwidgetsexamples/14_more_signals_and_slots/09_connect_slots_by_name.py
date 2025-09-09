@@ -27,11 +27,11 @@ class Window(QWidget):
     # If this is commented out the above slot gets connected.
     # If this is not commented out the above slot
     # is skipped and this one gets connected.
-
+    '''
     @Slot(bool)
     def on_myButton_clicked(self, checked):
         print('Slot with the argument')
-
+    '''
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
