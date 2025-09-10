@@ -15,14 +15,16 @@ class BankAccount(QObject):
         return self.balance
     
     def withdraw(self, amount):
-        print('---withdraw start---', self.thread().objectName())
+        print('---withdraw start---',
+            QThread.currentThread().objectName())
         balance = self.balance
         if balance >= amount:
             balance -= amount
             QThread.msleep(1)
             #QThread.yieldCurrentThread()
             self.balance = balance
-        print('---withdraw end---', self.thread().objectName())
+        print('---withdraw end---',
+            QThread.currentThread().objectName())
             
             
 class Worker(QObject):
@@ -82,7 +84,6 @@ class Window(QWidget):
             background_thread.started.connect(worker_obj.process)
             worker_obj.finished.connect(background_thread.quit)
             worker_obj.finished.connect(worker_obj.deleteLater)
-            #background_thread.finished.connect(self.trace)
             background_thread.finished.connect(background_thread.deleteLater)
             
             background_thread.start()
@@ -96,10 +97,6 @@ class Window(QWidget):
             self.label.setText(f"Final counter: {self.bank_account.balance}")
             self.button.setEnabled(True)
             print('=====================')
-    '''        
-    def trace(self):
-        print('deleting thread...', self.sender().objectName())
-    '''
 
 
 if __name__ == '__main__':
