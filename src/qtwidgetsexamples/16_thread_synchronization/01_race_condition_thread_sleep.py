@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import QObject, Slot, Signal, QThread
+from PySide6.QtCore import QObject, Slot, Signal, QThread, QEventLoop, QTimer
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QPushButton, QVBoxLayout, QLabel)
 
@@ -18,13 +18,15 @@ class BankAccount(QObject):
         print('---withdraw start---',
             QThread.currentThread().objectName())
         balance = self.balance
+        QThread.msleep(1)
+        #print(end='')
+        #loop = QEventLoop()
+        #QTimer.singleShot(1000, loop.quit)
         if balance >= amount:
             balance -= amount
-            QThread.msleep(1)
-            #QThread.yieldCurrentThread()
             self.balance = balance
         print('---withdraw end---',
-            QThread.currentThread().objectName())
+            QThread.currentThread().objectName(), self.balance)
             
             
 class Worker(QObject):
@@ -49,8 +51,6 @@ class Window(QWidget):
         
         self.thread_count = 5
         self.amount = 100
-        
-        self.setWindowTitle("Race Condition Demo")
 
         self.label = QLabel("Click to start", self)
         self.button = QPushButton("Start Threads", self)
@@ -67,6 +67,11 @@ class Window(QWidget):
         self.button.setEnabled(False)
 
         self.bank_account = BankAccount(self.thread_count * self.amount)
+        self.bank_account_thread = QThread()
+        self.bank_account_thread.setObjectName('Bank account thread')
+        self.bank_account.moveToThread(self.bank_account_thread)
+        self.bank_account_thread.start()
+        
         self.completed = 0
 
         self.workers.clear()
@@ -95,6 +100,8 @@ class Window(QWidget):
         if self.completed == self.thread_count:
             print('Expected: 0, Got:', self.bank_account.balance)
             self.label.setText(f"Final counter: {self.bank_account.balance}")
+            self.bank_account_thread.quit()
+            self.bank_account_thread.wait()
             self.button.setEnabled(True)
             print('=====================')
 
