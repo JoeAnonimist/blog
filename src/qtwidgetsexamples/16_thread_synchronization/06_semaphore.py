@@ -1,4 +1,5 @@
 import sys
+from random import randint
 from PySide6.QtCore import (QObject, Slot, Signal, QThread,
     QEventLoop, QTimer, QMutex, QSemaphore)
 from PySide6.QtWidgets import (QApplication, 
@@ -20,7 +21,7 @@ class AtmPool(QObject):
         try:
             print(f"{QThread.currentThread().objectName()} is USING an ATM "
                   f"(available: {self.semaphore.available()})")
-            QThread.msleep(200)
+            QThread.msleep(randint(10, 200))
         finally:
             print(f"{QThread.currentThread().objectName()} DONE "
                   f"(available before release: {self.semaphore.available()})")
