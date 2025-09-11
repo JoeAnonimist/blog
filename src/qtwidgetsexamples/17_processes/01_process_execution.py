@@ -29,7 +29,7 @@ class Window(QWidget):
         self.text_edit.clear()
         self.process.start(sys.executable, [
             '-c', 'import time\ntime.sleep(3)\nprint("Done")'])
-        #self.process.start('python', ['-c', 'print("Hello")'])
+        # self.process.start('python', ['-c', 'print("Hello")'])
         # self.process.start('python', ['-c', 'prin("Hello")'])
         # self.process.start('pytho', ['-c', 'print("Hello")'])
 
@@ -41,9 +41,9 @@ class Window(QWidget):
         output = self.process.readAllStandardError().data().decode()
         self.text_edit.setText(output)
         
-    def on_error_occurred(self, e):
-        print(self.process.error())
-        self.text_edit.setText(e.name)
+    def on_error_occurred(self):
+        self.text_edit.setText(self.process.errorString())
+        self.button.setEnabled(True)
         
     def on_finished(self):
         print('process finished')
