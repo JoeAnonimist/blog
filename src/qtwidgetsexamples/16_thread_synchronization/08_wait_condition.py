@@ -101,7 +101,7 @@ class Window(QWidget):
             f'Remaining balance: {self.bank_account.balance}')
 
     def on_worker_done(self):
-        print(self.sender())
+
         self.completed += 1
         if self.completed == self.thread_count:
             print(f'Remaining balance: {self.bank_account.balance}')
