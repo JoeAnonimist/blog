@@ -1,96 +1,94 @@
 import sys
 import os
 import platform
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QTextEdit
 from PySide6.QtCore import QProcess
+from PySide6.QtWidgets import (
+    QApplication, QWidget, QPushButton,
+    QVBoxLayout, QTextEdit, QHBoxLayout
+)
+
 
 class Window(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("readAllStandardOutput() Borked Lines Demo")
+        self.setWindowTitle("QProcess Split Output Demo (Crossplatform)")
 
         self.text_edit = QTextEdit(readOnly=True)
-        self.button_naive = QPushButton("Run Naive (Show Borked Only)")
-        self.button_buffered = QPushButton("Run Buffered (Show All)")
-        self.button_naive.clicked.connect(lambda: self.run_process(naive=True))
-        self.button_buffered.clicked.connect(lambda: self.run_process(naive=False))
+
+        # Buttons
+        self.run_button = QPushButton("Run command")
+        self.run_button.clicked.connect(self.run_command)
+
+        self.stop_button = QPushButton("Stop command")
+        self.stop_button.clicked.connect(self.stop_command)
+        self.stop_button.setEnabled(False)
+
+        # Layouts
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.run_button)
+        button_layout.addWidget(self.stop_button)
 
         layout = QVBoxLayout(self)
         layout.addWidget(self.text_edit)
-        layout.addWidget(self.button_naive)
-        layout.addWidget(self.button_buffered)
+        layout.addLayout(button_layout)
 
+        # Process
         self.process = QProcess(self)
-        self.process.readyReadStandardOutput.connect(self.on_stdout)
-        self.process.finished.connect(self.on_finished)
-        self.process.readyReadStandardError.connect(self.on_stderr)
+        self.process.readyReadStandardOutput.connect(self.handle_stdout)
+        self.process.readyReadStandardError.connect(self.handle_stderr)
+        self.process.finished.connect(self.process_finished)
 
-        # Initialize for buffering
-        self.buffer = ""
-        self.naive_mode = True
-        self.partial_count = 0  # Count partial lines
-        self.line_count = 0    # Count complete lines
-
-    def run_process(self, naive=True):
+    def run_command(self):
         self.text_edit.clear()
-        self.buffer = ""
-        self.partial_count = 0
-        self.line_count = 0
-        self.naive_mode = naive
-        self.text_edit.append(f"Running {'Naive (Borked Only)' if naive else 'Buffered (All)'} Mode\n{'='*30}\n")
-        
-        # Choose command for recursive filename listing from home directory
-        home_dir = os.path.expanduser("~")
+
         if platform.system() == "Windows":
-            # Use cmd.exe to run for loop
-            cmd = ["cmd.exe", "/c", f"cd /d {home_dir} && for /r %i in (*) do @echo %~ni"]
+            home_dir = os.path.expanduser("~")
+            self.process.start("cmd.exe", ["/C", f"dir /s \"{home_dir}\""])
         else:
-            # Use find to list filenames only
-            cmd = ["find", home_dir, "-type", "f", "-printf", "%f\n"]
-        
-        self.process.start(cmd[0], cmd[1:])
+            self.process.start("bash", ["-c", "find /usr -type f -printf '%p\\n' 2>&1"])
 
-    def on_stdout(self):
-        raw = self.process.readAllStandardOutput().data().decode(errors='replace')
-        print(f"Raw chunk: {repr(raw)}")  # Debug: Show chunk boundaries
-        if self.naive_mode:
-            # Naive: Show only partial (borked) lines
-            lines = raw.split('\n')
-            for line in lines[:-1]:
-                if line.strip():
-                    self.line_count += 1  # Count complete lines silently
-            if lines[-1]:
-                self.text_edit.append(f"Partial: {lines[-1]}")  # Show only partial
-                self.partial_count += 1
+        self.run_button.setEnabled(False)
+        self.stop_button.setEnabled(True)
+
+    def stop_command(self):
+        if self.process.state() == QProcess.Running:
+            self.process.kill()
+            self.text_edit.append("\n--- Process killed ---")
+        self.run_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+
+    def _append_chunk(self, label: str, text: str):
+        if not text:
+            return
+        preview_len = 50
+        if len(text) > preview_len * 2:
+            begin = text[:preview_len].replace("\n", "\\n")
+            end = text[-preview_len:].replace("\n", "\\n")
+            msg = f"{label} (len={len(text)}): '{begin}' ... '{end}'"
         else:
-            # Buffered: Show all complete lines
-            self.buffer += raw
-            lines = self.buffer.split('\n')
-            self.buffer = lines[-1]  # Keep partial
-            for line in lines[:-1]:
-                if line.strip():
-                    self.text_edit.append(f"Got: {line}")
-                    self.line_count += 1
+            one_line = text.replace("\n", "\\n")
+            msg = f"{label} (len={len(text)}): '{one_line}'"
+        self.text_edit.append(msg)
 
-    def on_stderr(self):
-        raw = self.process.readAllStandardError().data().decode(errors='replace')
-        self.text_edit.append(f"Stderr: {raw}")
+    def handle_stdout(self):
+        data = self.process.readAllStandardOutput()
+        text = bytes(data).decode("utf-8", errors="replace")
+        self._append_chunk("STDOUT CHUNK", text)
 
-    def on_finished(self):
-        # Process remaining buffer in buffered mode
-        if not self.naive_mode and self.buffer:
-            lines = self.buffer.split('\n')
-            for line in lines:
-                if line.strip():
-                    self.text_edit.append(f"Got: {line}")
-                    self.line_count += 1
-        if self.naive_mode:
-            self.text_edit.append(f"== Process finished ==\nPartial lines: {self.partial_count}\nComplete lines (not shown): {self.line_count}")
-        else:
-            self.text_edit.append(f"== Process finished ==\nTotal lines: {self.line_count}")
+    def handle_stderr(self):
+        data = self.process.readAllStandardError()
+        text = bytes(data).decode("utf-8", errors="replace")
+        self._append_chunk("STDERR CHUNK", text)
+
+    def process_finished(self):
+        self.text_edit.append("\n--- Process finished ---")
+        self.run_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    w = Window()
-    w.show()
+    win = Window()
+    win.resize(900, 600)
+    win.show()
     sys.exit(app.exec())
