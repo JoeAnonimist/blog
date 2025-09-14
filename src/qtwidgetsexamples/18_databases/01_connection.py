@@ -14,16 +14,18 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        button = QPushButton('Print database info')
-        button.clicked.connect(self.on_button_clicked)
-        layout.addWidget(button)
+        self.button = QPushButton('Print database info')
+        self.button.clicked.connect(self.on_button_clicked)
+        layout.addWidget(self.button)
         
         self.db = QSqlDatabase.addDatabase('QSQLITE')
         self.db.setDatabaseName('finance_demo.sqlite')
         
-        if self.db.open():
+        result = self.db.open()
+        if result:
             print('Connected!')
         else:
+            self.button.setDisabled(True)
             print('Failed to connect to the database')
     
     @Slot()
