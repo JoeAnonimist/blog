@@ -1,8 +1,7 @@
 import sys
 from PySide6.QtCore import QDate, Slot, Qt
 from PySide6.QtWidgets import (QApplication, 
-    QWidget, QPushButton, QVBoxLayout,
-    QTableWidget, QTableWidgetItem)
+    QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem)
 from PySide6.QtSql import QSqlDatabase, QSqlQuery
 
 
