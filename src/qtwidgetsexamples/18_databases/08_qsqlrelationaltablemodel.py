@@ -36,7 +36,7 @@ class Window(QWidget):
         self.table_view = QTableView()        
         self.table_view.setModel(self.table_model)
         
-        # PRovide comboboxes
+        # Provide comboboxes
         delegate = QSqlRelationalDelegate(self.table_view)
         self.table_view.setItemDelegate(delegate)
         
