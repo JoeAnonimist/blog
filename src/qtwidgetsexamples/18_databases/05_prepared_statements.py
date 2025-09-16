@@ -38,6 +38,7 @@ class Window(QWidget):
         result = self.db.open()
         if result:
             print('Connected!')
+            QSqlQuery().exec('PRAGMA foreign_keys = ON;')
             self.load_transactions()
             self.set_column_widths()
         else:
