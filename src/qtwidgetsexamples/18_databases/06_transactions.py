@@ -83,6 +83,7 @@ class Window(QWidget):
                 success = False
                 break
             else:
+                self.db.commit()
                 print(f'Inserted transaction: {t[4]}')
                 
         if success:
