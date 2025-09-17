@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import QTimer, QTime, Slot
+from PySide6.QtCore import QTimer, QTime, Slot, Qt
 from PySide6.QtWidgets import (QApplication, QWidget,
     QPushButton, QLabel, QVBoxLayout)
 
@@ -28,7 +28,8 @@ class Window(QWidget):
         self.reset_button.clicked.connect(self.on_reset_button_clicked)
         layout.addWidget(self.reset_button)
 
-        self.label = QLabel(self.elapsed_time.toString('mm:ss.zzz'))
+        self.label = QLabel(self.elapsed_time.toString('mm:ss.z'))
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.label)
         
         self.timer = QTimer()
@@ -50,18 +51,12 @@ class Window(QWidget):
     @Slot()
     def on_reset_button_clicked(self):
         self.elapsed_time = QTime(0, 0, 0, 0)
-        self.label.setText(self.elapsed_time.toString('mm:ss.zzz'))
+        self.label.setText(self.elapsed_time.toString('mm:ss.z'))
         
     @Slot()
     def on_timeout(self):
         self.elapsed_time = self.elapsed_time.addMSecs(100)
-        self.label.setText(self.elapsed_time.toString('mm:ss.zzz'))
-        self.start_button.setEnabled(True)
-        
-    @Slot(int)
-    def on_value_changed(self, value):
-        self.counter = value
-        self.label.setText(str(self.counter))
+        self.label.setText(self.elapsed_time.toString('mm:ss.z'))
       
 
 if __name__ == '__main__':
