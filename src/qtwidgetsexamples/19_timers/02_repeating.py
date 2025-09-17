@@ -20,12 +20,13 @@ class Window(QWidget):
         layout.addWidget(self.label)
         
         self.timer = QTimer()
+        self.timer.setInterval(1000)
         self.timer.timeout.connect(self.on_timeout)
     
     @Slot()
     def on_button_clicked(self):
         self.button.setDisabled(True)
-        self.timer.start(1000)
+        self.timer.start()
         
     @Slot()
     def on_timeout(self):
