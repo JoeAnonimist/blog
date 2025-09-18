@@ -1,19 +1,8 @@
 import sys
-
-from PySide6.QtCore import QObject, QEvent
+from PySide6.QtCore import QTimer, Qt
 from PySide6.QtGui import QInputEvent
 from PySide6.QtWidgets import (QApplication, 
     QWidget, QLabel, QVBoxLayout)
-
-
-class MousePressFilter(QObject):
-        
-    def eventFilter(self, watched, event):
-        if event.type() == QEvent.Type.MouseButtonPress:
-            print('Filter mouse press for: ', watched.objectName())
-            if watched.objectName() == 'button2':
-                return True
-        return super().eventFilter(watched, event)
 
 
 class Window(QWidget):
@@ -24,19 +13,35 @@ class Window(QWidget):
         
         layout = QVBoxLayout()
         self.setLayout(layout)
+        self.resize(300, 200)
+        # self.setMouseTracking(True)
         
-        label = QLabel()
-        layout.addWidget(label)
+        self.label = QLabel('Stop user activity to sleep')
+        self.label.setStyleSheet('border: 1px solid grey;')
+        self.label.setAlignment(
+            Qt.AlignmentFlag.AlignHCenter |
+            Qt.AlignmentFlag.AlignVCenter)
+        # self.label.setMouseTracking(True)
+        layout.addWidget(self.label)
         
-        #event_filter = MousePressFilter(self)
-        #self.installEventFilter(event_filter)
+        self.timer = QTimer()
+        self.timer.setInterval(3000)
+        self.timer.timeout.connect(self.on_timeout)
+        self.timer.start()
+        
+    def on_timeout(self):
+        print('timeout')
+        self.label.setStyleSheet('background: lightgrey;')
+        self.label.setText('Sleeping...')
         
     def event(self, event):
         if isinstance(event, QInputEvent):
             print(event)
-        return super().event(self, event)
+            self.label.setStyleSheet('border: 1px solid grey;')
+            self.label.setText('Stop user activity to sleep')
+            self.timer.start()
+        return super().event(event)
 
-      
 
 if __name__ == '__main__':
 
