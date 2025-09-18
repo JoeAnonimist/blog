@@ -27,7 +27,7 @@ class Worker(QObject):
         
     @Slot()
     def poll(self):
-        self.result_ready.emit(int(psutil.cpu_percent(interval=self.interval / 1000)))
+        self.result_ready.emit(int(psutil.cpu_percent(interval=None)))
 
 
 class Window(QWidget):
