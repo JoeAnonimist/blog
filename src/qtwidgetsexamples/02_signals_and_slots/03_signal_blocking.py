@@ -18,7 +18,8 @@ class Window(QWidget):
         layout.addWidget(self.button)
         
         block_checkbox = QCheckBox('Block signals')
-        block_checkbox.checkStateChanged.connect(self.on_checked_state_changed)
+        block_checkbox.checkStateChanged.connect(
+            self.on_checked_state_changed)
         layout.addWidget(block_checkbox)
 
     @Slot()
