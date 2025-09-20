@@ -41,7 +41,8 @@ class Window(QWidget):
         socket = self.server.nextPendingConnection()
         socket.readyRead.connect(lambda s=socket: self.handle_server_read(s))
         socket.disconnected.connect(socket.deleteLater)
-        
+
+    @Slot()
     def handle_server_read(self, socket):
         data = socket.readAll().data().decode()
         print(f'Server received: {data.strip()}')
