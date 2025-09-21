@@ -50,6 +50,10 @@ class Window(QWidget):
         print('Label 4 parent:', self.label4.parent())
 
         print('Window.__init__() end')
+        
+    def closeEvent(self, event):
+        print('\nWindow close event\n')
+        QWidget.closeEvent(self, event)
 
 if __name__ == '__main__':
     
