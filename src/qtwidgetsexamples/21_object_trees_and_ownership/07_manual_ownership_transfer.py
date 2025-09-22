@@ -1,4 +1,5 @@
 import sys
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (QApplication, QWidget,
     QGroupBox, QVBoxLayout, QPushButton, QLabel)
 
@@ -22,6 +23,7 @@ class SubTreeWidget(QWidget):
 class MainWindow(QWidget):
     
     def __init__(self):
+        
         super().__init__()
 
         layout = QVBoxLayout(self)
@@ -39,29 +41,35 @@ class MainWindow(QWidget):
         self.subtree = SubTreeWidget()
         self.group1.layout().addWidget(self.subtree)
 
-        self._connect_subtree_button(self.group1)
-
         self.switch_button = QPushButton('Move Subtree')
         layout.addWidget(self.switch_button)
         self.switch_button.clicked.connect(self.move_subtree)
 
-    def _connect_subtree_button(self, target_group):
-
-        try:
-            self.subtree.button.clicked.disconnect()
-        except TypeError:
-            pass  # No connection to remove
-
         self.subtree.button.clicked.connect(
-            lambda checked, group=target_group: group.setCheckable(checked))
+            self.toggle_current_group_checkable)
+
+    @Slot(bool)
+    def toggle_current_group_checkable(self, checked):
+        current_group = self.subtree.parent()
+        if current_group:
+            current_group.setCheckable(checked)
 
     def move_subtree(self):
         
         old_parent = self.subtree.parent()
+        if not old_parent:
+            return
+
+        self.subtree.button.clicked.disconnect(
+            self.toggle_current_group_checkable)
+
         old_parent.layout().removeWidget(self.subtree)
         old_parent.setCheckable(False)
-
-        new_parent = self.group2 if old_parent == self.group1 else self.group1
+        
+        if old_parent == self.group1:
+            new_parent = self.group2
+        else:
+            new_parent = self.group1
 
         self.subtree.setParent(new_parent)
         new_parent.layout().addWidget(self.subtree)
@@ -69,8 +77,8 @@ class MainWindow(QWidget):
         if self.subtree.button.isChecked():
             new_parent.setCheckable(True)
 
-        self._connect_subtree_button(new_parent)
-
+        self.subtree.button.clicked.connect(
+            self.toggle_current_group_checkable)
         print(f'Parent: {new_parent.objectName()}')
 
 
