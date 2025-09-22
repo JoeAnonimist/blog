@@ -90,3 +90,10 @@ if __name__ == '__main__':
     win.show()
     
     sys.exit(app.exec())
+    
+'''
+1. Prepare the Source (Old Parent)
+2. Handle State or Side Effects
+3. Transfer Ownership:obj.setParent(new_parent)
+4. Integrate into Destination
+'''
