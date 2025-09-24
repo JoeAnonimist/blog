@@ -1,142 +1,137 @@
 import sys
-from PySide6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QPushButton,
-    QLineEdit, QTableView, QMessageBox
-)
-from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
+from PySide6.QtWidgets import (QApplication, QWidget,
+    QVBoxLayout, QPushButton, QLineEdit, QTableView)
+from PySide6.QtSql import (QSqlDatabase, QSqlQuery,
+    QSqlTableModel)
 from PySide6.QtCore import QThread, Signal, Slot
 
 
-def initialize_database():
-    db = QSqlDatabase.addDatabase("QSQLITE", "init_conn")
-    db.setDatabaseName("example.db")
-    if not db.open():
-        raise Exception("Could not open database.")
+class BaseThread(QThread):
+    done = Signal(str)
 
-    query = QSqlQuery(db)
-    query.exec("""
-        CREATE TABLE IF NOT EXISTS Users (
-            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            email TEXT UNIQUE NOT NULL
-        )
-    """)
-    db.close()
-    QSqlDatabase.removeDatabase("init_conn")
-
-
-class ReaderThread(QThread):
-    result_ready = Signal(list)
-
-    def run(self):
-        db = QSqlDatabase.addDatabase("QSQLITE", "readConn")
-        db.setDatabaseName("example.db")
-        if not db.open():
-            self.result_ready.emit([])
-            return
-
-        query = QSqlQuery(db)
-        result = []
-        if query.exec("SELECT user_id, username, email FROM Users"):
-            while query.next():
-                result.append((query.value(0), query.value(1), query.value(2)))
-
-        db.close()
-        QSqlDatabase.removeDatabase("readConn")
-        self.result_ready.emit(result)
-
-
-class WriterThread(QThread):
-    write_complete = Signal(str)
-
-    def __init__(self, username, email):
+    def __init__(self, query_fn):
         super().__init__()
-        self.username = username
-        self.email = email
+        self.query_fn = query_fn
+
+    def _open_db(self, prefix):
+        conn_name = f'{prefix}_{id(self)}'
+        db = QSqlDatabase.addDatabase('QSQLITE', conn_name)
+        db.setDatabaseName('finance_demo.sqlite')
+        return db, conn_name
 
     def run(self):
-        db = QSqlDatabase.addDatabase("QSQLITE", "writeConn")
-        db.setDatabaseName("example.db")
+        db, conn_name = self._open_db(self.__class__.__name__.lower())
         if not db.open():
-            self.write_complete.emit("DB connection failed.")
+            self.done.emit('DB connection failed.')
+            db = None
             return
 
         query = QSqlQuery(db)
-        query.prepare("INSERT INTO Users (username, email) VALUES (?, ?)")
-        query.addBindValue(self.username)
-        query.addBindValue(self.email)
+        msg = self.query_fn(query)
+        query = None  # explicit cleanup
+        del query
+        db = None
+        del db
+        self.done.emit(msg)
 
-        if query.exec():
-            self.write_complete.emit("User added.")
-        else:
-            self.write_complete.emit(f"Error: {query.lastError().text()}")
 
-        db.close()
-        QSqlDatabase.removeDatabase("writeConn")
+class WriterThread(BaseThread):
+    def __init__(self, username, email):
+        def insert_user(query):
+            query.prepare('INSERT INTO Users (username, email) VALUES (?, ?)')
+            query.addBindValue(username)
+            query.addBindValue(email)
+            return 'User added.' if query.exec() else f'Error: {query.lastError().text()}'
+
+        super().__init__(insert_user)
+
+
+class DeleterThread(BaseThread):
+    def __init__(self, user_id):
+        def delete_user(query):
+            query.prepare('DELETE FROM Users WHERE user_id = ?')
+            query.addBindValue(user_id)
+            return 'User deleted.' if query.exec() else f'Error: {query.lastError().text()}'
+
+        super().__init__(delete_user)
 
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Users DB (Multithreaded)")
-        initialize_database()
 
         layout = QVBoxLayout(self)
-        self.username_input = QLineEdit()
-        self.username_input.setPlaceholderText("Username")
-        self.email_input = QLineEdit()
-        self.email_input.setPlaceholderText("Email")
 
-        self.add_btn = QPushButton("Add User")
-        self.refresh_btn = QPushButton("Refresh")
+        self.username_input = QLineEdit()
+        self.username_input.setPlaceholderText('Username')
+        self.email_input = QLineEdit()
+        self.email_input.setPlaceholderText('Email')
+
+        self.add_btn = QPushButton('Add User')
+        self.delete_btn = QPushButton('Delete Selected')
+
+        db = QSqlDatabase.addDatabase('QSQLITE', 'main_conn')
+        db.setDatabaseName('finance_demo.sqlite')
+        if not db.open():
+            print(f'DB Error: {db.lastError().text()}')
+            return
 
         self.table = QTableView()
-        self.model = QSqlTableModel()
-        self.model.setTable("Users")
+        self.table.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.model = QSqlTableModel(self, db)
+        self.model.setTable('Users')
         self.model.select()
         self.table.setModel(self.model)
 
         layout.addWidget(self.username_input)
         layout.addWidget(self.email_input)
         layout.addWidget(self.add_btn)
-        layout.addWidget(self.refresh_btn)
+        layout.addWidget(self.delete_btn)
         layout.addWidget(self.table)
 
         self.add_btn.clicked.connect(self.add_user)
-        self.refresh_btn.clicked.connect(self.refresh_users)
+        self.delete_btn.clicked.connect(self.delete_user)
 
     def add_user(self):
         name = self.username_input.text().strip()
         email = self.email_input.text().strip()
         if not name or not email:
-            QMessageBox.warning(self, "Input Error", "Both fields are required.")
+            print('Input Error: Both fields are required.')
             return
 
         self.writer = WriterThread(name, email)
-        self.writer.write_complete.connect(self.on_write_done)
+        self.writer.done.connect(self.on_action_done)
+        self.writer.finished.connect(self.writer.deleteLater)
         self.writer.start()
 
+    def delete_user(self):
+        selected = self.table.selectionModel().selectedRows()
+        if not selected:
+            print('No row selected.')
+            return
+
+        row = selected[0].row()
+        user_id = self.model.data(self.model.index(row, 0))  # assumes user_id is column 0
+        if user_id is None:
+            print('Invalid user ID.')
+            return
+
+        self.deleter = DeleterThread(user_id)
+        self.deleter.done.connect(self.on_action_done)
+        self.deleter.finished.connect(self.deleter.deleteLater)
+        self.deleter.start()
+
     @Slot(str)
-    def on_write_done(self, msg):
-        QMessageBox.information(self, "Insert Result", msg)
-        self.model.select()  # Refresh view
-
-    def refresh_users(self):
-        self.reader = ReaderThread()
-        self.reader.result_ready.connect(self.on_read_done)
-        self.reader.start()
-
-    @Slot(list)
-    def on_read_done(self, data):
-        print("Read from DB:")
-        for row in data:
-            print(row)
-        self.model.select()  # Refresh view
+    def on_action_done(self, msg):
+        print(msg)
+        self.model.select()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QApplication(sys.argv)
+
     window = MainWindow()
-    window.resize(500, 400)
+    window.resize(500, 300)
     window.show()
+
     sys.exit(app.exec())
