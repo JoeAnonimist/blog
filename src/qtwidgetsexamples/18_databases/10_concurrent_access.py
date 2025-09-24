@@ -11,7 +11,7 @@ class BaseThread(QThread):
 
     def __init__(self, query_fn):
         super().__init__()
-        self.query_fn = query_fn
+        self.query_fn = query_fn 
 
     def _open_db(self, prefix):
         conn_name = f'{prefix}_{id(self)}'
