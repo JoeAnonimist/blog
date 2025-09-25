@@ -12,6 +12,10 @@ ApplicationWindow {
 	    
 	Logger {
 	    id: myLogger
+	    
+	    onMessageChanged: () => {
+	        
+	    }
 	}
 
     Rectangle {
@@ -31,23 +35,10 @@ ApplicationWindow {
                 myLogger.message = "Some message"
                 myLogger.severity = Math.floor(Math.random() * 6)
                 myLogger.filename = "signals.qml"
-                myLogger.log()
+                //myLogger.log()
+                print(myLogger.detailsChanged)
+                print(myLogger.detailsChanged.connect)
             }
-        }
-    }
-    
-    Connections {
-        
-        target: myLogger
-
-        function onLogged (at) {
-            console.log("Logger.logged emitted: ",
-                Qt.formatTime(at, "hh:mm:ss"))
-        }
-        
-        function onSeverityChanged () {
-            console.log("Severity changed", 
-                target.severity, myLogger.severity)
         }
     }
 }
