@@ -16,21 +16,35 @@ ApplicationWindow {
 	        id: myText
 	    
 	        Layout.alignment: Qt.AlignCenter
+	        Layout.fillWidth: true
+	        wrapMode: Text.WordWrap
+	        horizontalAlignment: Text.AlignHCenter
+	        verticalAlignment: Text.AlignVCenter
 	        text: "Your text here"
 	        
-	        font.family: "Georgia"
-	        font.pointSize: 14
+	        font.family: "Serif"
+	        font.pointSize: 20
 	        
         }
         
         Button {
-            text: "Mirror horizontally"
+            text: "Toggle Bold"
             Layout.fillWidth: true
+            onClicked: () => {
+                myText.font.bold = ! myText.font.bold
+            }
         }
         
         Button {
-            text: "Mirror vertically"
+            text: "Toggle Italic"
             Layout.fillWidth: true
+            onClicked: () => {
+                myText.font.italic = ! myText.font.italic
+            }
+        }
+        
+        Item {
+            Layout.fillHeight: true
         }
     }
 }
