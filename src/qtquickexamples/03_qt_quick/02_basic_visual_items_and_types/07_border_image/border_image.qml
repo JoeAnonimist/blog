@@ -13,8 +13,8 @@ ApplicationWindow {
 
         anchors.centerIn: parent
         
-        width: parent.width / 2
-        height: parent.height / 2
+        width: parent.width
+        height: parent.height
         
         color: "lightsteelblue"
         

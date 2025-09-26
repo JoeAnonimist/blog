@@ -41,7 +41,7 @@ ApplicationWindow {
             Layout.fillWidth: true
             onClicked: {
                 myImage.playing = ! myImage.playing
-                parent.update.Stats()
+                parent.updateStats()
             }
         }
         
