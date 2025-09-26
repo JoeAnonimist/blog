@@ -17,11 +17,14 @@ ApplicationWindow {
 	    
 	        Layout.alignment: Qt.AlignCenter
 	        Layout.fillWidth: true
+	        
 	        wrapMode: Text.WordWrap
 	        horizontalAlignment: Text.AlignHCenter
 	        verticalAlignment: Text.AlignVCenter
+	        
 	        text: "Your text here"
 	        
+	        color: "steelblue"
 	        font.family: "Serif"
 	        font.pointSize: 20
 	        

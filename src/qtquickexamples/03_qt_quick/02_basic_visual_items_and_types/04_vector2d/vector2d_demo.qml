@@ -5,7 +5,7 @@ Window {
     width: 200
     height: 200
     visible: true
-    title: "Vector2D Positioning Exercise"
+    title: "Vector2D Positioning"
 
     property vector2d pos: Qt.vector2d(50, 50)
 
@@ -22,7 +22,9 @@ Window {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            pos = Qt.vector2d(Math.random() * (width - 100), Math.random() * (height - 100))
+            pos = Qt.vector2d(
+                Math.random() * (width - 100),
+                Math.random() * (height - 100))
         }
     }
 }
