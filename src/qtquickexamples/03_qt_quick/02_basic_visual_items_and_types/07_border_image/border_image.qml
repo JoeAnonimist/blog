@@ -7,6 +7,7 @@ ApplicationWindow {
     width: 300
     height: 200
     title: "Nine Patch Image"
+    flags: Qt.Window | Qt.WindowResizable
 
     Item {
         anchors.fill: parent
@@ -26,13 +27,12 @@ ApplicationWindow {
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 25
-            width: parent.width - 50
-            height: parent.height - 50
 
             Rectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                color: "#FCFCFC"
+                color: "lightgrey"
+                focus: true
 
                 Text {
                     anchors.centerIn: parent
@@ -43,9 +43,13 @@ ApplicationWindow {
                 }
 
                 MouseArea {
+                    id: mouseArea
                     anchors.fill: parent
                     onClicked: console.log("Rectangle clicked!")
                 }
+                
+                scale: mouseArea.pressed ? 0.995 : 1.0
+                
             }
         }
     }
