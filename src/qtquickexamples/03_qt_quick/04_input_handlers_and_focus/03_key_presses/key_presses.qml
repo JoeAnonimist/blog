@@ -31,7 +31,10 @@ ApplicationWindow {
             focus: true
             
             Keys.onPressed: (event) => {
-                text = event.text
+                text += event.text
+                if (text.length > 10) {
+                    text = text.slice(-10)
+                }
                 console.log(event.text)
             }
         }
