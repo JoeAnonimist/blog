@@ -24,8 +24,13 @@ ApplicationWindow {
         HoverHandler {
             onHoveredChanged: () => {
                 console.log("Hovered")
-                hovered ? rect1.border.width = 2 :
-                    rect1.border.width = 1;
+                if (hovered) {
+                    rect1.border.width = 2
+                    rect1.scale = 1.02
+                } else {
+                    rect1.border.width = 1
+                    rect1.scale = 1
+                }
             }
         }
     }
