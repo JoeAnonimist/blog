@@ -13,6 +13,7 @@ ApplicationWindow {
     
         id: container
         anchors.fill: parent
+        anchors.margins:10
         
         property bool flipped: false
 
@@ -20,7 +21,7 @@ ApplicationWindow {
             anchors.fill: parent
             color: "#B3E5FC"
             border.color: "#0288D1"
-            border.width: 4
+            border.width: 1
 
             Text {
                 anchors.centerIn: parent
@@ -33,7 +34,7 @@ ApplicationWindow {
             anchors.fill: parent
             color: "#B9F6CA"
             border.color: "#388E3C"
-            border.width: 4
+            border.width: 1
 
             Text {
                 anchors.centerIn: parent
