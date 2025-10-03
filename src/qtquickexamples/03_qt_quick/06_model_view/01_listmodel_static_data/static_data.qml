@@ -41,7 +41,7 @@ ApplicationWindow {
         highlightFollowsCurrentItem: true
         highlight: Rectangle {
             color: "orange"
-            opacity: 0.1
+            opacity: 0.2
         }
         
         delegate: MyDelegate {}
