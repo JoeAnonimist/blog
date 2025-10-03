@@ -44,12 +44,8 @@ ApplicationWindow {
                 anchors.fill: parent
                 anchors.margins: 8
                 
-                Label {
-                    text: name
-                }
-                Label {
-                    text: value
-                }
+                Label { text: name }
+                Label { text: value }
             }
         }
     }
