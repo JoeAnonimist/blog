@@ -47,21 +47,13 @@ ApplicationWindow {
         delegate: MyDelegate {}
         
         ScrollBar.vertical: ScrollBar {}
-        
-        onCurrentIndexChanged: () => {
-            console.log("Current index changed: " + currentIndex)
-        }
     }
+
+    // Legacy: all roles are available
     
     component MyDelegate: Rectangle {
         
         id: root
-        
-        required property int index
-        required property var model
-        
-        required property string name
-        required property int value
     
         width: 200
         height: 40
@@ -81,10 +73,11 @@ ApplicationWindow {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                console.log("Model: " + typeof model.name, typeof model.value)
+                console.log("Index: " + index)
+                Object.keys(model).forEach(k => console.log("\t" + k));
+
                 root.ListView.view.currentIndex = index
-                console.log("Clicked: " +
-                    "Current index: " + root.ListView.view.currentIndex +
-                    " Name: " + model.name + " Value: " + model.value)
             }
         }
     }
