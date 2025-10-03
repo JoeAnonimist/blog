@@ -13,7 +13,9 @@ ApplicationWindow {
     ListModel {
 
         id: listModel
+        objectName: "listModel"
 
+        ListElement {name: "Item 0"; value: 0}
         ListElement {name: "Item 1"; value: 1}
         ListElement {name: "Item 2"; value: 2}
         ListElement {name: "Item 3"; value: 3}
@@ -22,6 +24,7 @@ ApplicationWindow {
         ListElement {name: "Item 6"; value: 6}
         ListElement {name: "Item 7"; value: 7}
         ListElement {name: "Item 8"; value: 8}
+        ListElement {name: "Item 9"; value: 9}
     }
 
     ListView {
@@ -34,13 +37,24 @@ ApplicationWindow {
         implicitWidth: 200
         implicitHeight: count * 40
         
+        focus: true
+        highlightFollowsCurrentItem: true
+        highlight: Rectangle {
+            color: "orange"
+            opacity: 0.1
+        }
+        
+        ScrollBar.vertical: ScrollBar {}
+        
         delegate: Rectangle {
+        
+            id: root
         
             width: 200
             height: 40
-            color: index % 2 === 0 ? "#f0f0f0" : "#dcdcdc"
-            border.width: 1
-            border.color: "lightgrey"
+            color: index === ListView.view.currentIndex ?
+                "transparent" :
+                    index % 2 === 0 ? "#f0f0f0" : "#dcdcdc" 
             
             RowLayout {
             
@@ -49,6 +63,22 @@ ApplicationWindow {
                 
                 Label { text: name }
                 Label { text: value }
+            }
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Model: " + model)
+                    Object.keys(model).forEach(k => console.log("\t" + k));
+                    console.log("Index: " + index)
+                    console.log("ListView.view: " + root.ListView.view)
+                    console.log("ListView.view.currentItem: "
+                        + root.ListView.view.currentItem)
+                    console.log("ListView.view.currentIndex: "
+                        + root.ListView.view.currentIndex)
+                    
+                    root.ListView.view.currentIndex = index
+                }
             }
         }
     }
