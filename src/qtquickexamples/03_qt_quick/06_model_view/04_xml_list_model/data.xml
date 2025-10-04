@@ -3,334 +3,35 @@
     <firstname>Silvana</firstname>
     <lastname>Malvino</lastname>
     <profession>worker</profession>
-    <subordinates>
-      <person id="2">
-        <firstname>Shannah</firstname>
-        <lastname>Chesna</lastname>
-        <profession>worker</profession>
-        <subordinates>
-          <person id="3">
-            <firstname>Tybie</firstname>
-            <lastname>Bakerman</lastname>
-            <profession>doctor</profession>
-            <subordinates>
-              <person id="4">
-                <firstname>Inga</firstname>
-                <lastname>Alcott</lastname>
-                <profession>developer</profession>
-                <subordinates>
-                  <person id="5">
-                    <firstname>Ulrike</firstname>
-                    <lastname>Cimbura</lastname>
-                    <profession>firefighter</profession>
-                    <subordinates>
-                      <person id="6">
-                        <firstname>Lolita</firstname>
-                        <lastname>Wenda</lastname>
-                        <profession>developer</profession>
-                        <subordinates>
-                          <person id="7">
-                            <firstname>Rhea</firstname>
-                            <lastname>Miller</lastname>
-                            <profession>worker</profession>
-                          </person>
-                          <person id="8">
-                            <firstname>James</firstname>
-                            <lastname>Whitten</lastname>
-                            <profession>doctor</profession>
-                          </person>
-                          <person id="9">
-                            <firstname>Catherine</firstname>
-                            <lastname>Moor</lastname>
-                            <profession>firefighter</profession>
-                          </person>
-                        </subordinates>
-                      </person>
-                      <person id="10">
-                        <firstname>Tara</firstname>
-                        <lastname>Schmidt</lastname>
-                        <profession>worker</profession>
-                      </person>
-                      <person id="11">
-                        <firstname>Samantha</firstname>
-                        <lastname>Bailey</lastname>
-                        <profession>police officer</profession>
-                      </person>
-                    </subordinates>
-                  </person>
-                  <person id="12">
-                    <firstname>Fiona</firstname>
-                    <lastname>Knox</lastname>
-                    <profession>doctor</profession>
-                  </person>
-                </subordinates>
-              </person>
-            </subordinates>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="13">
     <firstname>Donnie</firstname>
     <lastname>Atcliffe</lastname>
     <profession>worker</profession>
-    <subordinates>
-      <person id="14">
-        <firstname>Kristan</firstname>
-        <lastname>Bohlin</lastname>
-        <profession>firefighter</profession>
-        <subordinates>
-          <person id="15">
-            <firstname>Rosaline</firstname>
-            <lastname>Adlare</lastname>
-            <profession>worker</profession>
-            <subordinates>
-              <person id="16">
-                <firstname>Ebonee</firstname>
-                <lastname>Salvidor</lastname>
-                <profession>firefighter</profession>
-                <subordinates>
-                  <person id="17">
-                    <firstname>James</firstname>
-                    <lastname>Frothingham</lastname>
-                    <profession>doctor</profession>
-                    <subordinates>
-                      <person id="18">
-                        <firstname>Lily</firstname>
-                        <lastname>Sacks</lastname>
-                        <profession>police officer</profession>
-                      </person>
-                      <person id="19">
-                        <firstname>Lydia</firstname>
-                        <lastname>Rashida</lastname>
-                        <profession>developer</profession>
-                      </person>
-                    </subordinates>
-                  </person>
-                  <person id="20">
-                    <firstname>Matthew</firstname>
-                    <lastname>Brock</lastname>
-                    <profession>police officer</profession>
-                  </person>
-                </subordinates>
-              </person>
-              <person id="21">
-                <firstname>Zoe</firstname>
-                <lastname>Gallagher</lastname>
-                <profession>doctor</profession>
-              </person>
-              <person id="22">
-                <firstname>Lena</firstname>
-                <lastname>Gusman</lastname>
-                <profession>firefighter</profession>
-              </person>
-            </subordinates>
-          </person>
-          <person id="23">
-            <firstname>Alvin</firstname>
-            <lastname>Smith</lastname>
-            <profession>developer</profession>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="24">
     <firstname>Gisela</firstname>
     <lastname>Norvol</lastname>
     <profession>police officer</profession>
-    <subordinates>
-      <person id="25">
-        <firstname>Adelle</firstname>
-        <lastname>Newell</lastname>
-        <profession>worker</profession>
-        <subordinates>
-          <person id="26">
-            <firstname>Minne</firstname>
-            <lastname>Reneta</lastname>
-            <profession>police officer</profession>
-            <subordinates>
-              <person id="27">
-                <firstname>Lucas</firstname>
-                <lastname>Deverell</lastname>
-                <profession>firefighter</profession>
-                <subordinates>
-                  <person id="28">
-                    <firstname>Madalyn</firstname>
-                    <lastname>Pond</lastname>
-                    <profession>police officer</profession>
-                    <subordinates>
-                      <person id="29">
-                        <firstname>Zachary</firstname>
-                        <lastname>Kensley</lastname>
-                        <profession>worker</profession>
-                      </person>
-                    </subordinates>
-                  </person>
-                  <person id="30">
-                    <firstname>Samuel</firstname>
-                    <lastname>Quintanilla</lastname>
-                    <profession>doctor</profession>
-                  </person>
-                </subordinates>
-              </person>
-            </subordinates>
-          </person>
-          <person id="31">
-            <firstname>Pauline</firstname>
-            <lastname>Ramos</lastname>
-            <profession>developer</profession>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="32">
     <firstname>Melanie</firstname>
     <lastname>Behre</lastname>
     <profession>developer</profession>
-    <subordinates>
-      <person id="33">
-        <firstname>Amii</firstname>
-        <lastname>Jefferey</lastname>
-        <profession>police officer</profession>
-        <subordinates>
-          <person id="34">
-            <firstname>Chickie</firstname>
-            <lastname>Uird</lastname>
-            <profession>doctor</profession>
-            <subordinates>
-              <person id="35">
-                <firstname>Luci</firstname>
-                <lastname>Lamoree</lastname>
-                <profession>firefighter</profession>
-                <subordinates>
-                  <person id="36">
-                    <firstname>Lusa</firstname>
-                    <lastname>Dimitris</lastname>
-                    <profession>police officer</profession>
-                    <subordinates>
-                      <person id="37">
-                        <firstname>Chester</firstname>
-                        <lastname>Jameson</lastname>
-                        <profession>developer</profession>
-                      </person>
-                      <person id="38">
-                        <firstname>Ember</firstname>
-                        <lastname>Thorne</lastname>
-                        <profession>doctor</profession>
-                      </person>
-                    </subordinates>
-                  </person>
-                </subordinates>
-              </person>
-              <person id="39">
-                <firstname>Emma</firstname>
-                <lastname>Rooney</lastname>
-                <profession>firefighter</profession>
-              </person>
-            </subordinates>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="40">
     <firstname>Ellette</firstname>
     <lastname>Timon</lastname>
     <profession>firefighter</profession>
-    <subordinates>
-      <person id="41">
-        <firstname>Nadine</firstname>
-        <lastname>Bord</lastname>
-        <profession>police officer</profession>
-        <subordinates>
-          <person id="42">
-            <firstname>Nanete</firstname>
-            <lastname>Stilwell</lastname>
-            <profession>police officer</profession>
-            <subordinates>
-              <person id="43">
-                <firstname>Judy</firstname>
-                <lastname>Marden</lastname>
-                <profession>police officer</profession>
-                <subordinates>
-                  <person id="44">
-                    <firstname>Alyssa</firstname>
-                    <lastname>Adamsen</lastname>
-                    <profession>police officer</profession>
-                    <subordinates>
-                      <person id="45">
-                        <firstname>Lily</firstname>
-                        <lastname>Fischer</lastname>
-                        <profession>doctor</profession>
-                      </person>
-                    </subordinates>
-                  </person>
-                  <person id="46">
-                    <firstname>Olivia</firstname>
-                    <lastname>Morgan</lastname>
-                    <profession>firefighter</profession>
-                  </person>
-                </subordinates>
-              </person>
-            </subordinates>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="47">
     <firstname>Nataline</firstname>
     <lastname>Lipson</lastname>
     <profession>doctor</profession>
-    <subordinates>
-      <person id="48">
-        <firstname>Rosabelle</firstname>
-        <lastname>Sallyann</lastname>
-        <profession>doctor</profession>
-        <subordinates>
-          <person id="49">
-            <firstname>Candi</firstname>
-            <lastname>Hanleigh</lastname>
-            <profession>police officer</profession>
-            <subordinates>
-              <person id="50">
-                <firstname>Eve</firstname>
-                <lastname>Green</lastname>
-                <profession>developer</profession>
-              </person>
-            </subordinates>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
   <person id="51">
     <firstname>Maurene</firstname>
     <lastname>Brieta</lastname>
     <profession>worker</profession>
-    <subordinates>
-      <person id="52">
-        <firstname>Meghann</firstname>
-        <lastname>Boycey</lastname>
-        <profession>firefighter</profession>
-        <subordinates>
-          <person id="53">
-            <firstname>Anestassia</firstname>
-            <lastname>Alarise</lastname>
-            <profession>firefighter</profession>
-            <subordinates>
-              <person id="54">
-                <firstname>Sidoney</firstname>
-                <lastname>Hanshaw</lastname>
-                <profession>police officer</profession>
-              </person>
-            </subordinates>
-          </person>
-        </subordinates>
-      </person>
-    </subordinates>
   </person>
 </organization>
