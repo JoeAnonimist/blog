@@ -66,7 +66,7 @@ ApplicationWindow {
         width: 200
         height: 40
         color: ListView.isCurrentItem ? "transparent" :
-               (ListView.index % 2 === 0 ? "#f0f0f0" : "#dcdcdc")
+               (index % 2 === 0 ? "#f0f0f0" : "#dcdcdc")
         
         RowLayout {
             anchors.fill: parent
