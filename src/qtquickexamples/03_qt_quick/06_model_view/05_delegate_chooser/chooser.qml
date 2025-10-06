@@ -8,21 +8,21 @@ ApplicationWindow {
     visible: true
     width: listView.implicitWidth
     height: listView.implicitHeight
-    title: "DelegateChooser"
+    title: "DelegateChooser Demo"
     
     ListModel {
-
+    
         id: listModel
-
+    
         ListElement { type: "info"; message: "Build completed successfully" }
-        ListElement { type: "warning"; message: "Unused variable 'temp'" }
-        ListElement { type: "error"; message: "Null pointer dereference" }
+        ListElement { type: "warning"; message: "Unused variable 'temp'"; lineno: 143 }
+        ListElement { type: "error"; message: "Null pointer dereference"; severity: 4 }
         ListElement { type: "info"; message: "Connected to server" }
-        ListElement { type: "warning"; message: "Deprecated API call" }
-        ListElement { type: "error"; message: "File not found" }
+        ListElement { type: "warning"; message: "Deprecated API call"; lineno: 58 }
+        ListElement { type: "error"; message: "File not found"; severity: 2 }
         ListElement { type: "info"; message: "Cache updated" }
-        ListElement { type: "warning"; message: "Unreachable code detected" }
-        ListElement { type: "error"; message: "Division by zero" }
+        ListElement { type: "warning"; message: "Unreachable code detected"; lineno: 179 }
+        ListElement { type: "error"; message: "Division by zero"; severity: 5 }
         ListElement { type: "info"; message: "Test suite passed" }
     }
 
@@ -37,23 +37,16 @@ ApplicationWindow {
         
         focus: true
         highlightFollowsCurrentItem: true
-        highlight: Rectangle {
-            z: 100; color: "orange"; opacity: 0.2 }
+        highlight: Rectangle { color: "orange"; opacity: 0.2 }
         
         delegate: chooser
         
         DelegateChooser {
             id: chooser
             role: "type"
-            DelegateChoice {roleValue: "info"; MyDelegate {
-                text: model.message
-                icon.source: "info.png"}}
-            DelegateChoice {roleValue: "warning"; MyDelegate {
-                text: model.message
-                icon.source: "warning.png"}}
-            DelegateChoice {roleValue: "error"; MyDelegate {
-                text: model.message
-                icon.source: "error.png"}}
+            DelegateChoice {roleValue: "info"; InfoDelegate { }}
+            DelegateChoice {roleValue: "warning"; WarningDelegate { }}
+            DelegateChoice {roleValue: "error"; ErrorDelegate { }}
         }
         
         ScrollBar.vertical: ScrollBar {}
@@ -63,17 +56,18 @@ ApplicationWindow {
         }
     }
     
-    component MyDelegate: ItemDelegate {
+    component MyCodeDelegate: ItemDelegate {
         
         id: root
         
         required property int index
-        required property var model
         required property string type
         required property string message
     
         width: 300
         height: 40
+        
+        text: message
 
         background: Rectangle {
             opacity: 0.2
@@ -87,7 +81,52 @@ ApplicationWindow {
                 root.ListView.view.currentIndex = index
                 console.log("Clicked: " +
                     "Current index: " + root.ListView.view.currentIndex +
-                    " Type: " + model.type + " Message: " + model.message)
+                    " Type: " + type + " Message: " + message)
+            }
+        }
+    }
+    
+    component InfoDelegate: MyCodeDelegate {
+        icon.source: "info.png"
+    }
+    
+    component ErrorDelegate: MyCodeDelegate {
+
+        icon.source: "error.png"
+        required property int severity
+        
+        Row {
+            anchors.right: contentItem.right
+            anchors.rightMargin: 6
+            anchors.verticalCenter: parent.verticalCenter
+            Repeater {
+                model: severity
+                Rectangle {
+                    height: 14; width: 6; color: "orange";
+                    border.width: 1; border.color: "#FFDBBB"
+                }
+            }
+        }
+    }
+    
+    component WarningDelegate: MyCodeDelegate {
+
+        icon.source: "warning.png"
+        required property int lineno
+        
+        Text {
+            anchors.right: parent.right
+            anchors.rightMargin: 6
+            anchors.verticalCenter: parent.verticalCenter
+            text: "<a href='someline'>Go to line: " + lineno + " </a>"
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                propagateComposedEvents: true
+                onClicked: (mouse) => {
+                    console.log("Go to line " + lineno)
+                    mouse.accepted = false
+                    }
             }
         }
     }
