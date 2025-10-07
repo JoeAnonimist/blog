@@ -141,7 +141,7 @@ ApplicationWindow {
                 clip: true
                 
                 focus: true
-                highlightFollowsCurrentItem: false  // Use custom selection color
+                highlightFollowsCurrentItem: false
                 
                 ScrollBar.vertical: ScrollBar {}
                 
