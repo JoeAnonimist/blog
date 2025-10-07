@@ -3,26 +3,20 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQml.Models
 
-
 ApplicationWindow {
-
-    id: appWindow
-
     visible: true
-    width: 300
+    width: 240
     height: 400
-    title: "DelegateModelGroup Example"
+    title: "DelegateModelGroup Demo"
 
     property var fsModel
     property var rootIndex
-    property bool showFiles: false
 
     DelegateModel {
-
         id: fileDelegateModel
 
         model: fsModel
-        //rootIndex: appWindow.rootIndex
+        rootIndex: rootIndex
         delegate: MyDelegate {}
         
         groups: [
@@ -37,65 +31,52 @@ ApplicationWindow {
                 includeByDefault: false
             }
         ]
-        
-        filterOnGroup: showFiles ? "files" : "dirs"
-        
-        items.onChanged: () => {
-            for (var i = 0; i < items.count; i++) {
-                var item = items.get(i)
-                console.log(item.model.fileName, item.model.isDir)
-                if (item.model.isDir === true) {
-                    item.inDirs = true
-                } else if (item.model.isDir === false) {
-                    item.inFiles = true
-                } else {
-                    console.log("AAAAAAAaaaaaaa!")
-                }
-            }
-        }
     }
     
     Connections {
         target: fsModel
         function onDirectoryLoaded(path) {
             fileDelegateModel.rootIndex = rootIndex
+            Qt.callLater(function() {
+                for (var i = 0; i < fileDelegateModel.items.count; i++) {
+                    var item = fileDelegateModel.items.get(i)
+                    item.inDirs = false
+                    item.inFiles = false
+                    item.inDirs = item.model.isDir
+                    item.inFiles = !item.model.isDir
+                }
+            })
         }
     }
 
-    Column {
+    ColumnLayout {
         anchors.fill: parent
-        spacing: 10
-        padding: 10
-
-        Row {
-            spacing: 10
-
+        
+        RowLayout {
+            spacing: 1
             Button {
-                text: "Show Files"
-                onClicked: showFiles = true
+                text: "All"
+                Layout.preferredWidth: 80
+                onClicked: fileDelegateModel.filterOnGroup = undefined
             }
-
             Button {
-                text: "Show Directories"
-                onClicked: showFiles = false
+                text: "Files"
+                Layout.preferredWidth: 80
+                onClicked: fileDelegateModel.filterOnGroup = "files"
             }
-            
-            Label {
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Count: " + listView.count
+            Button {
+                text: "Dirs"
+                Layout.preferredWidth: 80
+                onClicked: fileDelegateModel.filterOnGroup = "dirs"
             }
         }
 
         ListView {
-
             id: listView
-            
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             model: fileDelegateModel
             
-            width: parent.width - 20
-            height: parent.height - 80
-            
-            clip: true
             focus: true
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
@@ -104,49 +85,36 @@ ApplicationWindow {
             }
             
             ScrollBar.vertical: ScrollBar {}
-            
-            onCurrentIndexChanged: () => {
-                console.log("Current index changed: " + currentIndex)
-                var item = itemAtIndex(currentIndex)
-                console.log(item.model.fileName)
-            }
         }
     }
     
     component MyDelegate: Rectangle {
-    
         id: root
         
-        required property var model
         required property int index
         required property string fileName
         required property string filePath
         required property bool isDir
 
-        width: ListView.view.width
-        height: 40
+        implicitWidth: 240
+        implicitHeight: 40
         color: ListView.isCurrentItem ? "transparent" :
-               (ListView.index % 2 === 0 ? "#f0f0f0" : "#dcdcdc")
+               (index % 2 === 0 ? "#f0f0f0" : "#dcdcdc")
         
         RowLayout {
             anchors.fill: parent
             anchors.margins: 8
             
             Label { 
-                text: fileName + (isDir ? " [DIR]" : " [FILE]")
+                text: fileName
+                elide: Text.ElideRight
                 Layout.fillWidth: true
             }
         }
         
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                root.ListView.view.currentIndex = index
-                console.log("Clicked: " +
-                    "current index " + index +
-                    ", name " + fileName)
-				    console.log(isDir)
-            }
+            onClicked: root.ListView.view.currentIndex = index
         }
     }
 }
