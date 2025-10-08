@@ -5,11 +5,12 @@ import QtQuick.Layouts
 ApplicationWindow {
 
     visible: true
-    width: listView.implicitWidth
-    height: listView.implicitHeight
-    title: "Editable ListModel"
+    width: 230
+    height: 400
+    title: "Resizable ListModel"
 
     ListModel {
+
         id: listModel
         objectName: "listModel"
 
@@ -23,26 +24,84 @@ ApplicationWindow {
         ListElement { name: "Item 7"; value: 7 }
         ListElement { name: "Item 8"; value: 8 }
         ListElement { name: "Item 9"; value: 9 }
+        
+	    function getNextItemName() {
+	        if (listModel.count === 0) return "Item 0";
+	
+	        var maxNum = -1;
+	        for (var i = 0; i < listModel.count; ++i) {
+	            var itemName = listModel.get(i).name;
+	            var match = itemName.match(/Item (\d+)/);
+	            if (match) {
+	                var num = parseInt(match[1], 10);
+	                if (num > maxNum) {
+	                    maxNum = num;
+	                }
+	            }
+	        }
+	        console.log(maxNum + 1)
+	        return "Item " + (maxNum + 1);
+	    }
     }
-
-    ListView {
-        id: listView
+    
+    ColumnLayout {
+        
         anchors.fill: parent
-        model: listModel
-        implicitWidth: 220
-        implicitHeight: count * 40
-        focus: true
-        highlightFollowsCurrentItem: true
+        anchors.margins: 6
+    
+	    ListView {
+	        id: listView
+	        Layout.fillWidth: true
+	        Layout.fillHeight: true
+	        model: listModel
+	        focus: true
+	        highlightFollowsCurrentItem: true
+	
+	        highlight: Rectangle {
+	            color: "orange"
+	            opacity: 0.2
+	        }
+	
+	        delegate: MyDelegate {}
+	        
+            ScrollBar.vertical: ScrollBar {}
+	    }
+	    
+	    Button {
+	        Layout.fillWidth: true
+	        text: "Append new"
+	        onClicked: () => {
+	            var newIndex = listModel.count;
+	            listModel.append(
+	                {"name": listModel.getNextItemName(),
+	                "value": 0})
+	                listView.positionViewAtIndex(
+	                    newIndex, ListView.End);
+	        }
+	    }
 
-        highlight: Rectangle {
-            color: "orange"
-            opacity: 0.2
-        }
+	    Button {
+	        Layout.fillWidth: true
+	        text: "Insert new"
+	        onClicked: () => {
+	            var insertIndex = listView.currentIndex;
+	            listModel.insert(
+	                listView.currentIndex,
+	                {"name": listModel.getNextItemName(),
+	                "value": 0})
+	                listView.positionViewAtIndex(
+	                    insertIndex, ListView.Center);
+	        }
+	    }
 
-        delegate: MyDelegate {}
-
-        ScrollBar.vertical: ScrollBar {}
-    }
+	    Button {
+	        Layout.fillWidth: true
+	        text: "Remove current"
+	        onClicked: () => {
+	            listModel.remove(listView.currentIndex)
+	        }
+	    }
+	}
 
     component MyDelegate: Rectangle {
 
@@ -51,8 +110,6 @@ ApplicationWindow {
         required property int index
         required property string name
         required property int value
-        
-        property int originalValue
 
         width: 200
         height: 40
@@ -83,7 +140,6 @@ ApplicationWindow {
 
                 SpinBox {
                     id: editControl
-                    focus: root.state === "edit"
                     from: 0; to: 100; editable: true
                     value: root.value
                     
@@ -99,12 +155,7 @@ ApplicationWindow {
 
                     Keys.onReturnPressed: { root.state = "" }
                     Keys.onEnterPressed: { root.state = "" }
-                    Keys.onEscapePressed: {
-                        console.log(root.originalValue)
-                        listModel.setProperty(index, "value", root.originalValue)
-                        editControl.value = root.originalValue
-                        root.state = ""
-                    }
+                    Keys.onEscapePressed: { root.state = ""; editControl.value = value }
                 }
             }
         }
@@ -119,7 +170,6 @@ ApplicationWindow {
             }
 
             onDoubleClicked: (mouse) => {
-                originalValue = value
                 root.state = "edit"
                 editControl.forceActiveFocus()
             }
