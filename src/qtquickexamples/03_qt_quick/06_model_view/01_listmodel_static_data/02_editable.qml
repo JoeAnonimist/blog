@@ -3,9 +3,10 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
+
     visible: true
     width: listView.implicitWidth
-    height: listView.implicitWidth
+    height: listView.implicitHeight
     title: "Editable ListModel"
 
     ListModel {
@@ -26,15 +27,13 @@ ApplicationWindow {
 
     ListView {
         id: listView
-
         anchors.fill: parent
         model: listModel
-
-        implicitWidth: 200
+        implicitWidth: 220
         implicitHeight: count * 40
-
         focus: true
         highlightFollowsCurrentItem: true
+
         highlight: Rectangle {
             color: "orange"
             opacity: 0.2
@@ -43,65 +42,77 @@ ApplicationWindow {
         delegate: MyDelegate {}
 
         ScrollBar.vertical: ScrollBar {}
-
-        onCurrentIndexChanged: console.log("Current index changed: " + currentIndex)
     }
 
     component MyDelegate: Rectangle {
+
         id: root
 
         required property int index
-        required property var model
+        required property string name
+        required property int value
 
         width: 200
         height: 40
-        color: index === ListView.view.currentIndex ?
-                   "transparent" :
-                   index % 2 === 0 ? "#f0f0f0" : "#dcdcdc"
+        color: index === ListView.view.currentIndex
+            ? "transparent"
+            : index % 2 === 0 ? "#f0f0f0" : "#dcdcdc"
 
         RowLayout {
             anchors.fill: parent
             anchors.margins: 8
 
-            TextField {
-                id: nameField
-                text: model.name
-                readOnly: true
+            Label {
+                text: name
                 Layout.fillWidth: true
-                onAccepted: {
-                    model.name = text
-                    readOnly = true
-                }
             }
 
-            TextField {
-                id: valueField
-                text: model.value
-                readOnly: true
-                horizontalAlignment: Text.AlignRight
-                validator: IntValidator {}  // Ensures only integers
-                Layout.preferredWidth: 50
-                onAccepted: {
-                    model.value = parseInt(text, 10)
-                    readOnly = true
+            StackLayout {
+                id: valueStack
+                Layout.preferredWidth: 20
+                Layout.fillHeight: true
+                currentIndex: root.state === "edit" ? 1 : 0
+
+                Label {
+                    id: displayControl
+                    text: value
+                    horizontalAlignment: Text.AlignRight
+                }
+
+                SpinBox {
+                    id: editControl
+                    from: 0; to: 100; editable: true
+                    value: root.value
+                    
+                    onValueModified: () => {
+                        listModel.setProperty(index, "value", value)
+                    }
+
+                    onActiveFocusChanged: {
+                        if (!activeFocus && root.state === "edit") {
+                            root.state = ""
+                        }
+                    }
+
+                    Keys.onReturnPressed: { root.state = "" }
+                    Keys.onEnterPressed: { root.state = "" }
+                    Keys.onEscapePressed: { root.state = "" }
                 }
             }
         }
 
         MouseArea {
+
             anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton  // For double-click detection
-            onClicked: {
+            enabled: root.state !== "edit"
+
+            onClicked: (mouse) => {
                 root.ListView.view.currentIndex = index
-                console.log("Clicked: " +
-                            "Current index: " + root.ListView.view.currentIndex +
-                            " Name: " + model.name + " Value: " + model.value)
             }
-            onDoubleClicked: {
-                nameField.readOnly = false
-                nameField.forceActiveFocus()
-                valueField.readOnly = false  // Optionally edit both; could target specific field
-                console.log("Entered edit mode for index: " + index)
+
+            onDoubleClicked: (mouse) => {
+                root.state = "edit"
+                editControl.forceActiveFocus()
             }
         }
     }
