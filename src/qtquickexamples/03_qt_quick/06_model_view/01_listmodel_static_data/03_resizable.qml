@@ -110,6 +110,8 @@ ApplicationWindow {
         required property int index
         required property string name
         required property int value
+        
+        property int originalValue
 
         width: 200
         height: 40
@@ -140,6 +142,7 @@ ApplicationWindow {
 
                 SpinBox {
                     id: editControl
+                    focus: root.state === "edit"
                     from: 0; to: 100; editable: true
                     value: root.value
                     
@@ -155,7 +158,12 @@ ApplicationWindow {
 
                     Keys.onReturnPressed: { root.state = "" }
                     Keys.onEnterPressed: { root.state = "" }
-                    Keys.onEscapePressed: { root.state = ""; editControl.value = value }
+                    Keys.onEscapePressed: {
+                        console.log(root.originalValue)
+                        listModel.setProperty(index, "value", root.originalValue)
+                        editControl.value = root.originalValue
+                        root.state = ""
+                    }
                 }
             }
         }
@@ -170,6 +178,7 @@ ApplicationWindow {
             }
 
             onDoubleClicked: (mouse) => {
+                originalValue = value
                 root.state = "edit"
                 editControl.forceActiveFocus()
             }
