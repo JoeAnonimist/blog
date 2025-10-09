@@ -67,8 +67,10 @@ ApplicationWindow {
 			        return ""
 			    }
 	            onAccepted: () => {
-	                listModel.setProperty(
-	                    listView.currentIndex, "name", text)
+			        if (listView.currentIndex >= 0 &&
+                        listView.currentIndex < listModel.count)
+		                listModel.setProperty(
+		                    listView.currentIndex, "name", text)
 	                listView.forceActiveFocus()
 	            }
 	        }
@@ -85,9 +87,11 @@ ApplicationWindow {
 	                return 0
 	            }
 	            onValueModified: () => {
-                    listModel.setProperty(
-                        listView.currentIndex, "value", value)
-                    listView.forceActiveFocus()
+	                if (listView.currentIndex >= 0 &&
+                    listView.currentIndex < listModel.count)
+	                    listModel.setProperty(
+	                        listView.currentIndex, "value", value)
+	                    listView.forceActiveFocus()
 	            }
 	        }
 	        
@@ -107,9 +111,11 @@ ApplicationWindow {
                 enabled: listModel.count > 0
                 Layout.preferredWidth: implicitHeight
                 onClicked: () => {
-                    listModel.remove(listView.currentIndex, 1);
-                    listView.currentIndex = Math.max(
-                        0, listView.currentIndex - 1);
+                    if (listView.currentIndex >= 0 &&
+                    listView.currentIndex < listModel.count)
+	                    listModel.remove(listView.currentIndex, 1);
+	                    listView.currentIndex = Math.max(
+	                        0, listView.currentIndex - 1);
                 }
             }
 	    }
