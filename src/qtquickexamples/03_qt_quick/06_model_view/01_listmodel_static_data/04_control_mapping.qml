@@ -12,7 +12,6 @@ ApplicationWindow {
     ListModel {
 
         id: listModel
-        objectName: "listModel"
 
         ListElement { name: "Item 0"; value: 0 }
         ListElement { name: "Item 1"; value: 1 }
@@ -58,10 +57,16 @@ ApplicationWindow {
 	        spacing: 6
 	        
 	        TextField {
+	            id: nameField
 	            Layout.fillWidth: true
 	            placeholderText: "Name"
-	            text: listModel.get(listView.currentIndex).name
-	            onEditingFinished: () => {
+	            text: {
+			        if (listView.currentIndex >= 0 &&
+                        listView.currentIndex < listModel.count)
+                        return listModel.get(listView.currentIndex).name
+			        return ""
+			    }
+	            onAccepted: () => {
 	                listModel.setProperty(
 	                    listView.currentIndex, "name", text)
 	                listView.forceActiveFocus()
@@ -69,10 +74,16 @@ ApplicationWindow {
 	        }
 	        
 	        SpinBox {
+	            id: valueSpinbox
 	            Layout.preferredWidth: 70
 	            from: 0; to: 100
 	            editable: true
-	            value: listModel.get(listView.currentIndex).value
+	            value: {
+	                if (listView.currentIndex >= 0 &&
+	                    listView.currentIndex < listModel.count)
+	                    return listModel.get(listView.currentIndex).value
+	                return 0
+	            }
 	            onValueModified: () => {
                     listModel.setProperty(
                         listView.currentIndex, "value", value)
@@ -83,11 +94,23 @@ ApplicationWindow {
 	        Button {
 	            text: "➕"
 	            Layout.preferredWidth: implicitHeight
+	            onClicked: () => {
+	                listModel.append({ name: "New Item", value: 0 });
+	                listView.currentIndex = listModel.count - 1;
+                    listView.positionViewAtIndex(
+	                    listView.currentIndex, ListView.End);
+	            }
 	        }
 	        
             Button {
                 text: "➖"
+                enabled: listModel.count > 0
                 Layout.preferredWidth: implicitHeight
+                onClicked: () => {
+                    listModel.remove(listView.currentIndex, 1);
+                    listView.currentIndex = Math.max(
+                        0, listView.currentIndex - 1);
+                }
             }
 	    }
 	}
@@ -99,8 +122,6 @@ ApplicationWindow {
         required property int index
         required property string name
         required property int value
-        
-        property int originalValue
 
         width: 220
         height: 40
