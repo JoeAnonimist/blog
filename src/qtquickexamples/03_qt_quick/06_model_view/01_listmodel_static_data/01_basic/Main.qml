@@ -35,8 +35,12 @@ ApplicationWindow {
             color: "orange"
             opacity: 0.2
         }
+        
+        property var listViewModel: viewModel
 
-        delegate: ListDelegate { }
+        delegate: ListDelegate {
+            viewModel: listView.listViewModel
+        }
 
         ScrollBar.vertical: ScrollBar { }
 

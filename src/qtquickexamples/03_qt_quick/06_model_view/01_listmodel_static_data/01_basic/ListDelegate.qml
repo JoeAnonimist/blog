@@ -7,6 +7,8 @@ Rectangle {
 
     required property int index
     required property var model
+    
+    property var viewModel
 
     width: 200
     height: 40
