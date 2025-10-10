@@ -9,6 +9,6 @@ if __name__ == '__main__':
     app = QGuiApplication(sys.argv)
     
     engine = QQmlApplicationEngine()
-    engine.load('03_resizable.qml')
+    engine.load('Main.qml')
 
     sys.exit(app.exec())
