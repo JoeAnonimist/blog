@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: listView.implicitWidth
     height: listView.implicitHeight
-    title: "ListModel with static data"
+    title: "Editable ListModel with static data"
 
     DataModel {
         id: dataModel
@@ -20,13 +20,14 @@ ApplicationWindow {
     }
 
     ListView {
+    
         id: listView
 
         anchors.fill: parent
         model: viewModel.model
 
         implicitWidth: 200
-        implicitHeight: viewModel.modelData.count * 40
+        implicitHeight: viewModel.model.count * 40
 
         focus: true
         highlightFollowsCurrentItem: true
@@ -35,8 +36,12 @@ ApplicationWindow {
             color: "orange"
             opacity: 0.2
         }
+        
+        property var listViewModel: viewModel
 
-        delegate: ListDelegate { }
+        delegate: ListDelegate {
+            viewModel: listView.listViewModel
+        }
 
         ScrollBar.vertical: ScrollBar { }
 
