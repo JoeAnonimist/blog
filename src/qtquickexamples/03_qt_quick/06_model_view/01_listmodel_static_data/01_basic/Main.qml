@@ -26,7 +26,7 @@ ApplicationWindow {
         model: viewModel.model
 
         implicitWidth: 200
-        implicitHeight: viewModel.modelData.count * 40
+        implicitHeight: viewModel.model.count * 40
 
         focus: true
         highlightFollowsCurrentItem: true
