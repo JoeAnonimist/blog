@@ -2,53 +2,42 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+
 ApplicationWindow {
-    id: window
 
     visible: true
     width: listView.implicitWidth
-    height: listView.implicitHeight
+    height: listView.implicitWidth
     title: "ListModel with static data"
-
-    DataModel {
-        id: dataModel
-    }
-
-    ListViewModel {
-        id: viewModel
-        model: dataModel
+    
+    Data {
+        id: listModel
     }
 
     ListView {
+    
         id: listView
-
+        
         anchors.fill: parent
-        model: viewModel.model
-
+        model: listModel
+        
         implicitWidth: 200
-        implicitHeight: viewModel.model.count * 40
-
+        implicitHeight: count * 40
+        
         focus: true
         highlightFollowsCurrentItem: true
-        highlightMoveDuration: 150
         highlight: Rectangle {
             color: "orange"
             opacity: 0.2
         }
         
-        property var listViewModel: viewModel
-
-        delegate: ListDelegate {
-            viewModel: listView.listViewModel
-        }
-
-        ScrollBar.vertical: ScrollBar { }
-
-        Connections {
-            target: viewModel
-            function onSelected(index) {
-                listView.currentIndex = index
-            }
+        delegate: Delegate {}
+        
+        ScrollBar.vertical: ScrollBar {}
+        
+        onCurrentIndexChanged: () => {
+            console.log( "Current index changed: "
+            + currentIndex)
         }
     }
 }
