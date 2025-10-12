@@ -3,53 +3,33 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
-    id: window
 
     visible: true
-    width: listView.implicitWidth
+    width: 200
     height: listView.implicitHeight
-    title: "Editable ListModel with static data"
-
-    DataModel {
-        id: dataModel
-    }
-
-    ListViewModel {
-        id: viewModel
-        model: dataModel
-    }
+    title: "Editable ListModel"
 
     ListView {
     
         id: listView
 
         anchors.fill: parent
-        model: viewModel.model
-
         implicitWidth: 200
-        implicitHeight: viewModel.model.count * 40
-
+        implicitHeight: count * 45
+        anchors.margins: 4
+        spacing: 4
         focus: true
-        highlightFollowsCurrentItem: true
-        highlightMoveDuration: 150
-        highlight: Rectangle {
-            color: "orange"
-            opacity: 0.2
-        }
         
-        property var listViewModel: viewModel
-
-        delegate: ListDelegate {
-            viewModel: listView.listViewModel
+        highlightFollowsCurrentItem: true
+        highlight: Rectangle {
+            height: 40; width: 200
+            color: "#0078d7"; opacity: 0.2
         }
 
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {}
+        
+        model: Model { id: listModel }
 
-        Connections {
-            target: viewModel
-            function onSelected(index) {
-                listView.currentIndex = index
-            }
-        }
+        delegate: Delegate {}
     }
 }
