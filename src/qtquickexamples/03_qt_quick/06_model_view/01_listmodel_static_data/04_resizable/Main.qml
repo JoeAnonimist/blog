@@ -55,7 +55,7 @@ ApplicationWindow {
             onClicked: () => {
 	            var currentIndex = listView.currentIndex
 	            if (currentIndex < 0) currentIndex = 0
-	            listModel.insert(currentIndex, {"value": "< new >"})
+	            listModel.insert(currentIndex, {"value": "<new>"})
 	            listView.positionViewAtIndex(currentIndex, ListView.Center)
 	            listView.focus = true
             }
