@@ -2,35 +2,34 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-
 ApplicationWindow {
 
     visible: true
-    width: listView.implicitWidth
+    width: 200
     height: listView.implicitHeight
-    title: "ListModel with static data"
+    title: "Editable ListModel"
 
     ListView {
     
         id: listView
-        
+
         anchors.fill: parent
-        model: Model {}
-        
-        implicitWidth: 210
+        implicitWidth: 200
         implicitHeight: count * 45
         anchors.margins: 4
         spacing: 4
-        
         focus: true
         
-        delegate: Delegate {}
-        
+        highlightFollowsCurrentItem: true
+        highlight: Rectangle {
+            height: 40; width: 200
+            color: "#0078d7"; opacity: 0.2
+        }
+
         ScrollBar.vertical: ScrollBar {}
         
-        onCurrentIndexChanged: () => {
-            console.log( "Current index changed: "
-            + currentIndex)
-        }
+        model: Model { id: listModel }
+
+        delegate: Delegate {}
     }
 }

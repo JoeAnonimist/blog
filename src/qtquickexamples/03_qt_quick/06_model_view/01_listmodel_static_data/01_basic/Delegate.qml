@@ -9,22 +9,20 @@ Rectangle {
     
     required property int index
     required property var model
-    
-    required property string name
-    required property int value
 
-    width: 200
+    required property string value
+
+    width: ListView.view.width
     height: 40
-    color: index === ListView.view.currentIndex ?
-        "transparent" :
-            index % 2 === 0 ? "#f0f0f0" : "#dcdcdc" 
+    color: ListView.isCurrentItem ? "#e3f2fd" : "transparent"
+    border.color: ListView.isCurrentItem ? "#1976d2" : "lightgrey"
+    border.width: 1
     
     RowLayout {
     
         anchors.fill: parent
         anchors.margins: 8
-        
-        Label { text: name }
+
         Label { text: value }
     }
     
@@ -34,7 +32,7 @@ Rectangle {
             root.ListView.view.currentIndex = index
             console.log("Clicked: " +
                 "Current index: " + root.ListView.view.currentIndex +
-                " Name: " + model.name + " Value: " + model.value)
+                " Value: " + model.value)
         }
     }
 }

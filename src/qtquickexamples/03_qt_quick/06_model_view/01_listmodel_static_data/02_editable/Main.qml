@@ -19,17 +19,25 @@ ApplicationWindow {
         anchors.margins: 4
         spacing: 4
         focus: true
-        
-        highlightFollowsCurrentItem: true
-        highlight: Rectangle {
-            height: 40; width: 200
-            color: "#0078d7"; opacity: 0.2
-        }
 
         ScrollBar.vertical: ScrollBar {}
         
         model: Model { id: listModel }
 
         delegate: Delegate {}
+        
+        Keys.onUpPressed: (event) => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                positionViewAtIndex(currentIndex, ListView.CenterIndex);
+            }
+        }
+        
+        Keys.onDownPressed: (event) => {
+            if (currentIndex < count - 1) {
+                currentIndex++;
+                positionViewAtIndex(currentIndex, ListView.CenterIndex);
+            }
+        }
     }
 }

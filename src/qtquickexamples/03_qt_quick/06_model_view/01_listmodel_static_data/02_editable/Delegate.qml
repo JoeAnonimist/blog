@@ -5,68 +5,49 @@ import QtQuick.Layouts
 Rectangle {
 
     id: root
-    required property string value
-    required property int index
-    
-    property bool editing: false
-    
+
     width: ListView.view.width
     height: 40
     
-    color: "transparent"
-    border.color: "lightgrey"
+    color: ListView.isCurrentItem ? "#e3f2fd" : "transparent"
+    border.color: ListView.isCurrentItem ? "#1976d2" : "lightgrey"
     border.width: 1
-
-    Label {
-        anchors.fill: parent
-        anchors.margins: 8
-        verticalAlignment: Text.AlignVCenter
-        text: root.value
-        visible: !root.editing
-    }
+    
+    required property int index
+    required property var model
+    required property string value
 
     TextField {
+
+        id: editor
+
         anchors.fill: parent
         anchors.margins: 8
-        text: root.value
-        focus: root.editing
-        visible: root.editing
-
-        onActiveFocusChanged: () => {
-            if (!activeFocus) root.editing = false
-        }
+        text: value
         
-        Keys.onReturnPressed: () => {
+        onAccepted: () => {
+            
             root.ListView.view.model.setProperty(index, "value", text)
-            root.editing = false
-            mouse.forceActiveFocus()
-        }
-        
-        Keys.onEnterPressed: () => {
-            root.ListView.view.model.setProperty(index, "value", text)
-            root.editing = false
-            mouse.forceActiveFocus()
+            
+            var model = root.ListView.view.model
+            console.log(model)
+            console.log(index)
+            for (var i = 0; i < model.count; i++) {
+                console.log(model.get(i).value)
+            }
         }
         
         Keys.onEscapePressed: () => {
-            root.editing = false
-            text = root.value
-            mouse.forceActiveFocus()
-        }
-    }
-    
-    MouseArea {
-        id: mouse
-        anchors.fill: parent
-        enabled: !root.editing
-        onClicked: (mouse) => {
-            root.ListView.view.currentIndex = root.index
-        }
-        onDoubleClicked: () => {
-            root.editing = true
+            text = value
         }
     }
 
-    Keys.onEnterPressed: () => { root.editing = true }
-    Keys.onReturnPressed: () => { root.editing = true }
+    Connections {
+        target: root.ListView.view
+        function onCurrentIndexChanged() {
+            if (root.ListView.isCurrentItem) {
+                editor.forceActiveFocus()
+            }
+        }
+    }
 }
