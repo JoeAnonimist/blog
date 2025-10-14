@@ -33,6 +33,7 @@ Rectangle {
         onClicked: {
             root.ListView.view.currentIndex = index
             console.log("modelData: " + modelData)
+            // root.ListView.view.model = 3
         }
     }
 }
