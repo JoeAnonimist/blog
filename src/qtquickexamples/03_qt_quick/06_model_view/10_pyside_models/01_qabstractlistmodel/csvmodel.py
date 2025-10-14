@@ -24,12 +24,11 @@ class CsvModel(QAbstractListModel):
             return self.csv_data[index.row()]
     
     def setData(self, index, value, role):
-        print(value, role)
         if role == Qt.ItemDataRole.EditRole:
             if self.csv_data[index.row()] != value:
                 self.csv_data[index.row()] = value
                 self.dataChanged.emit(index, index)
-                return True
+            return True
         else:
             return False
     
@@ -41,7 +40,7 @@ class CsvModel(QAbstractListModel):
     
     def insertRows(self, row, count, parent=QModelIndex()):
         if 0 <= row <= self.rowCount():
-            self.beginInsertRows(parent, row, row )
+            self.beginInsertRows(parent, row, row + count - 1)
             self.csv_data[row:row] = ['<insert row data>'] * count
             self.endInsertRows()
             return True
@@ -49,13 +48,15 @@ class CsvModel(QAbstractListModel):
             return False
     
     def removeRows(self, row, count, parent=QModelIndex()):
-        if 0 <= row < len(self.csv_data):
-            self.beginRemoveRows(parent, row, row)
+        if 0 <= row < len(self.csv_data) and count > 0:
+            end = row + count - 1
+            if end >= len(self.csv_data):
+                end = len(self.csv_data) - 1
+            self.beginRemoveRows(parent, row, end)
             del self.csv_data[row:row + count]
             self.endRemoveRows()
             return True
-        else:
-            return False
+        return False
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Orientation.Horizontal:
