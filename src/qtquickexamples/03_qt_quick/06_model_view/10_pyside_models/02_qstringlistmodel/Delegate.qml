@@ -5,7 +5,7 @@ import QtQuick.Layouts
 Rectangle {
 
     id: root
-    required property var modelData
+    required property string display
     required property int index
     
     width: ListView.view.width
@@ -19,7 +19,7 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 8
         verticalAlignment: Text.AlignVCenter
-        text: root.modelData
+        text: root.display
     }
 
     MouseArea {
