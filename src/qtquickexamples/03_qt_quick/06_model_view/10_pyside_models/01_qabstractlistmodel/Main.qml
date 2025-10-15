@@ -22,7 +22,6 @@ ApplicationWindow {
 	
 	        Layout.fillWidth: true
 	        height: 250
-	        anchors.margins: 4
 	        spacing: 4
 	        focus: true
 	        clip: true
@@ -66,11 +65,10 @@ ApplicationWindow {
                 placeholderText: "Value"
                 text: {
                     if (parent.hasSelection) {
-                        console.log(listView.model.data(listView.model.index(parent.currentIndex, 0)))
                         const index = listView.model.index(parent.currentIndex, 0)
-                        listView.model.data(index)
+                        return listView.model.data(index)
                     } else {
-                        ""
+                        return ""
                     }
                 }
                 onAccepted: {
@@ -106,8 +104,12 @@ ApplicationWindow {
 		                if (listView.currentIndex == listView.model.rowCount()) {
 		                    listView.currentIndex = listView.currentIndex - 1
 		                }
-		                const index = listView.model.index(parent.currentIndex, 0)
-		                valueField.text = listView.model.data(index)
+		                if (listView.model.rowCount() > 0) {
+			                const index = listView.model.index(parent.currentIndex, 0)
+			                valueField.text = listView.model.data(index)
+			            } else {
+			                valueField.text = ""
+			            }
 		                listView.forceActiveFocus()
 		            }
                 }
