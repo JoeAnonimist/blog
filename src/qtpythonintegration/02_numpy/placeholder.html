@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumPy Exercises for Data-Intensive Qt Applications</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h1 { color: #333; }
+        h4 { color: #555; }
+        strong { color: #007bff; }
+        p { margin-bottom: 10px; }
+        .exercise { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>NumPy Exercises for Data-Intensive Qt Applications</h1>
+    <p>These 18 exercises progress from basic array handling to advanced numerical techniques, each focusing on a single NumPy concept for short, single-file implementations in PyQt apps (e.g., 50-200 lines). They integrate data processing with simple Qt widgets or Matplotlib embeds for visualization. Inspired by real-world uses like financial dashboards, image editors, and sensor monitors, where NumPy's efficiency shines in UI-responsive computations.</p>
+
+<div class="exercise">
+    <h4>Exercise 1: Creating and Displaying a Simple Array (Hello World)</h4>
+    <p><strong>Description:</strong> In a PyQt window, create a 1D array of 10 integers from 0 to 9 and display its contents in a QLabel.</p>
+    <p><strong>Scenario Inspiration:</strong> Beginners prototyping data loaders in Qt apps start with basic arrays for quick sanity checks.</p>
+    <p><strong>Hint:</strong> Use <code>np.arange(10)</code>; convert to string and set to QLabel text.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> NumPy arrays offer contiguous memory and fast creation, ideal for immediate Qt display without list overhead.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 2: Basic Array Indexing and Slicing</h4>
+    <p><strong>Description:</strong> Load a 1D array of 20 random floats; slice the first 10 elements and display the sum in a Qt dialog.</p>
+    <p><strong>Scenario Inspiration:</strong> Data entry apps in Qt use slicing for partial previews during user input validation.</p>
+    <p><strong>Hint:</strong> Generate with <code>np.random.rand(20)</code>; slice <code>arr[:10]</code> and use <code>np.sum</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Slicing creates views (not copies), enabling efficient partial computations for Qt's on-demand updates.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 3: Element-Wise Arithmetic Operations</h4>
+    <p><strong>Description:</strong> Create two 1D arrays of 15 values; add them element-wise and plot the result using Matplotlib in a PyQt embed.</p>
+    <p><strong>Scenario Inspiration:</strong> Sensor calibration tools in Qt apps perform quick alignments on paired data streams.</p>
+    <p><strong>Hint:</strong> Use <code>np.array([list1]) + np.array([list2])</code>; embed plot in QWidget.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Vectorized ops avoid explicit loops, speeding up arithmetic for real-time Qt visualizations.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 4: Reshaping Arrays for Multi-Dimensional Views</h4>
+    <p><strong>Description:</strong> Flatten a 3x4 array into 1D, then reshape to 2x6; display shapes in a Qt status bar.</p>
+    <p><strong>Scenario Inspiration:</strong> Image batch processors in PyQt reshape grids for flexible UI layouts.</p>
+    <p><strong>Hint:</strong> Create with <code>np.arange(12).reshape(3,4)</code>; use <code>reshape</code> methods.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Reshaping is O(1) via strides, perfect for adapting data to Qt's grid-based widgets without copying.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 5: Boolean Indexing for Data Filtering</h4>
+    <p><strong>Description:</strong> Generate a 1D array of 50 random numbers; filter values > 0.5 and show count in a QMessageBox.</p>
+    <p><strong>Scenario Inspiration:</strong> Threshold-based alerts in monitoring Qt apps filter noisy data for notifications.</p>
+    <p><strong>Hint:</strong> Use <code>arr[arr > 0.5]</code> after <code>np.random.rand(50)</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Boolean masks enable concise, fast filtering on large arrays, keeping Qt interfaces snappy.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 6: Broadcasting for Array Alignment</h4>
+    <p><strong>Description:</strong> Add a scalar to a 2D 5x3 array; display the modified array in a Qt table widget.</p>
+    <p><strong>Scenario Inspiration:</strong> Normalization in analytics dashboards broadcasts offsets to entire datasets.</p>
+    <p><strong>Hint:</strong> Create array with <code>np.random.rand(5,3)</code>; add scalar directly.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Broadcasting expands scalars automatically, avoiding nested loops for efficient Qt table updates.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 7: Computing Statistical Aggregates</h4>
+    <p><strong>Description:</strong> For a 1D array of 100 sales figures, compute mean and std; update a Qt progress bar with values.</p>
+    <p><strong>Scenario Inspiration:</strong> Summary stats in e-commerce Qt tools provide instant overviews.</p>
+    <p><strong>Hint:</strong> Use <code>np.mean(arr)</code> and <code>np.std(arr)</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Aggregates are vectorized, computing in constant time for growing datasets in responsive UIs.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 8: Sorting and Searching Arrays</h4>
+    <p><strong>Description:</strong> Sort a 1D array of 30 timestamps; find index of median value and highlight in Qt list view.</p>
+    <p><strong>Scenario Inspiration:</strong> Timeline sorters in project management apps prioritize events.</p>
+    <p><strong>Hint:</strong> Use <code>np.sort(arr)</code> and <code>np.searchsorted</code> for median.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Optimized sort algorithms (Timsort) handle large arrays quickly, essential for sorted Qt displays.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 9: Basic Linear Algebra - Dot Product</h4>
+    <p><strong>Description:</strong> Compute dot product of two 1D vectors (length 10); show result in Qt label with vectors visualized.</p>
+    <p><strong>Scenario Inspiration:</strong> Similarity scores in recommendation engines embedded in Qt.</p>
+    <p><strong>Hint:</strong> Use <code>np.dot(vec1, vec2)</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> BLAS-accelerated dot products scale linearly, outperforming loops for vector ops in interactive apps.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 10: Matrix Multiplication for Transformations</h4>
+    <p><strong>Description:</strong> Multiply a 3x3 rotation matrix by a 3x1 point vector; plot before/after in PyQt canvas.</p>
+    <p><strong>Scenario Inspiration:</strong> Graphics previews in CAD-like Qt tools apply transforms efficiently.</p>
+    <p><strong>Hint:</strong> Use <code>np.matmul(mat, vec)</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Matrix mult leverages optimized libraries, enabling smooth animations in Qt without CPU spikes.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 11: Fancy Indexing for Non-Sequential Selection</h4>
+    <p><strong>Description:</strong> Select elements from a 1D array using indices from another array; display selected in Qt combo box.</p>
+    <p><strong>Scenario Inspiration:</strong> Custom data pickers in analysis apps jump to specific points.</p>
+    <p><strong>Hint:</strong> Use <code>arr[idx_array]</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Fancy indexing gathers scattered data in one pass, faster than list lookups for Qt selections.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 12: Universal Functions (Ufuncs) for Custom Ops</h4>
+    <p><strong>Description:</strong> Apply np.sin to a 1D array of angles; animate the wave in a Qt timer-updated plot.</p>
+    <p><strong>Scenario Inspiration:</strong> Signal generators in audio/visual Qt prototypes.</p>
+    <p><strong>Hint:</strong> Use <code>np.sin(arr)</code> in a loop with QTimer.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Ufuncs are compiled for speed, ensuring fluid real-time updates in Qt's event loop.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 13: Random Number Generation and Seeding</h4>
+    <p><strong>Description:</strong> Seed random, generate 2D noise array (20x20); display as heatmap in Qt.</p>
+    <p><strong>Scenario Inspiration:</strong> Monte Carlo previews in risk assessment tools.</p>
+    <p><strong>Hint:</strong> Use <code>np.random.seed(42)</code> then <code>np.random.rand(20,20)</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Fast PRNG with reproducibility aids debugging in stochastic Qt simulations.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 14: Interpolation for Data Smoothing</h4>
+    <p><strong>Description:</strong> Interpolate missing values in a 1D array of 50 points; plot original vs. smoothed in PyQt.</p>
+    <p><strong>Scenario Inspiration:</strong> Gap-filling in time-series dashboards.</p>
+    <p><strong>Hint:</strong> Use <code>np.interp</code> with x, y coords.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Linear interp is vectorized, quickly smoothing large series for Qt plots.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 15: Eigenvalue Decomposition for PCA Preview</h4>
+    <p><strong>Description:</strong> Compute eigenvalues of a 5x5 covariance matrix; show top eigenvector in Qt vector display.</p>
+    <p><strong>Scenario Inspiration:</strong> Dimensionality reduction demos in data exploration apps.</p>
+    <p><strong>Hint:</strong> Use <code>np.linalg.eig</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> LAPACK-backed decomps handle matrices efficiently, key for exploratory Qt analytics.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 16: Convolution for Edge Detection</h4>
+    <p><strong>Description:</strong> Convolve a 1D signal with Sobel kernel; highlight edges in Qt line plot.</p>
+    <p><strong>Scenario Inspiration:</strong> Simple signal processors in IoT monitoring.</p>
+    <p><strong>Hint:</strong> Use <code>np.convolve(sig, kernel, mode='same')</code>.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> FFT-accelerated convos process signals fast, enabling real-time Qt edge viz.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 17: Sparse Matrix Operations</h4>
+    <p><strong>Description:</strong> Create a sparse 10x10 matrix from coordinates; compute sum and display density in Qt.</p>
+    <p><strong>Scenario Inspiration:</strong> Network graphs in social analytics tools with sparse adjacency.</p>
+    <p><strong>Hint:</strong> Use <code>scipy.sparse.coo_matrix</code> (import scipy.sparse); sum with .sum().</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Sparse formats (via scipy) store efficiently, reducing memory for large sparse data in Qt graphs.</p>
+</div>
+
+<div class="exercise">
+    <h4>Exercise 18: FFT for Frequency Analysis</h4>
+    <p><strong>Description:</strong> Apply FFT to a 1D sine wave array (length 512); plot magnitude spectrum in PyQt.</p>
+    <p><strong>Scenario Inspiration:</strong> Audio spectrum analyzers in multimedia apps.</p>
+    <p><strong>Hint:</strong> Use <code>np.fft.fft(signal)</code> and <code>np.abs</code> for magnitude.</p>
+    <p><strong>Why NumPy is Appropriate:</strong> Optimized FFT (FFTW backend) transforms large signals swiftly, vital for interactive frequency views.</p>
+</div></body>
+</html>
+

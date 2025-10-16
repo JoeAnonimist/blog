@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask in Hybrid Qt Apps: Exercises</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h3 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        p { margin-bottom: 10px; }
+        ul { margin-left: 20px; }
+        strong { color: #555; }
+    </style>
+</head>
+<body>
+
+<h1>Exercises: Using Python Flask in Hybrid Qt Applications</h1>
+
+<h3>Exercise 1: Basic Hello World Hybrid App</h3>
+<p><strong>Description:</strong> Create a simple PyQt application that launches a main window with a QWebEngineView displaying a "Hello, World!" message served from a local Flask server, instead of using a static QLabel.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Set up a minimal Flask app with a single route returning plain text or basic HTML.</li>
+    <li>In Qt, initialize the web view and load the localhost URL after starting the Flask server in a background thread.</li>
+    <li>Use a button to reload the view for testing dynamic updates.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Flask's ease in serving dynamic content allows quick prototyping of web elements in native apps, outperforming Qt's static widgets for text that might evolve to include styles or links. Beginners on Stack Overflow often start with this for "embedded web hellos," noting it simplifies transitions from console scripts to GUIs without Qt's layout hassles.</p>
+
+<h3>Exercise 2: Serving Static HTML Page</h3>
+<p><strong>Description:</strong> Build a PyQt app for a basic info viewer where the main window embeds a web view loading a static HTML page (e.g., an about page) from a local Flask server, rather than embedding HTML directly in Qt.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Configure Flask to serve files from a static folder with a route pointing to an index.html.</li>
+    <li>From Qt, load the static URL in the web view upon app start.</li>
+    <li>Add a refresh mechanism in Qt to pull updates if the HTML changes.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> For serving pre-built HTML, Flask handles file routing effortlessly with low overhead, making it better than Qt's QTextBrowser for assets like CSS-linked pages. Reddit users in r/learnpython share this as a "starter for hybrid info apps," avoiding Qt's string-based HTML limitations that complicate styling.</p>
+
+<h3>Exercise 3: Simple GET Endpoint for Data Retrieval</h3>
+<p><strong>Description:</strong> Develop a PyQt weather mockup app where a button fetches and displays current "weather" data (hardcoded) via a GET request to a local Flask endpoint, shown in a label.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Define a Flask GET route returning a plain string or JSON.</li>
+    <li>Use Qt's network manager to make the GET call and update the UI with the response.</li>
+    <li>Handle basic errors like connection failures with a fallback message.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Flask simplifies HTTP-based data pulls in a local context, more flexible than Qt signals for mock APIs. Forum posts on PyQt communities highlight this for "quick data mocks," as it decouples fetch logic from UI, easing debugging over direct Qt method calls.</p>
+
+<h3>Exercise 4: Handling Query Parameters in GET Requests</h3>
+<p><strong>Description:</strong> Create a PyQt calculator app where user inputs numbers in fields, and a button sends them as query params to a Flask GET endpoint for summation, displaying the result.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>In Flask, access query args in the route to compute and return the result.</li>
+    <li>From Qt, construct the URL with params and parse the text response.</li>
+    <li>Validate inputs in Qt before sending to prevent errors.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Parameter handling in Flask is straightforward for lightweight computations, superior to Qt's slot functions for reusable API-like interfaces. Developers on GitHub issues note this in simple tools, as it allows "web-style querying" without bloating Qt code.</p>
+
+<h3>Exercise 5: Basic POST Endpoint for Form Submission</h3>
+<p><strong>Description:</strong> Build a PyQt feedback form app that collects user text input and submits it via POST to a Flask endpoint, which echoes it back for confirmation in the UI.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Set up a Flask POST route to read request data and return a response.</li>
+    <li>In Qt, prepare a POST request with form data using network access.</li>
+    <li>Update a text area with the echoed response upon success.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> POST handling in Flask mimics web forms efficiently, better than Qt's internal event loops for request-response cycles. User experiences on Medium tutorials describe this for "local forms," reducing UI blocking compared to pure Qt processing.</p>
+
+<h3>Exercise 6: Returning JSON Data from Flask</h3>
+<p><strong>Description:</strong> Design a PyQt contact list app that requests a list of mock contacts as JSON from a Flask endpoint and populates a QListWidget with the data.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask route returns a JSON-serialized list of dictionaries.</li>
+    <li>Qt side parses JSON from the response and iterates to add items.</li>
+    <li>Add sorting in Qt based on JSON fields for interactivity.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> JSON serialization in Flask is native and lightweight, ideal over Qt's QJsonDocument for API-structured data. Stack Overflow answers praise this in list-based apps, as it "future-proofs" for real APIs without Qt's verbose parsing.</p>
+
+<h3>Exercise 7: File Upload via POST</h3>
+<p><strong>Description:</strong> Create a PyQt image uploader app where users select a file, upload it to a Flask endpoint, which saves it locally and returns a success message displayed in the UI.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Use Flask's request.files to handle uploads in the route.</li>
+    <li>From Qt, prepare a multipart POST with the file data.</li>
+    <li>Display upload progress if possible using Qt signals.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Flask's built-in file handling outperforms Qt's QFile for server-like storage, especially for validation. Real-world shares on dev.to show this in "hybrid uploaders," simplifying paths over Qt's direct I/O.</p>
+
+<h3>Exercise 8: Basic Authentication for Endpoints</h3>
+<p><strong>Description:</strong> Build a PyQt secure note app where access to a notes endpoint requires basic auth, sent from Qt to Flask, which verifies and returns protected data.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Implement Flask with a decorator or check for auth headers.</li>
+    <li>In Qt, add authorization headers to the network request.</li>
+    <li>Store credentials securely in Qt for repeated calls.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Lightweight auth in Flask secures local APIs easily, more modular than Qt's access controls. X posts from devs mention this for "personal tools," avoiding Qt's complexity in credential management.</p>
+
+<h3>Exercise 9: Polling for Real-Time Updates</h3>
+<p><strong>Description:</strong> Develop a PyQt stock ticker mockup that polls a Flask endpoint every few seconds for updated "prices" and refreshes a label.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask serves random or incremental data on GET.</li>
+    <li>Use Qt's QTimer to trigger periodic network requests.</li>
+    <li>Parse and update UI without freezing the app.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> For simple polling, Flask handles state changes cleanly, better than Qt timers alone for decoupled updates. Forum discussions note this in "monitoring apps," as it scales to websockets later.</p>
+
+<h3>Exercise 10: Integrating a Simple Database</h3>
+<p><strong>Description:</strong> Create a PyQt todo list app that interacts with a Flask API backed by SQLite for adding and listing items, displayed in a table.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Use Flask with SQLite connections in routes for CRUD.</li>
+    <li>Qt sends POST for adds, GET for lists, parsing JSON to fill QTableWidget.</li>
+    <li>Keep database file local for portability.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Flask integrates databases with minimal code, outperforming Qt's QSql for web-like queries. GitHub repos show this in "desktop DB fronts," easing schema changes over direct Qt bindings.</p>
+
+<h3>Exercise 11: Proxying External APIs</h3>
+<p><strong>Description:</strong> Build a PyQt news reader that queries a Flask endpoint, which fetches and proxies data from a public API (e.g., mock news), returning JSON to Qt.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>In Flask, use requests to fetch external data in the route.</li>
+    <li>Qt calls local endpoint to avoid CORS issues in web views.</li>
+    <li>Cache results in Flask for efficiency.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> As a proxy, Flask handles external integrations seamlessly, better than Qt's direct calls for headers or errors. Dev blogs highlight this for "API bridges," simplifying auth proxies.</p>
+
+<h3>Exercise 12: Generating Dynamic HTML Templates</h3>
+<p><strong>Description:</strong> Design a PyQt report viewer where Flask renders an HTML template with user-provided data (via query), loaded in a web view.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Use Jinja2 in Flask for template rendering.</li>
+    <li>Qt passes data as params and loads the generated URL.</li>
+    <li>Include basic styles in the template.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Template engines in Flask enable dynamic web content, superior to Qt's HTML strings for complexity. User stories on Reddit describe this for "report gens," reducing UI redraws.</p>
+
+<h3>Exercise 13: Error Handling and Custom Responses</h3>
+<p><strong>Description:</strong> Create a PyQt validator app that sends data to Flask, which returns custom error JSON on invalid input, handled in Qt with dialogs.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask uses HTTP status codes and error payloads.</li>
+    <li>Qt checks response status and shows messages accordingly.</li>
+    <li>Log errors in both for debugging.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Robust error responses in Flask standardize handling, better than Qt exceptions for API flows. SO threads note this in "validation tools," improving reliability.</p>
+
+<h3>Exercise 14: Multi-Threaded Server Management</h3>
+<p><strong>Description:</strong> Build a PyQt dashboard that starts/stops a threaded Flask server for on-demand data serving, with status indicators.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Run Flask in a QThread from Qt.</li>
+    <li>Use signals to communicate server status.</li>
+    <li>Endpoint serves simple metrics.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Threading with Flask keeps UIs responsive, outperforming Qt's QProcess for control. Dev forums share this for "dynamic servers," avoiding blocks.</p>
+
+<h3>Exercise 15: Image Processing Endpoint</h3>
+<p><strong>Description:</strong> Develop a PyQt photo editor mock where images are sent to Flask for basic processing (e.g., grayscale), returned as base64 for display.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask uses PIL for processing and encoding.</li>
+    <li>Qt decodes and shows in QImage.</li>
+    <li>Handle file types in requests.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Offloading processing to Flask modularizes code, better than Qt's QImage ops for libraries. X devs mention this in "editors," for easy extension.</p>
+
+<h3>Exercise 16: Simple WebSocket for Real-Time Chat</h3>
+<p><strong>Description:</strong> Create a PyQt chat app using Flask-SocketIO for bidirectional messaging, with Qt handling client-side via web view or library.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Add SocketIO to Flask for emit/listen.</li>
+    <li>Qt uses a web view with JS for connections.</li>
+    <li>Keep messages in memory.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> WebSockets in Flask enable real-time without Qt's heavy polling, ideal for chats. Tutorials show this in "hybrids," surpassing Qt events.</p>
+
+<h3>Exercise 17: Machine Learning Inference API</h3>
+<p><strong>Description:</strong> Build a PyQt predictor app sending text to Flask for sentiment analysis (using NLTK), displaying results.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Load model in Flask route.</li>
+    <li>Qt POSTs input and parses score.</li>
+    <li>Mock for simplicity.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Flask isolates ML logic, better than Qt embeds for dependencies. Blogs note this in "AI desktops," for scalable inference.</p>
+
+<h3>Exercise 18: Game State Server</h3>
+<p><strong>Description:</strong> Design a PyQt tic-tac-toe where Flask manages game state via API, Qt handles moves and board.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask endpoints for moves/validation.</li>
+    <li>Qt polls or posts updates.</li>
+    <li>JSON for board state.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Central state in Flask simplifies multiplayer mocks, over Qt's variables. Game devs on forums use this for "local servers."</p>
+
+<h3>Exercise 19: Dashboard with Embedded Charts</h3>
+<p><strong>Description:</strong> Create a PyQt analytics dash where Flask serves HTML with JS charts (e.g., Chart.js) based on data, loaded in web view.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Template embeds chart data.</li>
+    <li>Qt passes params for customization.</li>
+    <li>Static JS served.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> Web charts in Flask leverage JS libs, outperforming Qt plots for interactivity. User posts describe this in "dashes," for responsive visuals.</p>
+
+<h3>Exercise 20: Advanced Config with YAML/JSON API</h3>
+<p><strong>Description:</strong> Build a PyQt config manager using Flask to load/save YAML configs via API, with Qt UI for edits.</p>
+<p><strong>Hints for Implementation:</strong></p>
+<ul>
+    <li>Flask parses/saves files in routes.</li>
+    <li>Qt syncs via requests.</li>
+    <li>Validate schemas.</li>
+</ul>
+<p><strong>Why Flask is Appropriate:</strong> File-based configs via API in Flask allow versioning, better than Qt's QSettings for sharing. Advanced users on GitHub note this for "extensible tools."</p>
+
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Requests Exercises in PyQt</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h3 { color: #333; }
+        h4 { color: #666; }
+        ul, ol { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Exercises: Using Python Requests in PyQt Applications</h1>
+    
+<ol>
+    <li>
+        <h3>Building a Simple Weather Dashboard</h3>
+        <p>Create a PyQt application that fetches current weather data from a public API like OpenWeatherMap and displays it in a GUI window. The app should handle API keys for authentication and refresh data periodically without blocking the UI.</p>
+        
+        <h4>Hints for implementation:</h4>
+        <p>Use a QTimer to trigger periodic fetches in a background thread. Employ a session object to persist the API key across requests, and parse the JSON response directly. Handle potential network errors by retrying with exponential backoff.</p>
+        
+        <h4>Why using Python requests is appropriate:</h4>
+        <p>In real-world user experiences, such as those shared in Python forums and GitHub repositories for desktop weather tools, developers often prefer requests for its straightforward authentication handling (e.g., via params or headers) and built-in JSON decoding, which simplifies code compared to Qt's more verbose signal-slot setup for replies. This keeps the networking logic modular and reusable outside the Qt environment, avoiding tight coupling with QNetworkAccessManager's asynchronous callbacks.</p>
+    </li>
+    
+    <li>
+        <h3>Creating a File Downloader with Resume Support</h3>
+        <p>Develop a PyQt app that downloads large files from a URL, supports pausing and resuming downloads, and shows progress in a QProgressBar.</p>
+        
+        <h4>Hints for implementation:</h4>
+        <p>Check for partial downloads by sending a HEAD request first to get the file size, then use range headers in subsequent GET requests to resume. Stream the response in chunks to update the progress bar via signals from a worker thread.</p>
+        
+        <h4>Why using Python requests is appropriate:</h4>
+        <p>Based on discussions in developer communities like Stack Overflow threads about PyQt download managers, requests excels in handling ranged requests and streaming large files efficiently, which is less cumbersome than managing partial content with QNetworkAccessManager. It allows for cleaner integration with Python's file I/O, making the code easier to test independently of the GUI and drawing from experiences where Qt's networking led to more complex error handling for resumes.</p>
+    </li>
+    
+    <li>
+        <h3>Integrating a Login System for a Web Service</h3>
+        <p>Build a PyQt desktop client that logs into a web service (e.g., a mock forum or API like Reddit's) using username/password, maintains a session for subsequent API calls, and displays user-specific data.</p>
+        
+        <h4>Hints for implementation:</h4>
+        <p>Initialize a session to automatically handle cookies after the initial POST login request. Follow up with GET requests using the same session to fetch protected resources, and emit signals to update the UI upon successful authentication.</p>
+        
+        <h4>Why using Python requests is appropriate:</h4>
+        <p>From user stories in Reddit's r/Python and PyQt tutorials on GitHub, requests' Session class simplifies cookie persistence and header management across multiple requests, which is more intuitive than manually tracking authentication in QNetworkAccessManager. This approach is favored in apps requiring ongoing sessions, as it reduces boilerplate and aligns with Pythonic patterns, allowing the logic to be ported to non-Qt scripts easily.</p>
+    </li>
+    
+    <li>
+        <h3>Fetching and Parsing RSS Feeds for a News Reader</h3>
+        <p>Design a PyQt application that pulls RSS feeds from multiple sources, parses the XML, and displays headlines in a QListWidget, with options to filter by keywords.</p>
+        
+        <h4>Hints for implementation:</h4>
+        <p>Send GET requests to feed URLs, handle potential redirects automatically, and integrate with a XML parsing library like feedparser. Use a thread pool to fetch multiple feeds concurrently without freezing the main window.</p>
+        
+        <h4>Why using Python requests is appropriate:</h4>
+        <p>Real-world examples from open-source PyQt news aggregators on GitHub highlight requests' ease in dealing with redirects, timeouts, and response encoding, which can be tricky in Qt's networking without extra configuration. It pairs seamlessly with Python ecosystem libraries for parsing, keeping the code concise and focused on data processing rather than low-level network details.</p>
+    </li>
+    
+    <li>
+        <h3>Submitting Forms to a Web API with Attachments</h3>
+        <p>Create a PyQt tool that allows users to upload images or documents to a web API (e.g., a mock image hosting service) via a form, along with metadata like descriptions, and shows upload status.</p>
+        
+        <h4>Hints for implementation:</h4>
+        <p>Prepare a multipart/form-data POST request with files and additional fields. Stream the upload if files are large, and capture the response to display success or error messages in the UI.</p>
+        
+        <h4>Why using Python requests is appropriate:</h4>
+        <p>Drawing from experiences in PyQt-based file sharing tools discussed in online coding communities, requests provides a high-level interface for multipart uploads that's simpler and more readable than constructing QHttpMultiPart in Qt. This is especially useful for APIs with complex form requirements, as it avoids Qt-specific memory management issues and enables easier debugging with Python's standard logging.</p>
+    </li>
+</ol></body>
+</html>
+

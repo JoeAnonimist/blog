@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLAlchemy PyQt Exercises</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h3 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        strong { color: #555; }
+        ul, ol { margin: 10px 0; padding-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>SQLAlchemy Exercises for PyQt Applications</h1>
+    <p>These exercises progress from basic to advanced concepts, each designed for a single-file implementation.</p>
+    
+<h3>Exercise 1: Setting Up a Basic Database Connection</h3>
+<p><strong>Description:</strong> Create a simple PyQt "Hello World" app that connects to a SQLite database and displays a success message in a QLabel if the connection is established.</p>
+<p><strong>Implementation Hints:</strong> Use SQLAlchemy's create_engine to initialize a SQLite engine. Create a session and test it with a simple metadata reflection. Bind the connection status to a QLabel in the main window.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> In beginner PyQt tutorials on forums like Reddit's r/learnpython, new devs struggle with QtSql's driver dependencies and manual connection strings. SQLAlchemy abstracts this with Pythonic URLs, making initial setups quicker and more portable, ideal for prototyping without deep SQL knowledge.</p>
+
+<h3>Exercise 2: Performing Basic CRUD Operations</h3>
+<p><strong>Description:</strong> Build a PyQt app with buttons to create, read, update, and delete a single user record in a database, showing the current record in a QLineEdit.</p>
+<p><strong>Implementation Hints:</strong> Define a simple User model with declarative_base. Use session.add for create, query for read, update attributes for update, and session.delete for delete. Refresh the QLineEdit after each operation.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> QtSql requires raw SQL strings for CRUD, leading to syntax errors in novice apps as seen in Stack Overflow questions. SQLAlchemy's ORM allows object-oriented operations in Python, reducing bugs and easing learning for those transitioning from object-based programming.</p>
+
+<h3>Exercise 3: Querying and Displaying Data in a List</h3>
+<p><strong>Description:</strong> Develop a PyQt list viewer app that queries all tasks from a database and displays them in a QListWidget, with a button to add a new task.</p>
+<p><strong>Implementation Hints:</strong> Model a Task class with id and description. Use session.query to fetch all, then populate the QListWidget items from the results. Commit new tasks via session.add.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Real-world task managers shared on GitHub often hit limits with Qt's QSqlQueryModel for dynamic lists, needing manual refreshes. SQLAlchemy's query API integrates seamlessly with Python loops for UI population, avoiding Qt's model-view complexities early on.</p>
+
+<h3>Exercise 4: Handling Simple Data Validation</h3>
+<p><strong>Description:</strong> Create a PyQt form app for entering book details (title, author), validating that the title isn't empty before saving to the database, and showing an error dialog if invalid.</p>
+<p><strong>Implementation Hints:</strong> In the Book model, add a validator method checking attributes. Call it before session.add, and use QMessageBox for errors. Query saved books to a QComboBox for selection.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> PyQt devs in forums report QtSql lacking built-in validation hooks, forcing UI-level checks. SQLAlchemy enables model-level Python validations, keeping logic centralized and reusable, as in simple catalog apps where data integrity is key without complex schemas.</p>
+
+<h3>Exercise 5: Implementing One-to-Many Relationships</h3>
+<p><strong>Description:</strong> Build a PyQt app for managing blog posts and their comments, displaying posts in a QTreeWidget with nested comments.</p>
+<p><strong>Implementation Hints:</strong> Define Post and Comment models with a relationship (backref for bidirectional). Query posts with joined comments, then build the tree structure in Python before feeding to QTreeWidget.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> In blogging prototypes discussed on PyQt mailing lists, QtSql joins require handwritten SQL, prone to errors in relationships. SQLAlchemy's declarative relationships handle eager loading automatically, simplifying data traversal in Python for UI nesting.</p>
+
+<h3>Exercise 6: Filtering Data with User Input</h3>
+<p><strong>Description:</strong> Develop a PyQt search app where users enter a keyword in a QLineEdit to filter products by name from the database, updating a QTableView in real-time.</p>
+<p><strong>Implementation Hints:</strong> Use session.query with .filter containing like() for partial matches. Connect textChanged signal to requery and update a custom QAbstractTableModel backed by the results.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Search features in e-commerce mocks on Stack Overflow reveal QtSql's parameterized queries being cumbersome for dynamic filters. SQLAlchemy's expression language builds composable filters in Python, enhancing readability over concatenated strings.</p>
+
+<h3>Exercise 7: Sorting and Paginating Results</h3>
+<p><strong>Description:</strong> Create a PyQt browser app for employee records, with buttons to sort by salary and paginate results (e.g., 10 per page) in a QListView.</p>
+<p><strong>Implementation Hints:</strong> Apply .order_by on queries for sorting, and .offset/.limit for pagination. Track page state in the app and refresh the view on button clicks.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Pagination in HR tools, as per real-world shares on LinkedIn, taxes QtSql with manual offset calculations in queries. SQLAlchemy's chainable methods make sorting/paging Pythonic and efficient, reducing query duplication.</p>
+
+<h3>Exercise 8: Using Aggregates for Summary Stats</h3>
+<p><strong>Description:</strong> Build a PyQt dashboard showing total sales and average price from invoice data in labels, with a refresh button.</p>
+<p><strong>Implementation Hints:</strong> Leverage func.sum and func.avg in queries on an Invoice model. Bind aggregated scalars directly to QLabel texts after execution.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Analytics snippets in PyQt repos show QtSql aggregates needing subqueries or multiple calls. SQLAlchemy's func module integrates aggregates cleanly into Python, ideal for quick stats without full result sets.</p>
+
+<h3>Exercise 9: Managing Transactions for Batch Operations</h3>
+<p><strong>Description:</strong> Develop a PyQt importer that batches multiple expense entries from a text file, committing only if all validate, else rolling back.</p>
+<p><strong>Implementation Hints:</strong> Wrap session.add_all in a try-except with session.rollback on failure. Use a QProgressDialog for feedback during the batch.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Batch imports in accounting apps, from user stories on Reddit, fail atomically hard with QtSql's per-query commits. SQLAlchemy's session transactions ensure all-or-nothing ops in Python, preventing partial data corruption.</p>
+
+<h3>Exercise 10: Integrating with External Python Libraries</h3>
+<p><strong>Description:</strong> Create a PyQt app that stores weather data, using requests to fetch current data, then saves and queries it for a line chart.</p>
+<p><strong>Implementation Hints:</strong> Model Weather with date and temp. After API fetch, map to objects and session.add. Query for charting with matplotlib embedded in a QWidget.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Hybrid apps in dev communities mix APIs with DBs, where QtSql isolates from Python ecosystems. SQLAlchemy's ORM meshes with libs like requests, allowing data enrichment in pure Python over Qt's limited integration.</p>
+
+<h3>Exercise 11: Setting Up Migrations for Schema Changes</h3>
+<p><strong>Description:</strong> Adapt a PyQt note-taking app to add a 'tags' column to existing notes via migration, without losing data.</p>
+<p><strong>Implementation Hints:</strong> Use Alembic with SQLAlchemy models to generate and apply a revision. Run the upgrade in app init if needed, then query updated schema.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Schema evolutions in evolving apps, per Stack Overflow threads, demand manual ALTERs in QtSql. SQLAlchemy/Alembic automates versioned changes, crucial for maintainable apps without downtime.</p>
+
+<h3>Exercise 12: Listening to Database Events</h3>
+<p><strong>Description:</strong> Build a PyQt logging app where updating a task auto-logs the change timestamp in a separate audit table.</p>
+<p><strong>Implementation Hints:</strong> Attach @event.listens_for to the Task model for 'before_update' to populate an Audit entry. Query audits for a separate QTextEdit display.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Event-driven logs in compliance tools, from forum experiences, rely on DB triggers in QtSql. SQLAlchemy's Python events decouple logic, easier to debug than server-side triggers.</p>
+
+<h3>Exercise 13: Optimizing Queries with Indexes</h3>
+<p><strong>Description:</strong> Create a PyQt search optimizer app that frequently queries large user logs, ensuring fast responses by adding indexes.</p>
+<p><strong>Implementation Hints:</strong> Add Index to frequently filtered columns in the Log model. Use .explain to check query plans, refreshing a QTableView with results.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Performance tweaks in log analyzers, shared online, involve manual index SQL in QtSql. SQLAlchemy declares indexes in models, integrating optimization into Python for better portability.</p>
+
+<h3>Exercise 14: Handling Concurrency with Locking</h3>
+<p><strong>Description:</strong> Develop a PyQt reservation app where multiple instances prevent double-booking seats by using row-level locks.</p>
+<p><strong>Implementation Hints:</strong> Use .with_for_update on queries to lock rows during edits. Manage sessions per instance to simulate concurrency.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Concurrency issues in booking systems, from real-world bugs reported, crash QtSql without explicit LOCK commands. SQLAlchemy's pessimistic locking is Python-configurable, reducing race conditions intuitively.</p>
+
+<h3>Exercise 15: Testing ORM Logic Independently</h3>
+<p><strong>Description:</strong> Build a PyQt finance tracker with unit tests for balance calculations before UI integration.</p>
+<p><strong>Implementation Hints:</strong> Use in-memory engine for isolated session tests on Transaction models. Mock queries in pytest, ensuring logic works sans app run.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Testing woes in PyQt projects, per GitHub issues, tie QtSql to running connections. SQLAlchemy's mockable sessions enable TDD in Python, accelerating dev without full UI spins.</p>
+
+<h3>Exercise 16: Customizing Hybrid Properties</h3>
+<p><strong>Description:</strong> Create a PyQt employee app computing full names from first/last on-the-fly for display in a combo box.</p>
+<p><strong>Implementation Hints:</strong> Define a hybrid_property on Employee for full_name, usable in queries. Populate QComboBox with queried hybrid values.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Derived fields in HR apps, from user examples, need QtSql aliases or views. SQLAlchemy's hybrids blend Python/server expressions, simplifying computed data handling.</p>
+
+<h3>Exercise 17: Asynchronous Session for Non-Blocking Ops</h3>
+<p><strong>Description:</strong> Develop a PyQt real-time monitor pulling DB updates without freezing the UI, using async.</p>
+<p><strong>Implementation Hints:</strong> Switch to async_engine and async_session. Run queries in a QThread with awaitables, signaling back to main thread.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> UI responsiveness in monitoring tools, discussed in communities, suffers from QtSql's sync nature. SQLAlchemy's async support integrates with Python's asyncio, enabling non-blocking DB access.</p>
+
+<h3>Exercise 18: Polymorphic Inheritance for Models</h3>
+<p><strong>Description:</strong> Build a PyQt media library distinguishing audio/video subclasses from a base Media model.</p>
+<p><strong>Implementation Hints:</strong> Use single_table inheritance with discriminator. Query polymorphically to handle subtypes uniformly in a QTreeView.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Inheritance in asset managers, from dev shares, forces QtSql unions or separate tables. SQLAlchemy's polymorphic queries unify subtypes in Python, streamlining complex hierarchies.</p>
+
+<h3>Exercise 19: Full-Text Search Integration</h3>
+<p><strong>Description:</strong> Create a PyQt document searcher using database full-text capabilities for efficient keyword matches.</p>
+<p><strong>Implementation Hints:</strong> Add a tsvector column and use func.to_tsvector in queries with @@ operator. Update QTableWidget with ranked results.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Search engines in apps, per forum posts, adapt poorly with QtSql's basic LIKE. SQLAlchemy extends to dialect-specific full-text, like PostgreSQL's, in pure Python expressions.</p>
+
+<h3>Exercise 20: Sharding for Scalable Data</h3>
+<p><strong>Description:</strong> Adapt a PyQt analytics app to shard user data across multiple DBs based on regions for better performance.</p>
+<p><strong>Implementation Hints:</strong> Use horizontal_sharding with multiple engines, routing sessions by user attributes. Aggregate queries across shards for unified views.</p>
+<p><strong>Why SQLAlchemy is Appropriate:</strong> Scaling in growing apps, from enterprise stories, overwhelms QtSql's single-connection focus. SQLAlchemy's sharding plugins distribute load Pythonically, preparing for advanced distributed systems.</p></body>
+</html>
+
