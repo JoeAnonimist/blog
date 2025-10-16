@@ -1,9 +1,11 @@
+html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adapted Exercises: Concurrent.Futures with PySide6</title>
+    <title>Revised Exercises: Concurrent.Futures with PySide6</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
         ol { list-style-position: inside; }
@@ -12,96 +14,140 @@
         .description { font-style: italic; }
         .hints { background-color: #e8f4fd; padding: 8px; border-radius: 4px; }
         .why { font-weight: bold; }
+        .level { color: #666; font-size: 0.9em; }
     </style>
 </head>
 <body>
-    <h1>Adapted Exercises for Using concurrent.futures with PySide6</h1>
-    <p>These exercises focus on scenarios where <code>concurrent.futures</code> provides clear advantages over Qt-native threading, emphasizing Python-centric tasks like I/O and CPU-bound operations.</p>
+    <h1>Revised Exercises for Using concurrent.futures with PySide6</h1>
+    <p>These 18 revised exercises progress from a basic "Hello World" to advanced patterns, each focusing on a single key concept from <code>concurrent.futures</code>. They are designed for short, single-file implementations (under 100 lines) in PySide6, emphasizing scenarios where futures provide clean, Python-centric concurrency for GUI apps. Real-world inspirations include dashboard data fetching, file explorers, and data processors from user forums like StackOverflow and Python GUIs tutorials.</p>
     
     <ol>
         <li>
-            <h3>Basic Network Fetch</h3>
-            <div class="description">Inspired by users fetching JSON from multiple APIs for a dashboard app (e.g., stock prices or weather data), submit tasks to retrieve data without blocking the PySide6 UI, then update labels with results.</div>
-            <div class="hints">Hints for Implementation: Use ThreadPoolExecutor for I/O-bound requests; add done callbacks to marshal data back to the main thread via a custom signal or QMetaObject.invokeMethod for safe UI updates.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Network I/O is Python-centric (using libraries like requests), and concurrent.futures provides a simple pool for parallel fetches, isolating HTTP logic from Qt's networking classes like QNetworkAccessManager, which might be overkill for basic JSON pulls—as noted in Python GUIs examples.</div>
+            <h3 class="level">Beginner: Hello World Submission</h3>
+            <div class="description">Submit a simple function that returns a greeting string to a ThreadPoolExecutor; display the result in a QLabel after blocking wait.</div>
+            <div class="hints">Hints for Implementation: Use submit() on a ThreadPoolExecutor; call future.result() in a button handler to update the label.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Introduces basic task offloading for non-GUI computations; simple alternative to manual threading, as in basic PyQt examples for avoiding UI blocks.</div>
         </li>
         
         <li>
-            <h3>Concurrent File Loading</h3>
-            <div class="description">Based on real-world file explorers or data analyzers where users load multiple logs or CSVs simultaneously; process files in background and populate a QTableWidget with summaries.</div>
-            <div class="hints">Hints for Implementation: Employ ThreadPoolExecutor with map() over file paths; handle results with as_completed() to update progress in a QProgressBar, ensuring file parsing stays in workers.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: File I/O is inherently I/O-bound and benefits from Python's standard threading without Qt's file watchers; StackOverflow users report it prevents GUI hangs during batch reads, unlike sequential Qt loops.</div>
+            <h3 class="level">Beginner: Non-Blocking Callback</h3>
+            <div class="description">Extend the greeting to use add_done_callback() for async result handling without blocking the main thread.</div>
+            <div class="hints">Hints for Implementation: Define a callback function to check future.done() and update UI; connect to a button click.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Enables responsive GUIs for short tasks; users report it simplifies event-driven updates over QThread signals in lightweight apps.</div>
         </li>
         
         <li>
-            <h3>Image Thumbnail Generator</h3>
-            <div class="description">Drawn from photo gallery apps where users report generating thumbs for directories of images; create previews in parallel and display in a QGridLayout.</div>
-            <div class="hints">Hints for Implementation: Opt for ProcessPoolExecutor if using CPU-heavy libraries like Pillow; submit paths, return byte data or paths to temp files, then load into QPixmaps on main thread.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Image processing often involves CPU-bound ops (resizing, filtering) that bypass GIL via processes; real users on Reddit prefer this for isolation, avoiding Qt's QImage in threads which can lead to crashes.</div>
+            <h3 class="level">Beginner: Batch Mapping</h3>
+            <div class="description">Map a list of names to personalized greetings using executor.map(); display results in a QListWidget.</div>
+            <div class="hints">Hints for Implementation: Call map(greet, names).result() in a button handler; iterate over returned iterable to populate the list.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Handles iterable tasks efficiently; ideal for batch string processing in forms, isolating from Qt's list models.</div>
         </li>
         
         <li>
-            <h3>Batch Data Processing</h3>
-            <div class="description">From scientific apps processing sensor data batches (e.g., CSV crunching with Pandas); compute stats in parallel and visualize results in a PySide6 plot widget.</div>
-            <div class="hints">Hints for Implementation: Use ProcessPoolExecutor for NumPy/Pandas ops; chunk data if large, reduce results in a callback to update charts safely.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: CPU-bound data tasks excel with process pools for true parallelism; tutorials highlight it for keeping Qt GUIs responsive during analysis, without entangling data code in QThreads.</div>
+            <h3 class="level">Beginner: As-Completed Iteration</h3>
+            <div class="description">Submit multiple sleep tasks; use as_completed() to update a QProgressBar as each finishes.</div>
+            <div class="hints">Hints for Implementation: Submit sleeps to futures list; loop over as_completed(futures) to increment progress.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Provides ordered completion for progress feedback; common in file loaders to avoid Qt's complex progress signals.</div>
         </li>
         
         <li>
-            <h3>Parallel Downloads</h3>
-            <div class="description">Inspired by download managers in media apps; queue multiple file downloads and show progress in a list view.</div>
-            <div class="hints">Hints for Implementation: ThreadPoolExecutor with submit() for each URL; use partial results for incremental QProgressBar updates via callbacks.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Download I/O is pure Python (urllib/requests), and users on StackOverflow use futures for easy cancellation and pooling, simpler than Qt's download signals for non-Qt protocols.</div>
+            <h3 class="level">Beginner: Exception Propagation</h3>
+            <div class="description">Add random errors to greeting tasks; catch with future.exception() and show in a status label.</div>
+            <div class="hints">Hints for Implementation: In callback or result handler, use try-except around future.result() or check exception().</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Built-in error bubbling; simplifies debugging in multi-task GUIs, as per StackOverflow PyQt threads.</div>
         </li>
         
         <li>
-            <h3>API Polling Loop</h3>
-            <div class="description">Based on monitoring tools polling endpoints periodically (e.g., server status); run polls in background without freezing the status display.</div>
-            <div class="hints">Hints for Implementation: ThreadPoolExecutor for repeated submits; integrate with QTimer to trigger polls, handling results to refresh labels.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Polling is lightweight I/O; real-world experiences show futures simplify scheduling over QThread loops, especially when mixing with non-Qt timers.</div>
+            <h3 class="level">Easy: Simple Network Fetch</h3>
+            <div class="description">Fetch JSON from one API (e.g., JSONPlaceholder); display parsed data in a QLabel.</div>
+            <div class="hints">Hints for Implementation: Use requests.get in a submitted function; parse and return dict for UI update.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: I/O-bound HTTP calls with requests lib; keeps networking Python-pure, avoiding QNetworkAccessManager overhead.</div>
         </li>
         
         <li>
-            <h3>Prime Number Calculator</h3>
-            <div class="description">From educational or math apps computing primes for large ranges; offload to avoid UI lag and display results in a text edit.</div>
-            <div class="hints">Hints for Implementation: Switch to ProcessPoolExecutor for CPU work; divide range into chunks for map(), aggregate in main thread.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Pure math computations are CPU-bound; process pools provide speedup without Qt's thread overhead, as per user examples in concurrency blogs.</div>
+            <h3 class="level">Easy: Concurrent File Reads</h3>
+            <div class="description">Read lines from 3-5 sample text files; append contents to a QTextEdit as they complete.</div>
+            <div class="hints">Hints for Implementation: Submit open/read functions; use as_completed to append results safely.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Parallel I/O for logs/CSVs; prevents freezes in explorers, per user reports on batch loading.</div>
         </li>
         
         <li>
-            <h3>Matrix Operations</h3>
-            <div class="description">Drawn from engineering sims with NumPy matrices; perform multiplications in parallel and plot outputs.</div>
-            <div class="hints">Hints for Implementation: ProcessPoolExecutor with map() over sub-matrices; use shared memory if needed, but keep simple with picklable data.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Linear algebra is CPU-intensive; users report futures integrate easily with SciPy/NumPy, isolating math from Qt's graphics view updates.</div>
+            <h3 class="level">Easy: CPU-Bound Prime Check</h3>
+            <div class="description">Check primality for a user-input number using ProcessPoolExecutor; show result and time in labels.</div>
+            <div class="hints">Hints for Implementation: Switch to ProcessPoolExecutor; submit is_prime(n) and time the result().</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Bypasses GIL for math; useful for educational apps without Qt math threads.</div>
         </li>
         
         <li>
-            <h3>File System Operations</h3>
-            <div class="description">Inspired by file managers with bulk copy/move/delete (e.g., archiving tools); execute ops concurrently to speed up large folders.</div>
-            <div class="hints">Hints for Implementation: ThreadPoolExecutor for I/O ops like shutil; add exception handling in callbacks to show error dialogs.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: FS tasks are I/O-bound with potential bottlenecks; StackOverflow threads praise futures for performance gains in PyQt file GUIs, avoiding custom QThread subclasses.</div>
+            <h3 class="level">Easy: Task Cancellation</h3>
+            <div class="description">Submit a long-running task; add a cancel button to call future.cancel() if pending.</div>
+            <div class="hints">Hints for Implementation: Check future.cancelled() in callback; disable/enable buttons accordingly.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Native cancellation for user interrupts; simpler than QThread termination in volatile tasks.</div>
         </li>
         
         <li>
-            <h3>Hybrid I/O and Compute</h3>
-            <div class="description">From image analyzers downloading then processing pics (e.g., ML inference); chain downloads to computations.</div>
-            <div class="hints">Hints for Implementation: Mix ThreadPoolExecutor for downloads and ProcessPoolExecutor for processing; use nested futures or callbacks for chaining.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Combines I/O and CPU; futures allow easy executor switching, as in Medium articles on PyQt concurrency, keeping pipelines Python-pure.</div>
+            <h3 class="level">Easy: Timeout Enforcement</h3>
+            <div class="description">Fetch from a slow API with future.result(timeout=5); show timeout message if exceeded.</div>
+            <div class="hints">Hints for Implementation: Wrap result() in try-except TimeoutError; update status label.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Built-in timeouts for flaky networks; preferred in monitoring apps over custom Qt timers.</div>
         </li>
         
         <li>
-            <h3>Timeout-Handled Tasks</h3>
-            <div class="description">Based on unreliable network apps; submit tasks with timeouts and cancel if needed, updating a status bar.</div>
-            <div class="hints">Hints for Implementation: Use future.result(timeout=) in a wrapper; add cancel() on user interrupt via button signal.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Timeouts are built-in to futures; user experiences show it's simpler for handling flaky APIs than Qt's timeout signals in QNetworkReply.</div>
+            <h3 class="level">Intermediate: Progress Reporting</h3>
+            <div class="description">Simulate a task with intermediate updates (e.g., via queue); use callback to advance QProgressBar.</div>
+            <div class="hints">Hints for Implementation: Use a shared queue in worker; poll in callback or use concurrent.futures' partial support.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Fine-grained feedback for downloads; isolates progress logic from Qt signals.</div>
         </li>
         
         <li>
-            <h3>Resumable Batch Jobs</h3>
-            <div class="description">Drawn from long-running data importers with checkpoints (e.g., database syncs); persist progress and resume on app restart.</div>
-            <div class="hints">Hints for Implementation: ProcessPoolExecutor with checkpointing in workers; store state in files, resume by skipping completed tasks.</div>
-            <div class="why">Why Concurrent.Futures is Appropriate: Fault-tolerant jobs benefit from futures' exception propagation; real users use it for robust GUIs in data tools, without Qt's persistent thread states.</div>
+            <h3 class="level">Intermediate: Task Chaining</h3>
+            <div class="description">Download data, then process it (e.g., JSON to CSV); chain via callback on first future.</div>
+            <div class="hints">Hints for Implementation: In done callback of fetch, submit process if successful; update UI on second result.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Sequential pipelines for I/O-compute; easy in data apps, avoiding nested QThreads.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Intermediate: Multiple Executors</h3>
+            <div class="description">Use ThreadPool for fetches and ProcessPool for computations on results; display aggregated stats.</div>
+            <div class="hints">Hints for Implementation: Submit fetches to thread pool; chain to process pool in as_completed handler.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Flexible pool switching for hybrid loads; real-world in analyzers per Medium tutorials.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Intermediate: Periodic Polling</h3>
+            <div class="description">Poll an API every 5s via QTimer-triggered submits; update a live label with latest data.</div>
+            <div class="hints">Hints for Implementation: In timer slot, submit poll task; use callback to refresh if not cancelled.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Lightweight recurring I/O; simplifies over QThread loops in dashboards.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Intermediate: Error Recovery</h3>
+            <div class="description">On exception in a batch task, resubmit only failed ones; log recoveries in console.</div>
+            <div class="hints">Hints for Implementation: In as_completed, if exception, append to retry list and resubmit after loop.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Robust batch handling; useful for unreliable FS ops in managers.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Advanced: Priority Tasks</h3>
+            <div class="description">Use heapq for task priorities; submit high-priority first and process with as_completed.</div>
+            <div class="hints">Hints for Implementation: Queue futures by priority; iterate as_completed to update a priority list widget.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Custom scheduling for queues; in task managers, avoids Qt's priority queues.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Advanced: Data Aggregation</h3>
+            <div class="description">Aggregate results from parallel computations (e.g., word counts); display top items in QTableWidget.</div>
+            <div class="hints">Hints for Implementation: Use reduce-like callback to merge dicts from map(); sort and populate table.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Map-reduce for analytics; isolates aggregation from GUI, as in Python GUIs examples.</div>
+        </li>
+        
+        <li>
+            <h3 class="level">Advanced: Shutdown Handling</h3>
+            <div class="description">On app close, call executor.shutdown(wait=True); ensure pending tasks finish or cancel.</div>
+            <div class="hints">Hints for Implementation: Override closeEvent; check running futures before shutdown.</div>
+            <div class="why">Why Concurrent.Futures is Appropriate: Clean resource management; critical for long-running apps per StackOverflow advice.</div>
         </li>
     </ol>
 </body>
 </html>
+

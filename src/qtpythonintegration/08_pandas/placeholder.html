@@ -9,72 +9,132 @@
         h1 { color: #333; }
         h2 { color: #555; border-bottom: 1px solid #ddd; }
         h3 { color: #666; }
-        ul, ol { margin-bottom: 20px; }
         p { margin-bottom: 10px; }
     </style>
 </head>
 <body>
-    <h1>Pandas Exercises for Qt Applications: When Data Manipulation Shines</h1>
-    <p>These exercises are designed for developers building data-centric Qt apps (using PyQt or PySide) where structured data like CSV files, logs, or sensor readings needs exploration. Each one highlights a scenario where Qt's built-in models (e.g., QStandardItemModel or QSqlTableModel) fall short for complex manipulations, but pandas excels in efficiency and expressiveness. I've drawn inspiration from real-world user projects, such as Stack Overflow discussions on fast DataFrame-to-QTableView integration and a Qiita article visualizing Japanese Shinkansen history with pandas and PyQt, keeping things simple to focus on core concepts.</p>
+    <h1>Pandas Exercises for Qt Applications: Progressive Data Manipulation</h1>
+    <p>These 15 exercises guide developers building Qt apps (using PyQt or PySide) through pandas data manipulation, progressing from beginner to advanced concepts. Each focuses on one pandas feature, keeps code short for a single-file implementation, and integrates with Qt for data-centric apps. Inspired by real-world user projects like Stack Overflow discussions on DataFrame-to-QTableView integration and a Qiita article visualizing Shinkansen history, they highlight why pandas outperforms Qt's built-in models (e.g., QStandardItemModel) for data tasks.</p>
 
-<h2>Exercise 1: Cleaning and Previewing Messy Sensor Data</h2>
-<h3>Description</h3>
-<p>Build a Qt app for an IoT dashboard that loads a CSV of temperature sensor readings (with missing values, inconsistent dates, and outliers). Clean the data, then display a preview table and a simple summary widget showing min/max/average temps.</p>
+    <h2>Exercise 1: Loading and Displaying CSV Data</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a small CSV (e.g., columns: name, age, city) and display it in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Read the CSV into a DataFrame. Create a QAbstractTableModel to map DataFrame rows/columns to the view. Set headers from DataFrame columns.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt's QFile requires manual CSV parsing, which is error-prone for malformed files. Pandas handles CSV variations (e.g., encoding, delimiters) automatically, as users note for quick prototyping.</p>
 
-<h3>Hints</h3>
-<p>Load the CSV into a DataFrame. Use methods to detect and fill missing values based on forward-fill for time series, convert date columns to datetime, and clip outliers using quantiles. Create a custom QAbstractTableModel to bridge the cleaned DataFrame to a QTableView. Update the summary labels reactively when the user triggers a "Clean" button.</p>
+    <h2>Exercise 2: Sorting Data by Column</h2>
+    <h3>Description</h3>
+    <p>Build a Qt app to load a CSV of products (name, price, stock) and sort by price in a QTableView using a button toggle (ascending/descending).</p>
+    <h3>Hints</h3>
+    <p>Use DataFrame sort_values with an ascending parameter. Update the table model on button click. Connect QPushButton to toggle the sort direction.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt's QSortFilterProxyModel sorts visually but doesn’t modify the underlying data. Pandas’ sort_values is simpler and preserves data integrity, avoiding Qt’s complex proxy setup.</p>
 
-<h3>Why Pandas?</h3>
-<p>Qt models are great for static display but cumbersome for iterative cleaning (e.g., handling NaNs or type coercion requires manual loops). Pandas' vectorized operations make data wrangling concise and fast, especially for real-world sensor logs where 20-30% of data is often noisy—users on forums report slashing prep time from hours to minutes compared to pure Qt string parsing.</p>
+    <h2>Exercise 3: Filtering Rows by Value</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a CSV of students (name, grade, subject) and filter rows where grade > 80 using a checkbox, showing results in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use boolean indexing (e.g., df[df['grade'] > 80]). Toggle the filtered DataFrame in the model when the checkbox changes.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt’s proxy models require regex or custom filters, which are verbose. Pandas’ boolean indexing is concise and intuitive, as seen in user apps filtering datasets.</p>
 
-<h2>Exercise 2: Filtering Large Log Files for Troubleshooting</h2>
-<h3>Description</h3>
-<p>Create a Qt log analyzer app that loads a 10,000-row CSV of app error logs (columns: timestamp, user, error_type, message). Add filters for error types and date ranges, updating a searchable QTableView in real-time as the user selects options.</p>
+    <h2>Exercise 4: Adding a Derived Column</h2>
+    <h3>Description</h3>
+    <p>Develop a Qt app to load a CSV of employees (name, salary) and add a column for bonus (10% of salary), displaying in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Create a new column with a simple calculation (e.g., df['bonus'] = df['salary'] * 0.1). Refresh the table model to include the new column.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt models require manual item insertion for new columns, which is tedious. Pandas’ vectorized operations are faster and cleaner, as users report for quick calculations.</p>
 
-<h3>Hints</h3>
-<p>Read the full CSV into a DataFrame with low-memory mode. Implement filter logic using boolean indexing for categories and date slicing. Expose filters via QComboBox and QDateEdit widgets, reapplying the mask on value changes and refreshing the model. Sort the view by timestamp descending for latest-first display.</p>
+    <h2>Exercise 5: Handling Missing Values</h2>
+    <h3>Description</h3>
+    <p>Build a Qt app to load a CSV of weather data (date, temp) with missing temps, fill them with the mean, and show in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use fillna with the column mean. Update the model post-cleaning. Add a button to trigger the fill operation.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt lacks built-in missing value handling, requiring loops. Pandas’ fillna is a one-liner, efficient for datasets like sensor logs where users report 20% missing data.</p>
 
-<h3>Why Pandas?</h3>
-<p>Qt's filtering via proxy models works for simple cases but slows down on large datasets without built-in indexing. Pandas' query API and boolean masks handle millions of rows efficiently with minimal code, mirroring user experiences in debugging tools where Qt alone leads to UI freezes during searches.</p>
+    <h2>Exercise 6: Grouping by Category</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a CSV of sales (region, amount) and show total sales per region in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use groupby on region and sum the amount. Display the aggregated DataFrame in the model. Use reset_index to format for the view.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt has no grouping tools, requiring manual aggregation. Pandas’ groupby is optimized, as seen in retail apps for quick regional summaries.</p>
 
-<h2>Exercise 3: Grouping Sales Data for Regional Dashboards</h2>
-<h3>Description</h3>
-<p>Develop a Qt sales tracker app that imports a CSV of transactions (columns: date, region, product, sales_amount). Group by region to compute totals and averages, displaying results in a QTableView with expandable rows for details, plus a pie chart widget for visual summary.</p>
+    <h2>Exercise 7: Merging Two Datasets</h2>
+    <h3>Description</h3>
+    <p>Develop a Qt app to merge two CSVs—customers (id, name) and orders (customer_id, order_date)—and display the joined data in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use merge with an inner join on customer_id. Load the result into the model. Handle missing matches with a default value if needed.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt’s QSql requires a database, which is overkill for CSV joins. Pandas’ merge is straightforward, as users note in CRM apps for avoiding manual ID lookups.</p>
 
-<h3>Hints</h3>
-<p>Use groupby on region, aggregating with sum and mean functions. Flatten the grouped results into a new DataFrame for the model. For drill-down, store the original DataFrame and filter subgroups on row clicks. Integrate a QChart for the pie via PyQt's charting module, populating it from group counts.</p>
+    <h2>Exercise 8: Dropping Duplicate Rows</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a CSV of user logs (user_id, action, timestamp) with duplicates, remove them, and show the cleaned data in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use drop_duplicates with subset columns (e.g., user_id, action). Update the model after deduplication. Add a button to trigger the action.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt lacks deduplication tools, requiring manual checks. Pandas’ drop_duplicates is fast and flexible, saving time in log analysis apps per user feedback.</p>
 
-<h3>Why Pandas?</h3>
-<p>Qt lacks native aggregation tools, forcing custom SQL-like queries or loops that bloat the code. Pandas' groupby is optimized for this (e.g., handling categorical data seamlessly), as seen in retail analytics apps where users praise it for quick insights on uneven regional data without reinventing the wheel.</p>
+    <h2>Exercise 9: Converting Data Types</h2>
+    <h3>Description</h3>
+    <p>Build a Qt app to load a CSV of sensor data (timestamp, value as string) and convert values to floats for display in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use astype or to_numeric for conversion, handling errors with coerce. Refresh the model post-conversion.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt’s string-to-number parsing is manual and error-prone. Pandas’ type conversion is robust, as users report for cleaning messy IoT data.</p>
 
-<h2>Exercise 4: Merging Customer and Order Datasets</h2>
-<h3>Description</h3>
-<p>In a Qt CRM app, load two CSVs—one for customers (id, name, email) and one for orders (customer_id, date, amount). Merge them on customer_id, handle unmatched records, and show a unified QTableView with a status column for "active/inactive" customers based on recent orders.</p>
+    <h2>Exercise 10: Applying a Custom Function</h2>
+    <h3>Description</h3>
+    <p>Develop a Qt app to load a CSV of products (name, price) and categorize prices as "Low" or "High" (>50) in a new column, shown in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use apply with a lambda to categorize prices. Update the model to include the new column.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt requires manual iteration for custom logic. Pandas’ apply simplifies row-wise operations, as seen in e-commerce apps for quick categorization.</p>
 
-<h3>Hints</h3>
-<p>Perform an outer join on the key column, filling NaNs for missing matches. Add a derived column using apply to flag activity (e.g., if last order > 90 days ago). Use a QSortFilterProxyModel for in-view sorting by amount. Add a button to export the merged view back to CSV.</p>
+    <h2>Exercise 11: Pivoting Data for Summary</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a CSV of sales (region, month, amount) and pivot to show regions as rows, months as columns, and amounts as values in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use pivot_table with region as index and month as columns. Load the pivoted DataFrame into the model.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt has no pivoting tools, requiring complex model restructuring. Pandas’ pivot_table is ideal for summary views, as users note in dashboard apps.</p>
 
-<h3>Why Pandas?</h3>
-<p>Qt's relational support (via QSql) requires a database setup, which is overkill for ad-hoc file merges. Pandas' merge function is intuitive and handles duplicates/mismatches effortlessly, a common pain point in user-built CRMs where manual ID matching in Qt leads to error-prone scripts.</p>
+    <h2>Exercise 12: Resampling Time Series Data</h2>
+    <h3>Description</h3>
+    <p>Build a Qt app to load a CSV of hourly stock prices (timestamp, price), resample to daily averages, and display in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Set timestamp as index and use resample with mean. Update the model with the resampled DataFrame.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt lacks time-series tools, requiring manual datetime grouping. Pandas’ resample is efficient, as used in financial apps for quick trends.</p>
 
-<h2>Exercise 5: Time Series Resampling for Weather Trends</h2>
-<h3>Description</h3>
-<p>Build a Qt weather station app that loads a CSV of hourly readings (timestamp, temp, humidity). Resample to daily averages, plot trends in a line chart, and display resampled stats in a QTableView, with user-selectable periods (e.g., week/month).</p>
+    <h2>Exercise 13: Computing Rolling Averages</h2>
+    <h3>Description</h3>
+    <p>Develop a Qt app to load a CSV of daily temperatures (date, temp), compute a 7-day rolling average, and show both columns in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use rolling with a 7-day window and mean. Add the result as a new column and update the model.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt requires custom loops for rolling calculations. Pandas’ rolling is optimized, as seen in weather apps for smoothing time series.</p>
 
-<h3>Hints</h3>
-<p>Set the timestamp as index and resample using mean for numerics. Create a QDateTimeAxis for the chart, feeding it resampled series data. Use QSlider for period selection, recomputing the resample on slide events. Highlight anomalies (e.g., temp > 2 std devs) with conditional styling in the table.</p>
+    <h2>Exercise 14: Calculating Correlations</h2>
+    <h3>Description</h3>
+    <p>Create a Qt app to load a CSV of experiment data (variable1, variable2, variable3), compute pairwise correlations, and display in a QTableView.</p>
+    <h3>Hints</h3>
+    <p>Use corr to get the correlation matrix. Flatten it with stack and load into the model for display.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt lacks statistical tools, requiring external libraries. Pandas’ corr integrates seamlessly, as users note in research GUIs for quick stats.</p>
 
-<h3>Why Pandas?</h3>
-<p>Qt has no built-in time series tools, so resampling would involve custom datetime math and aggregation loops. Pandas' resample is purpose-built for this, enabling smooth apps like the Shinkansen history visualizer where users combined it with PyQt for interactive timelines without low-level date headaches.</p>
+    <h2>Exercise 15: Conditional Formatting in Table</h2>
+    <h3>Description</h3>
+    <p>Build a Qt app to load a CSV of test scores (name, score), highlight scores > 90 in a QTableView with color, and show a count of high scores in a QLabel.</p>
+    <h3>Hints</h3>
+    <p>Create a boolean mask for scores > 90. Use QAbstractTableModel’s data method with Qt.BackgroundRole to set colors. Count matches with sum for the label.</p>
+    <h3>Why Pandas?</h3>
+    <p>Qt’s styling is manual and view-based. Pandas’ boolean operations simplify logic, as seen in educational apps for highlighting key metrics.</p>
 
-<h2>Exercise 6: Statistical Correlation Explorer</h2>
-<h3>Description</h3>
-<p>For a Qt research tool, load a CSV of experiment variables (e.g., columns: dosage, response_time, side_effects). Compute correlations, filter high-value pairs (>0.7), and display a heatmap-style QTableView with color-coded cells, plus a scatter plot for selected pairs.</p>
-
-<h3>Hints</h3>
-<p>Calculate the correlation matrix, then mask and melt it for display. Use QTableView's stylesheet for conditional coloring based on values. On cell double-click, extract the pair and plot with QScatterSeries. Load data lazily for larger files using chunksize.</p>
-
-<h3>Why Pandas?</h3>
-<p>Qt views excel at display but not at matrix math or stats; you'd need NumPy separately, but pandas integrates it seamlessly for corr() and styling. This setup is popular in data exploration GUIs, where users note pandas cuts development time for correlational insights by avoiding fragmented Qt+math libraries.</p></body>
+</body>
 </html>
-

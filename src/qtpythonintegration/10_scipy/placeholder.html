@@ -1,76 +1,182 @@
 <ol>
   <li>
-    <h3>Curve Fitting for Experimental Data</h3>
-    <p>In a physics lab, you collect data on the cooling of a hot object over time, which follows an exponential decay pattern. Fit a curve to this data to estimate the decay constant, inspired by common user queries on fitting models to lab measurements in scientific computing forums.</p>
+    <h3>Basic Array Statistics</h3>
+    <p>Compute mean, median, and standard deviation of a dataset, like sensor readings from a weather station, as seen in beginner data analysis tutorials.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Generate sample data using NumPy arrays for time and temperature.</li>
-      <li>Define a model function for exponential decay.</li>
-      <li>Use the appropriate SciPy function from the optimize module to perform the least-squares fit and extract parameters.</li>
-      <li>Plot the original data and fitted curve using Matplotlib to visualize the results.</li>
+      <li>Use NumPy to create an array of sample data (e.g., temperatures).</li>
+      <li>Apply SciPy’s stats module functions to calculate statistics.</li>
+      <li>Print results for quick verification.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>SciPy's optimize module provides efficient, robust algorithms like least-squares fitting that handle noisy real-world data better than manual implementations, saving time for researchers analyzing experimental results.</p>
+    <p>SciPy’s stats module provides reliable statistical functions optimized for numerical data, ideal for quick analysis in simple Qt-based data tools.</p>
   </li>
   <li>
-    <h3>Numerical Integration for Physical Work Calculation</h3>
-    <p>Calculate the work done by a variable force along a path, represented by a non-analytic function, as in engineering simulations where force varies with distance— a frequent task in user-shared mechanics problems.</p>
+    <h3>Linear Regression</h3>
+    <p>Fit a straight line to predict house prices from square footage, inspired by data science learners’ projects on regression.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Define the force function using NumPy.</li>
-      <li>Apply a quadrature method from SciPy's integrate module over the given interval.</li>
-      <li>Compare results with a simple trapezoidal rule approximation to see the accuracy gain.</li>
+      <li>Create arrays for house sizes and prices with NumPy.</li>
+      <li>Use a SciPy function from the stats module for linear regression.</li>
+      <li>Extract slope and intercept for plotting.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>SciPy offers adaptive quadrature routines that ensure high precision for irregular functions without requiring custom error handling, ideal for quick computations in technical tools like Qt-based engineering software.</p>
+    <p>SciPy’s linear regression is fast and includes statistical metrics like p-values, streamlining analysis for small datasets compared to manual calculations.</p>
   </li>
   <li>
-    <h3>Optimization of Resource Allocation</h3>
-    <p>Minimize costs in allocating resources under constraints, such as budgeting for a project with limited funds, drawing from optimization challenges posted by data scientists in industry applications.</p>
+    <h3>Matrix Determinant</h3>
+    <p>Calculate the determinant of a 3x3 matrix, like those used in robotics for transformation matrices, common in engineering forums.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Formulate the objective function and inequality constraints using NumPy arrays.</li>
-      <li>Employ a constrained minimization solver from SciPy's optimize module.</li>
-      <li>Verify the solution satisfies the constraints and improves the objective.</li>
+      <li>Define a 3x3 matrix using NumPy.</li>
+      <li>Use a SciPy linear algebra function to compute the determinant.</li>
+      <li>Output the result to check matrix invertibility.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>SciPy's optimization tools include solvers for nonlinear problems with constraints, providing reliable results faster than from-scratch methods, which is crucial for real-time decision-making in business analytics.</p>
+    <p>SciPy’s linear algebra module leverages optimized LAPACK routines, ensuring accurate matrix operations for technical applications.</p>
   </li>
   <li>
-    <h3>Signal Denoising in Audio Processing</h3>
-    <p>Remove noise from a recorded audio signal to clarify speech, based on user experiences in signal processing for amateur radio enthusiasts using Python for hobby projects.</p>
+    <h3>Solving Linear Equations</h3>
+    <p>Solve a system of linear equations for circuit currents, as in electrical engineering problems shared online.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Generate a noisy sine wave signal with added Gaussian noise using NumPy.</li>
-      <li>Apply a low-pass filter from SciPy's signal module to smooth the data.</li>
-      <li>Compute and compare signal-to-noise ratios before and after filtering.</li>
+      <li>Define a coefficient matrix and constants vector with NumPy.</li>
+      <li>Use a SciPy linear algebra solver to find the solution.</li>
+      <li>Verify by checking if the solution satisfies the equations.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>The signal processing submodule in SciPy delivers specialized filters and transforms optimized for efficiency, making it suitable for handling large datasets in technical applications without reinventing digital signal algorithms.</p>
+    <p>SciPy’s solvers handle numerical stability in linear systems efficiently, crucial for engineering simulations in Qt tools.</p>
   </li>
   <li>
-    <h3>Solving Ordinary Differential Equations for Population Growth</h3>
-    <p>Model the growth of a bacterial population over time using the logistic equation, reflecting ecology simulations shared by biology researchers on online communities.</p>
+    <h3>Polynomial Interpolation</h3>
+    <p>Interpolate missing data points in a temperature dataset, a common task in IoT sensor applications discussed in forums.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Set up the differential equation as a function returning the derivative.</li>
-      <li>Use an ODE integrator from SciPy's integrate module with initial conditions and time span.</li>
-      <li>Plot the population curve to observe the sigmoid shape.</li>
+      <li>Create arrays for time and temperature with some gaps.</li>
+      <li>Use a SciPy interpolate function for polynomial interpolation.</li>
+      <li>Plot the interpolated curve with Matplotlib.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>SciPy's integrate suite includes adaptive solvers like LSODA that accurately handle stiff equations common in real-world modeling, allowing scientists to focus on interpretation rather than numerical stability issues.</p>
+    <p>SciPy’s interpolation tools provide smooth polynomial fits, outperforming basic linear methods for time-series data in monitoring systems.</p>
   </li>
   <li>
-    <h3>Interpolation for Missing Sensor Data</h3>
-    <p>Fill in gaps in temperature sensor readings from a weather station using interpolation, a practical fix for incomplete datasets discussed in IoT developer forums.</p>
+    <h3>Numerical Integration</h3>
+    <p>Calculate the area under a velocity curve to find distance traveled, inspired by physics students’ motion analysis problems.</p>
     <h4>Hints</h4>
     <ul>
-      <li>Create arrays with time points and some missing temperature values.</li>
-      <li>Select a spline interpolation method from SciPy's interpolate module.</li>
-      <li>Generate interpolated values and plot against original data to assess smoothness.</li>
+      <li>Define a velocity function using NumPy.</li>
+      <li>Use a SciPy integrate function for numerical integration.</li>
+      <li>Output the total distance.</li>
     </ul>
     <h4>Why SciPy?</h4>
-    <p>SciPy provides versatile interpolation techniques, including splines for smooth approximations, which outperform linear methods for time-series data in monitoring systems, ensuring reliable visualizations in Qt dashboards.</p>
+    <p>SciPy’s quadrature methods ensure high accuracy for non-analytic functions, simplifying calculations in physics simulations.</p>
+  </li>
+  <li>
+    <h3>Root Finding</h3>
+    <p>Find the break-even point for a cost function, as in financial modeling tasks shared by analysts online.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Define a cost function with NumPy.</li>
+      <li>Use a SciPy optimize function to find where the function equals zero.</li>
+      <li>Check the root by evaluating the function.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s root-finding algorithms are robust and fast, ideal for solving nonlinear equations in business applications without manual iteration.</p>
+  </li>
+  <li>
+    <h3>Basic Signal Filtering</h3>
+    <p>Apply a low-pass filter to smooth noisy sensor data, like in audio processing tasks from hobbyist projects.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Generate a noisy signal with NumPy.</li>
+      <li>Use a SciPy signal function to design and apply a low-pass filter.</li>
+      <li>Plot original and filtered signals.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s signal module offers pre-built filters optimized for performance, simplifying signal processing for real-time applications.</p>
+  </li>
+  <li>
+    <h3>Eigenvalue Computation</h3>
+    <p>Find eigenvalues of a matrix representing a mechanical system, as in vibration analysis discussed in engineering communities.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Create a square matrix with NumPy.</li>
+      <li>Use a SciPy linear algebra function to compute eigenvalues.</li>
+      <li>Display eigenvalues for analysis.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s eigenvalue solvers are efficient and handle complex matrices, essential for dynamic system analysis in technical software.</p>
+  </li>
+  <li>
+    <h3>Curve Fitting</h3>
+    <p>Fit an exponential model to bacterial growth data, inspired by biology researchers’ modeling tasks.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Generate time and population data with NumPy.</li>
+      <li>Define an exponential model and use a SciPy optimize function for fitting.</li>
+      <li>Plot data and fitted curve.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s optimization tools provide robust curve fitting for noisy experimental data, saving time in scientific analysis.</p>
+  </li>
+  <li>
+    <h3>Fourier Transform</h3>
+    <p>Analyze frequency components of an audio signal, a common task in signal processing forums.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Create a signal with multiple frequencies using NumPy.</li>
+      <li>Apply a SciPy FFT function to compute the frequency spectrum.</li>
+      <li>Plot the frequency components.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s FFT implementation is highly optimized, enabling fast frequency analysis for large signals in audio applications.</p>
+  </li>
+  <li>
+    <h3>Ordinary Differential Equation (ODE)</h3>
+    <p>Solve a simple ODE for a falling object with air resistance, as in physics simulations shared online.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Define the ODE function with velocity and drag terms.</li>
+      <li>Use a SciPy integrate solver with initial conditions.</li>
+      <li>Plot the velocity over time.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s ODE solvers handle dynamic systems efficiently, ensuring accurate solutions for physics models in Qt-based tools.</p>
+  </li>
+  <li>
+    <h3>Optimization with Constraints</h3>
+    <p>Minimize material costs for a container with a fixed volume, inspired by optimization problems in engineering design.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Define the cost function and volume constraint using NumPy.</li>
+      <li>Use a SciPy optimize function for constrained minimization.</li>
+      <li>Verify the constraint is satisfied.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s constrained optimization solvers handle complex problems reliably, streamlining design tasks in engineering applications.</p>
+  </li>
+  <li>
+    <h3>Sparse Matrix Operations</h3>
+    <p>Solve a sparse linear system for a network flow problem, as in graph-based simulations discussed in data science communities.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Create a sparse matrix using SciPy’s sparse module.</li>
+      <li>Use a sparse linear solver to find the solution.</li>
+      <li>Compare memory usage with a dense matrix approach.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s sparse module optimizes memory and computation for large, sparse systems, critical for network analysis in technical tools.</p>
+  </li>
+  <li>
+    <h3>Image Edge Detection</h3>
+    <p>Detect edges in a grayscale image, like in computer vision tasks shared by hobbyists processing webcam feeds.</p>
+    <h4>Hints</h4>
+    <ul>
+      <li>Load or generate a simple image array with NumPy.</li>
+      <li>Apply a SciPy image processing function for edge detection.</li>
+      <li>Display the result using Matplotlib.</li>
+    </ul>
+    <h4>Why SciPy?</h4>
+    <p>SciPy’s image processing tools provide efficient filters for edge detection, ideal for lightweight vision tasks in Qt-based applications.</p>
   </li>
 </ol>
-

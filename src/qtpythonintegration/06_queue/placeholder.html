@@ -2,31 +2,143 @@
 
 <ol>
   <li>
-    <h3>Exercise 1: Buffered Progress Updates for Long-Running Downloads</h3>
-    <p><strong>Description:</strong> Create a PyQt application with a GUI button that triggers a background thread to simulate downloading multiple files (e.g., generating fake data chunks over time). The background thread should queue progress updates (like percentage complete for each file), and the main GUI thread should periodically dequeue and display these updates in a text area or progress bar without freezing the interface.</p>
-    <p><strong>Hint for Implementation:</strong> Use a <code>Queue</code> instance shared between the threads. In the background thread, use a loop to "download" chunks and call <code>put()</code> with tuples of (file_name, percentage). In the main thread, set up a timer (e.g., every 500ms) to check <code>get_nowait()</code> for updates, process them, and clear any exceptions with <code>task_done()</code>. Ensure the queue has a reasonable maxsize to prevent memory buildup.</p>
-    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> In real-world scenarios like network monitoring tools (inspired by Stack Overflow discussions on IMAP mailbox checkers where raw threading caused GUI freezes), Qt signals/slots can flood the event loop with frequent small updates, leading to lag or dropped events. Python's <code>Queue</code> provides built-in buffering and blocking semantics, decoupling the producer's pace from the consumer's processing, which is simpler than manually managing QMutex locks around shared lists or using QSemaphore for signaling availability—avoiding the need to wrap every update in a signal emission.</p>
+    <h3>Exercise 1: Basic Hello World Producer-Consumer</h3>
+    <p><strong>Description:</strong> Create a simple PyQt window with a button that starts a background thread to produce a single "Hello World" message. The thread puts the message into a queue, and the main thread dequeues it to display in a label.</p>
+    <p><strong>Hint for Implementation:</strong> Import Queue and create a Queue(). In the thread's run method, use put("Hello World"). In the main thread, after starting the thread, call get() in a one-shot timer callback to update the QLabel text.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> For introductory multithreading, Qt's signals require subclassing QThread and connecting slots, adding boilerplate for trivial cases; Python's Queue simplifies data passing with minimal setup, as noted in beginner PyQt tutorials where users struggle with signal-slot wiring for basic comms.</p>
   </li>
 
   <li>
-    <h3>Exercise 2: Multi-Worker Task Processing for Image Resizing</h3>
-    <p><strong>Description:</strong> Build a PyQt file loader GUI where users select multiple images. Spawn a pool of 3-4 background worker threads that dequeue image paths from a shared queue, resize them (using a library like Pillow), and queue the results back to a separate output queue. The GUI thread consumes from the output queue to update a list widget with thumbnails or status messages.</p>
-    <p><strong>Hint for Implementation:</strong> Initialize two queues: one for input tasks (populate with file paths after user selection) and one for results (tuples of (original_path, resized_data, status)). Each worker runs in a loop, using <code>get()</code> to fetch tasks (with a sentinel like None to stop), processes the image, and <code>put()</code>s the result. Use <code>join()</code> on threads after queueing a sentinel for each to ensure cleanup.</p>
-    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Drawing from user experiences in parallel URL fetchers (as seen in Python forums where simple threading without queues led to race conditions), managing multiple Qt QThreads with shared data often requires complex QMutex/QReadWriteLock setups to protect lists, which can introduce deadlocks or performance bottlenecks in I/O-heavy tasks. Python's <code>Queue</code> handles multi-producer/multi-consumer coordination transparently with internal locks, making it more straightforward and less error-prone than emitting signals for each sub-task or using Qt's QThreadPool with custom synchronization—especially when the workload varies unpredictably.</p>
+    <h3>Exercise 2: Single Message with Thread Completion</h3>
+    <p><strong>Description:</strong> Extend the hello world: the background thread puts the message and then a sentinel (None) into the queue. The main thread dequeues both and updates the label with the message, then disables the button on sentinel.</p>
+    <p><strong>Hint for Implementation:</strong> In the thread, put(message) followed by put(None). In main, use a loop with get() until None, but since single, just get() twice. Use thread.join() after dequeuing to ensure completion.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt's finished() signal handles completion but doesn't carry data; combining with custom signals for messages complicates simple flows, whereas Queue's sentinel pattern is a standard, lightweight idiom for signaling end-of-stream without extra Qt connections.</p>
   </li>
 
   <li>
-    <h3>Exercise 3: Real-Time Logging from Background Simulations</h3>
-    <p><strong>Description:</strong> Develop a PyQt dashboard simulating sensor data (e.g., a loop generating random temperature readings in a background thread). The thread queues log entries (timestamps and values) to a shared queue, while the GUI dequeues them to append to a scrolling text widget, with an option to filter or pause logging via buttons.</p>
-    <p><strong>Hint for Implementation:</strong> Employ a single <code>Queue</code> for logs as dicts (e.g., {'time': datetime, 'value': temp}). The background thread runs indefinitely, putting entries every second until a stop signal (perhaps via another queue or flag). In the GUI, use an event loop or timer to <code>get()</code> non-blockingly, update the widget, and handle empty queues gracefully to avoid blocking the UI.</p>
-    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Based on real-user reports from PyQt threading crash logs (e.g., "unknown request in queue" errors on Stack Overflow when mixing Python threads with Qt event queues), direct shared variables with QMutex can cause segfaults if Qt objects are involved. Python's <code>Queue</code> offers exception-safe, thread-agnostic communication that's ideal for high-volume, low-latency logging without the overhead of per-entry signals/slots, which might queue up in Qt's event system and delay other UI interactions—providing cleaner separation than Qt's semaphore-based handshaking.</p>
+    <h3>Exercise 3: Periodic Status Updates from a Counter</h3>
+    <p><strong>Description:</strong> A button starts a thread that counts from 1 to 10, putting each number into the queue every second. The main thread dequeues and appends to a QTextEdit.</p>
+    <p><strong>Hint for Implementation:</strong> Use time.sleep(1) in a for loop 1 to 10, put(i). In main, use a QTimer (interval 1.1s) that calls get_nowait(), appends if available, and stops after 10 items.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Frequent Qt signal emissions for counters can queue up in the event loop, causing UI stutter in early learning apps; Queue's non-blocking get_nowait() allows batched polling without flooding, a tip from PyQt debugging threads on Reddit.</p>
   </li>
 
   <li>
-    <h3>Exercise 4: Priority Task Queue for User-Interactive Simulations</h3>
-    <p><strong>Description:</strong> Implement a PyQt simulation app (e.g., a simple particle system) where user actions (like clicking to add particles) enqueue high-priority tasks, while a background thread enqueues low-priority maintenance tasks (e.g., physics updates). Use a <code>PriorityQueue</code> to ensure user inputs are processed first, with the GUI dequeuing and rendering results smoothly.</p>
-    <p><strong>Hint for Implementation:</strong> Opt for <code>PriorityQueue</code> and assign priorities (e.g., 1 for user tasks, 10 for background). Enqueue user tasks directly from button clicks or mouse events into the queue. The renderer (in main thread or a dedicated one) uses a timer to <code>get()</code> highest-priority items first, processes them (e.g., update positions), and redraws the scene.</p>
-    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> In experiences shared on Python GUI tutorials (like Real Python's QThread guides, where users noted signal overload in interactive sims), Qt's FIFO signals don't natively support prioritization, forcing custom QTimer-based sorting or multiple signal channels. Python's <code>PriorityQueue</code> integrates seamlessly for variable-priority workloads with automatic heap management, avoiding the boilerplate of Qt's QSemaphore for counting or manual mutex-protected priority lists—making it preferable for responsive, event-driven apps without complicating the Qt signal-slot wiring.</p>
+    <h3>Exercise 4: Buffered Output for Slow Producer</h3>
+    <p><strong>Description:</strong> Simulate a slow producer: thread sleeps 2s between putting three messages. Main thread uses a faster timer (500ms) to dequeue and display cumulatively in a label.</p>
+    <p><strong>Hint for Implementation:</strong> Queue with maxsize=3. Thread: for msg in messages: put(msg); sleep(2). Timer: try get_nowait(), update label with joined messages, except Empty: pass.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt mutex-protected lists require manual locking/unlocking per access, risking deadlocks in naive implementations; Queue's internal buffering decouples rates naturally, ideal for paced simulations as in user-shared CLI-to-GUI bridges.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 5: Error Propagation via Queue</h3>
+    <p><strong>Description:</strong> Thread attempts division by zero after putting a message, catching and putting an error tuple. Main dequeues, displays message if str, error dialog if tuple.</p>
+    <p><strong>Hint for Implementation:</strong> In thread: put("Start"); try: 1/0; except Exception as e: put(("Error", str(e))). Main: item = get(); if isinstance(item, tuple): QMessageBox.warning(... ) else: label.setText(item).</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt exceptions in threads don't propagate to main easily without custom signal args; Queue carries exceptions as payloads simply, avoiding try-except in signal handlers, a common pitfall in Stack Overflow PyQt error threads.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 6: Two-Thread Ping-Pong</h3>
+    <p><strong>Description:</strong> Two background threads alternate putting "Ping" and "Pong" into a shared queue 5 times each. Main dequeues all via timer and logs to text edit.</p>
+    <p><strong>Hint for Implementation:</strong> Thread1: for i in range(5): sleep(0.5); put("Ping"). Thread2 similar for "Pong" but offset start. Main timer gets all pending with while not empty: get_nowait().</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Coordinating two Qt threads with semaphores for turn-taking adds complexity; Queue's FIFO ensures order without explicit sync, suitable for demoing multi-producer basics without race worries.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 7: Queue with Maxsize Overflow Handling</h3>
+    <p><strong>Description:</strong> Producer thread puts 20 messages rapidly. Queue maxsize=5; on full, skip or log. Consumer timer dequeues slowly, showing backlog in label.</p>
+    <p><strong>Hint for Implementation:</strong> Queue(maxsize=5). Producer: for i in 20: try: put(i, block=False); except Full: print("Skipped"). Consumer: get(), update qsize() display.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt's no built-in bounded buffer; using QWaitCondition with mutex for full/empty checks is verbose; Queue's Full exception enables simple backpressure, as in real-time data apps from forum examples.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 8: Multiple Consumers from One Producer</h3>
+    <p><strong>Description:</strong> One producer puts 10 numbers. Two consumer threads dequeue and process (e.g., even/odd sum), putting results to output queue. Main aggregates from output.</p>
+    <p><strong>Hint for Implementation:</strong> Input Queue(); output Queue(). Producer puts 1-10. Each consumer: while True: item=get(); if item is None: break; process; output.put(result). Main gets from output.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Distributing work in Qt requires thread pools with shared mutex lists, prone to contention; Queue fans out naturally to multiple get() calls, simplifying load balancing in short scripts.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 9: Task Cancellation with Poison Pill</h3>
+    <p><strong>Description:</strong> Start long-running producer (infinite loop putting timestamps). Button sends "STOP" pill to queue; producer checks after each put and exits on pill.</p>
+    <p><strong>Hint for Implementation:</strong> Producer: while True: put(datetime.now()); item = get(); if item == "STOP": break. Button: queue.put("STOP"); thread.join().</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt's interrupt via flag needs atomic checks with mutex; poison pill is a clean, queue-native way to signal without shared state, preferred in user-cited cancellable downloads.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 10: Buffered File Reader Output</h3>
+    <p><strong>Description:</strong> Thread reads a small text file line-by-line, putting lines to queue. Main dequeues to populate QListWidget item by item via timer.</p>
+    <p><strong>Hint for Implementation:</strong> Thread: with open(file): for line in f: put(line.strip()). Main timer: try: list.addItem(get_nowait()) except Empty: pass. End with sentinel.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt QFile in thread risks blocking signals; Queue streams lines without direct file access in main, preventing UI hangs, a fix from I/O threading Q&A on Python Discord.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 11: Introduction to PriorityQueue</h3>
+    <p><strong>Description:</strong> Use PriorityQueue for tasks: button enqueues low-pri (10) background job, high-pri (1) user click. Dequeue processes high first, updates label with task type.</p>
+    <p><strong>Hint for Implementation:</strong> from queue import PriorityQueue; pq = PriorityQueue(). put((1, "High")); put((10, "Low")). get() returns (pri, task); process based on pri.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Standard Queue is FIFO; PriorityQueue adds heapq for ordering without custom sorts, unlike Qt's multiple queues/signals, streamlining priority in interactive prototypes.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 12: Mixed Priority File Processing</h3>
+    <p><strong>Description:</strong> Enqueue file paths with priorities (user-selected high, auto low). Single consumer dequeues highest first, "processes" (sleep), puts status to output queue for display.</p>
+    <p><strong>Hint for Implementation:</strong> PriorityQueue(); put((pri, path)). Consumer loop: pri, path = get(); sleep(1); output.put(f"{path} done"). Main shows from output.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt lacks native priority; manual QTimer delays or sorted lists with locks bloat code; PriorityQueue handles it transparently, as in task manager apps from GitHub issues.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 13: Handling Duplicate Priorities</h3>
+    <p><strong>Description:</strong> Enqueue tasks with same priority but unique IDs (counter). PriorityQueue orders by pri then FIFO; display order in list to verify stability.</p>
+    <p><strong>Hint for Implementation:</strong> counter=0; put((5, counter, task)); counter+=1. get() yields (5, id, task); log id to show insertion order for ties.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Ties in custom Qt priority need stable sorts; Queue's tuple comparison ensures FIFO for equals, avoiding extra metadata, a subtlety from advanced threading blogs.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 14: Priority with Worker Pool</h3>
+    <p><strong>Description:</strong> Two workers dequeue from PriorityQueue, process (sum numbers), put results. Enqueue mix of high/low pri numbers; main aggregates totals by pri level.</p>
+    <p><strong>Hint for Implementation:</strong> Workers: while True: pri, num = get(); if num is None: break; res = num*2; output.put((pri, res)). Sentinels per worker.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Scaling Qt QThreadPool with priorities requires subclassing QRunnable with sorts; Queue centralizes, workers pull highest, efficient for varied loads per user benchmarks.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 15: Exception Handling in PriorityQueue</h3>
+    <p><strong>Description:</strong> Enqueue tasks some causing errors (e.g., invalid input). Workers catch, put (pri, "Error", details) to output. Main filters errors to dialog, successes to list.</p>
+    <p><strong>Hint for Implementation:</strong> Worker: try: process(task); output.put((pri, result)) except: output.put((pri, "Error", str(e))). Main: unpack and handle types.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Priority with errors in Qt needs signal variants; Queue payloads exceptions uniformly, preserving order, crucial for debuggable pipelines in production GUIs.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 16: Queue Integration with Qt Signals</h3>
+    <p><strong>Description:</strong> Producer puts data; use QThread with signal connected to slot that dequeues and emits Qt signal for UI update, bridging pure Python queue to Qt.</p>
+    <p><strong>Hint for Implementation:</strong> Custom QThread subclass: signal dataReady(str). Slot: try: self.dataReady.emit(get_nowait()) except: pass. Connect in main.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Pure Qt signals are event-loop bound; Queue allows off-loop buffering before signaling, reducing emissions, a hybrid pattern from mixed-thread architectures in docs.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 17: Real-Time Data Streaming</h3>
+    <p><strong>Description:</strong> Simulate sensor: thread puts random floats every 100ms to queue. Main timer dequeues batch (last 5), plots simple line in QGraphicsView or updates chart.</p>
+    <p><strong>Hint for Implementation:</strong> Use collections.deque(maxlen=5) alongside queue for recent. Timer: while not empty: recent.append(get_nowait()); update plot with list(recent).</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> High-freq Qt signals overwhelm plot updates; Queue batches for efficient redraws, preventing lag in live charts, as in IoT dashboard prototypes shared online.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 18: Thread-Safe Configuration Updates</h3>
+    <p><strong>Description:</strong> GUI sliders enqueue config changes (pri 1) to queue. Background worker dequeues, applies to running sim (e.g., speed var), puts ack back for status bar.</p>
+    <p><strong>Hint for Implementation:</strong> PriorityQueue for configs. Worker: config = get(); globals()[key] = val; ack_queue.put("Updated"). Sliders: onChange: put((1, (key, val))).</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Direct shared var updates need mutex; Queue serializes changes safely, with acks for feedback, better than signal floods in dynamic sims per user experiences.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 19: Multi-Queue Pipeline</h3>
+    <p><strong>Description:</strong> Input queue for raw data; mid queue for processed; output for final. Chain two threads: first deq input, put mid; second mid to output. Main from output.</p>
+    <p><strong>Hint for Implementation:</strong> Three Queues. Thread1: raw=get(input); proc=process(raw); put(proc, mid). Thread2 similar. Sentinels propagate through.</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt multi-stage needs chained signals or complex mutex; multi-Queue pipelines modularity without wiring, scalable for ETL-like flows in single-file apps.</p>
+  </li>
+
+  <li>
+    <h3>Exercise 20: Graceful Shutdown with Joinables</h3>
+    <p><strong>Description:</strong> Multiple workers on queue; app close enqueues sentinels, joins all threads, dequeues remains. Show "All done" after clean exit.</p>
+    <p><strong>Hint for Implementation:</strong> For each worker: put(None) on close. Workers: while True: item=get(); if item is None: break. After all put(None), for t in threads: t.join().</p>
+    <p><strong>Why Use Python Queue Over Qt Threading Sync Primitives:</strong> Qt quit() may leave threads dangling without wait(); Queue sentinels ensure tasks drain before join, preventing leaks, a best practice from shutdown horror stories on forums.</p>
   </li>
 </ol>
 
