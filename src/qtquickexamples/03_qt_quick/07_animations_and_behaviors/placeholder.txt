@@ -1,0 +1,86 @@
+6. Animations and Behaviors
+
+: PropertyAnimation on pos
+
+Description: Animate an item's position property using PropertyAnimation, moving it from start to end coordinates over time.
+Hints for implementation: PropertyAnimation { target: rect; property: "x"; from: 0; to: 200; duration: 1000 }. Start with running: true or trigger.
+
+: NumberAnimation scale
+
+Description: Use NumberAnimation to smoothly scale an item, changing its scale property for zoom effects.
+Hints for implementation: NumberAnimation { target: img; property: "scale"; to: 2.0; easing.type: Easing.InOutQuad }.
+
+: ColorAnimation tint
+
+Description: Animate the color property of a Rectangle or Text to transition between hues gradually.
+Hints for implementation: ColorAnimation { target: rect; property: "color"; from: "red"; to: "blue"; duration: 500 }.
+
+: RotationAnimation spin
+
+Description: Rotate an item around its origin using RotationAnimation, specifying direction and loops.
+Hints for implementation: RotationAnimation { target: item; property: "rotation"; from: 0; to: 360; direction: RotationAnimation.Clockwise; loops: Animation.Infinite }.
+
+: PauseAnimation delay
+
+Description: Insert a PauseAnimation in a sequence to create timed delays between other animations.
+Hints for implementation: SequentialAnimation { PauseAnimation { duration: 500 }; NumberAnimation { ... } }.
+
+: ParallelAnimation
+
+Description: Run multiple animations simultaneously with ParallelAnimation, synchronizing their timelines.
+Hints for implementation: ParallelAnimation { ColorAnimation { ... }; NumberAnimation { ... } }.
+
+: SequentialAnimation
+
+Description: Chain animations in SequentialAnimation to execute them one after another.
+Hints for implementation: SequentialAnimation { NumberAnimation { ... }; ColorAnimation { ... } }.
+
+: Behavior smooth
+
+Description: Attach a Behavior to a property for automatic animation on any change, like smoothing manual updates.
+Hints for implementation: Behavior on x { NumberAnimation { duration: 200 } }; then set x = 100 in code.
+
+: Easing curves
+
+Description: Apply easing curves to animations for realistic acceleration and deceleration.
+Hints for implementation: easing.type: Easing.OutBounce; easing.amplitude: 2.0 for custom.
+
+: AnchorAnimation
+
+Description: Animate changes in anchor properties to smoothly adjust layout connections.
+Hints for implementation: AnchorAnimation { target: item; anchors.horizontalCenter: parent.horizontalCenter; duration: 300 }.
+
+: SpringAnimation bounce
+
+Description: Simulate spring physics with SpringAnimation for overshooting and oscillating effects.
+Hints for implementation: SpringAnimation { target: item; property: "x"; to: 100; spring: 80; damping: 0.3 }.
+
+: Vector3dAnimation
+
+Description: Animate vector3d properties for 3D vector transitions in transforms.
+Hints for implementation: Vector3dAnimation { target: vecProp; from: Qt.vector3d(0,0,0); to: Qt.vector3d(10,20,30) }.
+
+: ScriptAction JS
+
+Description: Insert ScriptAction in an animation to run custom JavaScript mid-sequence.
+Hints for implementation: SequentialAnimation { ScriptAction { script: someJSFunction() } }.
+
+: ParentAnimation
+
+Description: Animate an item during reparenting to another container smoothly.
+Hints for implementation: ParentAnimation { NumberAnimation { properties: "x,y" } } when changing parent.
+
+: Python anim trigger
+
+Description: Trigger a QML animation from a Python signal, coordinating backend events with UI feedback.
+Hints for implementation: In QML: onPySignal: anim.start(); connect py_signal to anim.start in Python.
+
+: Smoothed follow
+
+Description: Use SmoothedAnimation to make an item follow a target with velocity smoothing.
+Hints for implementation: SmoothedAnimation { target: follower; property: "x"; velocity: 200; } binding x: target.x.
+
+: PropertyAction seq
+
+Description: Use PropertyAction for instantaneous property changes within a SequentialAnimation.
+Hints for implementation: SequentialAnimation { PropertyAction { target: item; property: "visible"; value: false } }.

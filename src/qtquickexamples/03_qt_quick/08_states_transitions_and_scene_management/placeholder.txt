@@ -1,0 +1,76 @@
+7. States, Transitions, and Scene Management
+
+: Basic State change
+
+Description: Define and switch between states in an Item, changing properties like color or position per state.
+Hints for implementation: states: [ State { name: "active"; PropertyChanges { target: rect; color: "green" } } ]; set state: "active".
+
+: When condition
+
+Description: Apply states conditionally with 'when' clauses based on property values or expressions.
+Hints for implementation: State { when: slider.value > 50; ... }. Auto-applies on condition change.
+
+: StateGroup multiple
+
+Description: Use StateGroup to manage independent state sets that can activate simultaneously.
+Hints for implementation: StateGroup { states: [ ... ]; StateGroup { states: [ ... ] } }.
+
+: Transition basics
+
+Description: Define a Transition to animate between any state changes with specified animations.
+Hints for implementation: transitions: [ Transition { from: ""; to: ""; ColorAnimation { ... } } ].
+
+: PropertyChanges
+
+Description: Use PropertyChanges within a State to modify multiple properties on targets.
+Hints for implementation: State { PropertyChanges { target: [rect1, rect2]; color: "red" } }.
+
+: Reversible transition
+
+Description: Make transitions reversible to mirror animations when returning to previous states.
+Hints for implementation: Transition { reversible: true; ... }. Works with symmetric from/to.
+
+: StateChangeScript
+
+Description: Execute JavaScript scripts on state entry or exit using StateChangeScript.
+Hints for implementation: State { StateChangeScript { name: "enter"; script: console.log("Entered") } }.
+
+: Nested states
+
+Description: Create hierarchical states where child states extend or override parent ones.
+Hints for implementation: State { name: "parent"; State { name: "child"; extend: "parent"; ... } }.
+
+: Scene graph renderer
+
+Description: Configure the scene graph renderer backend for software or threaded rendering.
+Hints for implementation: In Python: os.environ["QSG_RENDERER"] = "software"; before engine.load.
+
+: Item layer effects
+
+Description: Enable layering on Items for caching and anti-aliasing in complex scenes.
+Hints for implementation: layer.enabled: true; layer.samples: 16 for AA; layer.textureSize if needed.
+
+: Dynamic state create
+
+Description: Dynamically add states to an item's states array at runtime using JavaScript.
+Hints for implementation: item.states.push(newState); where newState is a State object.
+
+: Python state control
+
+Description: Change QML states from Python by accessing the root object and setting the state property.
+Hints for implementation: root = engine.rootObjects()[0]; root.setProperty("state", "newState").
+
+: Transition with anim
+
+Description: Embed complex animations like Sequential inside a Transition for state changes.
+Hints for implementation: Transition { SequentialAnimation { ... } }.
+
+: Error state fallback
+
+Description: Define a fallback state triggered on errors, like network failure, to show messages.
+Hints for implementation: State { when: errorCondition; PropertyChanges { target: label; text: "Error!" } }.
+
+: Scene graph custom
+
+Description: Extend the scene graph with custom nodes via Python/C++ for low-level rendering control.
+Hints for implementation: Subclass QSGGeometryNode in Python; add to QSGNode tree via custom Item.

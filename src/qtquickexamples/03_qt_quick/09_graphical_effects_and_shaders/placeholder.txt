@@ -1,0 +1,74 @@
+: BrightnessContrast adjust
+
+Description: Apply BrightnessContrast effect to an Image, adjusting brightness and contrast sliders for real-time tweaks.
+Hints for implementation: BrightnessContrast { source: img; brightness: 0.5; contrast: 1.2; anchors.fill: img }.
+
+: ColorOverlay tint
+
+Description: Overlay a color on an Image or Item to tint it uniformly, useful for theme application.
+Hints for implementation: ColorOverlay { source: img; color: "purple"; anchors.fill: source }.
+
+: Desaturate grayscale
+
+Description: Convert an image to grayscale by desaturating it with the Desaturate effect.
+Hints for implementation: Desaturate { source: img; desaturation: 1.0 }.
+
+: GammaAdjust curve
+
+Description: Adjust the gamma curve of an image to correct exposure or create stylized looks.
+Hints for implementation: GammaAdjust { source: img; gamma: 0.5 }.
+
+: OpacityMask clip
+
+Description: Clip an image to the shape of another item using OpacityMask for irregular boundaries.
+Hints for implementation: OpacityMask { source: img; maskSource: maskRect; anchors.fill: source }.
+
+: Blend mode
+
+Description: Blend two layers using modes like Multiply or Screen for composite effects.
+Hints for implementation: Blend { foreground: fgImg; background: bgImg; mode: Blend.Multiply }.
+
+: DropShadow
+
+Description: Add a drop shadow to an item for depth, controlling offset, radius, and color.
+Hints for implementation: DropShadow { source: item; radius: 8; color: "black"; anchors.fill: source; horizontalOffset: 2 }.
+
+: FastBlur
+
+Description: Apply a quick Gaussian blur to soften an image or create glows.
+Hints for implementation: FastBlur { source: img; radius: 16 }.
+
+: GaussianBlur
+
+Description: Use high-quality Gaussian blur with deviation control for precise softening.
+Hints for implementation: GaussianBlur { source: img; deviation: 5 }.
+
+: MaskedBlur
+
+Description: Blur only parts of an image based on a mask for selective effects.
+Hints for implementation: MaskedBlur { source: img; maskSource: mask; radius: 10 }.
+
+: RecursiveBlur
+
+Description: Achieve deeper blurs by recursively applying blur passes.
+Hints for implementation: RecursiveBlur { source: img; loops: 3; samples: 9 }.
+
+: ShaderEffect custom
+
+Description: Create a custom shader effect with vertex and fragment sources for GPU-accelerated visuals.
+Hints for implementation: ShaderEffect { property real time: 0; fragmentShader: "qrc:/shader.frag"; NumberAnimation on time { ... } }.
+
+: Python shader param
+
+Description: Pass parameters from Python to a ShaderEffect's uniforms for dynamic shader control.
+Hints for implementation: Expose property var uniform: pyValue; in fragmentShader: uniform float pyUniform; set via setContextProperty.
+
+: MultiEffect combo
+
+Description: Combine multiple effects in MultiEffect for chained processing like blur then colorize.
+Hints for implementation: MultiEffect { brightness: 0.5; blur: 10; source: img }.
+
+: Perf-optimized effect
+
+Description: Optimize an effect for performance by using caching layers or reducing samples.
+Hints for implementation: layer.enabled: true in parent; limit radius or use FastBlur over Gaussian.

@@ -1,0 +1,100 @@
+: Basic Shape path
+
+Description: Draw a basic vector shape using Shape and a simple Path to render lines or polygons.
+Hints for implementation: Shape { Path { startX: 0; startY: 0; PathLine { x: 100; y: 100 } } }.
+
+: PathLine element
+
+Description: Construct a polyline shape with multiple PathLine segments for straight-edged figures.
+Hints for implementation: Path { PathLine { x: 50; y: 0 }; PathLine { x: 100; y: 100 } }.
+
+: PathArc curve
+
+Description: Add curved segments to a path using PathArc for elliptical arcs.
+Hints for implementation: PathArc { radiusX: 50; radiusY: 50; x: 100; y: 0; }.
+
+: VectorImage load
+
+Description: Load and display an SVG file as a VectorImage, scaling it vectorially.
+Hints for implementation: VectorImage { source: "icon.svg"; width: 100; height: 100 }.
+
+: LocalStorage open DB
+
+Description: Open a local SQLite database using LocalStorage for persistent data in QML.
+Hints for implementation: import Qt.labs.platform 1.1; LocalStorage.openDatabaseSync("db", "1.0", "MyDB", 1000000).
+
+: PathCubic bezier
+
+Description: Create smooth curves with PathCubic for Bezier splines in shapes.
+Hints for implementation: PathCubic { control1X: 20; control1Y: 80; control2X: 80; control2Y: 20; x: 100; y: 100 }.
+
+: Shape fill/stroke
+
+Description: Style a Shape with fill colors and stroke lines for complete vector rendering.
+Hints for implementation: Shape { fillColor: "blue"; strokeColor: "black"; strokeWidth: 2; ... }.
+
+: VectorImage scale
+
+Description: Scale a VectorImage while preserving aspect ratio and handling transforms.
+Hints for implementation: VectorImage { smooth: true; antialiasing: true; scale: 1.5 }.
+
+: LocalStorage query
+
+Description: Perform CRUD operations on LocalStorage with SQL queries in transactions.
+Hints for implementation: db.transaction( function(tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS ...'); } ).
+
+: TestCase basics
+
+Description: Write a basic TestCase to assert property values or signal emissions in QML.
+Hints for implementation: TestCase { name: "MyTest"; function test_prop() { compare(item.width, 100); } }.
+
+: PathSvg import
+
+Description: Import an SVG path string directly into a Path for dynamic vector creation.
+Hints for implementation: PathSvg { path: "M10 10 L90 10" }.
+
+: Shape animations
+
+Description: Animate Shape path elements to morph between forms smoothly.
+Hints for implementation: PathAnimation { target: path; path: newPath; duration: 1000 }.
+
+: LocalStorage transact
+
+Description: Use transactions for atomic database operations in LocalStorage.
+Hints for implementation: db.transaction( function(tx) { tx.executeSql('INSERT ...'); } ).
+
+: SignalSpy test
+
+Description: Spy on signals in tests to verify they emit with correct arguments.
+Hints for implementation: SignalSpy { id: spy; target: item; signalName: "clicked" }; compare(spy.count, 1).
+
+: Python test integration
+
+Description: Run QML TestCase from Python using QQmlApplicationEngine and capture results.
+Hints for implementation: engine.load("test.qml"); connect to warnings for failures.
+
+: VectorImage with effects
+
+Description: Apply graphical effects like blur to a VectorImage for enhanced visuals.
+Hints for implementation: FastBlur { source: vectorImg }.
+
+: TouchEventSequence test
+
+Description: Simulate touch sequences in tests to verify gesture handling.
+Hints for implementation: TouchEventSequence { id: touch; target: item; type: TouchEventSequence.TouchPress; ... }.
+
+: LocalStorage error handle
+
+Description: Handle database errors in LocalStorage with try-catch or error callbacks.
+Hints for implementation: In transaction: tx.executeSql(..., function(tx, res) {}, function(tx, err) { console.log(err) } ).
+
+: Shape performance opt
+
+Description: Optimize large Shapes by enabling vendor extensions or simplifying paths.
+Hints for implementation: Shape { vendorExtensionsEnabled: true; ... }.
+
+: Comprehensive QML test suite
+
+Description: Build a suite of TestCases covering multiple components, running them sequentially.
+Hints for implementation: Multiple TestCase {} in one file; use QTEST_MAIN in Python to execute.
+

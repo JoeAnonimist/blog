@@ -1,0 +1,74 @@
+: Basic ParticleSystem
+
+Description: Set up a basic ParticleSystem with an emitter to generate and render simple particles.
+Hints for implementation: ParticleSystem { Emitter3D { ... } ImageParticle3D { ... } }.
+
+: Emitter particles
+
+Description: Configure an Emitter to spawn particles at a rate with defined lifespan and velocity.
+Hints for implementation: Emitter3D { emitRate: 100; lifeSpan: 3000; velocity: TargetDirection { magnitude: 50 } }.
+
+: ImageParticle render
+
+Description: Render particles using ImageParticle with a texture for visible, textured dots.
+Hints for implementation: ImageParticle3D { source: "particle.png"; billboard: true }.
+
+: Age affector fade
+
+Description: Use Age to fade particle opacity over their lifetime for natural dissipation.
+Hints for implementation: Age { relativeStrength: 1.0; onAffectParticle: particle.opacity = 1.0 - particle.t }.
+
+: Gravity affector
+
+Description: Apply gravity to pull particles downward, simulating falling effects.
+Hints for implementation: Gravity3D { magnitude: 100; direction: Qt.vector3d(0, -1, 0) }.
+
+: AngleDirection
+
+Description: Emit particles in a conical spread using AngleDirection for velocity variation.
+Hints for implementation: TargetDirection3D { magnitude: 20; angleVariation: 30 } in Emitter.
+
+: Attractor pull
+
+Description: Create an attractor point that draws particles toward it over time.
+Hints for implementation: Attractor3D { point: Qt.vector3d(0,0,0); strength: 50 }.
+
+: Friction slow
+
+Description: Slow particles with Friction affector to simulate air resistance.
+Hints for implementation: Friction3D { magnitude: 0.1 }.
+
+: TrailEmitter follow
+
+Description: Generate trails by emitting from moving particles with TrailEmitter.
+Hints for implementation: TrailEmitter3D { follow: "targetParticle"; emitRate: 50 }.
+
+: Wander random
+
+Description: Add random wandering to particle paths with Wander affector.
+Hints for implementation: Wander3D { amount: 10; pacing: Wander3D.Pace }.
+
+: Turbulence wind
+
+Description: Simulate wind turbulence affecting particle movement with noise.
+Hints for implementation: Turbulence3D { strength: 20; noiseSource: noiseTexture }.
+
+: Custom affector
+
+Description: Implement a custom affector using JavaScript to modify particle properties uniquely.
+Hints for implementation: CustomAffector3D { onAffectParticle: particle.vx += Math.random() * 10 }.
+
+: Python particle control
+
+Description: Control particle system properties like emitRate from Python for interactive effects.
+Hints for implementation: Expose emitter.emitRate to Python property; update via setProperty.
+
+: GroupGoal target
+
+Description: Direct particle groups toward goals based on state changes.
+Hints for implementation: GroupGoal3D { goalState: 1; strength: 30 }.
+
+: Optimized system
+
+Description: Optimize a ParticleSystem for many particles by pooling and limiting updates.
+Hints for implementation: Set maxParticles: 1000; use SpriteParticle for efficiency.
