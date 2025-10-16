@@ -1,0 +1,232 @@
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <caption><strong>Table A: Python → Qt → QML</strong></caption>
+    <thead>
+        <tr>
+            <th>Python Type</th>
+            <th>Qt/C++ Type</th>
+            <th>QML/JavaScript Type</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>int</code></td>
+            <td><code>int</code>, <code>long</code>, <code>qint32</code>, etc.</td>
+            <td><code>int</code> (JavaScript number)</td>
+            <td>Automatic conversion. QML uses 53-bit integer precision within JS numbers.</td>
+        </tr>
+        <tr>
+            <td><code>float</code></td>
+            <td><code>double</code>, <code>float</code></td>
+            <td><code>real</code> (JavaScript number)</td>
+            <td>Direct mapping; QML numbers are double-precision.</td>
+        </tr>
+        <tr>
+            <td><code>bool</code></td>
+            <td><code>bool</code></td>
+            <td><code>bool</code></td>
+            <td>Direct bidirectional conversion.</td>
+        </tr>
+        <tr>
+            <td><code>str</code></td>
+            <td><code>QString</code>, <code>std::string</code></td>
+            <td><code>string</code></td>
+            <td>Python <code>str</code> to <code>QString</code> (UTF-16) or <code>std::string</code> (UTF-8); QML strings are JS strings (UTF-16).</td>
+        </tr>
+        <tr>
+            <td><code>bytes</code></td>
+            <td><code>QByteArray</code></td>
+            <td><code>ArrayBuffer</code></td>
+            <td>Python <code>bytes</code> maps to <code>QByteArray</code>; QML sees it as a JS <code>ArrayBuffer</code>.</td>
+        </tr>
+        <tr>
+            <td><code>list</code></td>
+            <td><code>QList<T></code>, <code>QVariantList</code>, <code>std::vector<T></code></td>
+            <td>Array-like object</td>
+            <td>Converts to <code>QList<T></code> or <code>QVariantList</code> (T depends on elements); QML sees as array-like (not true JS array, <code>Array.isArray() == false</code>).</td>
+        </tr>
+        <tr>
+            <td><code>tuple</code></td>
+            <td><code>std::pair<T1,T2></code>, <code>QList<T></code> (context-dependent)</td>
+            <td>Array-like object</td>
+            <td>Typically maps to <code>QList</code> for sequences; QML treats as array-like. Limited pair support requires custom conversion.</td>
+        </tr>
+        <tr>
+            <td><code>dict</code></td>
+            <td><code>QMap<K,V></code>, <code>QVariantMap</code>, <code>std::map<K,V></code></td>
+            <td>JS object</td>
+            <td>Maps to <code>QVariantMap</code> or <code>QMap</code>; QML sees as JS object with key-value pairs.</td>
+        </tr>
+        <tr>
+            <td><code>None</code></td>
+            <td><code>void*</code>, null <code>QObject*</code></td>
+            <td><code>null</code></td>
+            <td>Maps to null pointers in Qt; QML sees as <code>null</code>.</td>
+        </tr>
+        <tr>
+            <td><code>complex</code></td>
+            <td>Custom <code>Complex</code> (user-defined struct)</td>
+            <td>JS object (if registered)</td>
+            <td>Requires custom type with <code>Q_GADGET</code>, <code>Q_PROPERTY</code> for real/imag; QML sees as object with properties.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QColor</code></td>
+            <td><code>QColor</code></td>
+            <td><code>color</code></td>
+            <td>Python-wrapped Qt type passes directly; QML uses color strings (e.g., <code>"#RRGGBB"</code>) or <code>Qt.rgba()</code>. Requires Qt Quick.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QPoint</code></td>
+            <td><code>QPoint</code>, <code>QPointF</code></td>
+            <td>JS object <code>{x, y}</code></td>
+            <td>Direct pass-through; QML sees as object with <code>x</code>, <code>y</code> properties. Requires <code>Q_GADGET</code> registration.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QDateTime</code></td>
+            <td><code>QDateTime</code></td>
+            <td><code>Date</code></td>
+            <td>Converts to JS <code>Date</code>; QML uses 0-11 months (Qt: 1-12). Use UTC methods for consistency.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QDate</code></td>
+            <td><code>QDate</code></td>
+            <td><code>Date</code></td>
+            <td>Maps to JS <code>Date</code> (UTC start-of-day); prefer <code>QDateTime</code> for time zone safety.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QTime</code></td>
+            <td><code>QTime</code></td>
+            <td><code>Date</code></td>
+            <td>Adds arbitrary date in QML (unreliable); use <code>QDateTime</code> for better control.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QUrl</code></td>
+            <td><code>QUrl</code></td>
+            <td><code>url</code></td>
+            <td>Direct mapping; QML uses URL strings or <code>Qt.resolvedUrl()</code>.</td>
+        </tr>
+        <tr>
+            <td>PySide <code>QObject</code> subclass</td>
+            <td><code>QObject*</code> (registered with <code>QML_ELEMENT</code>)</td>
+            <td>QML component/object</td>
+            <td>Exposed as QML component; can be instantiated in QML if registered. Ownership stays with C++.</td>
+        </tr>
+        <tr>
+            <td>Custom Python class</td>
+            <td>User-defined Qt type (via <code>Q_GADGET</code> or <code>QObject</code>)</td>
+            <td>JS object or QML component</td>
+            <td>Requires Shiboken/SIP registration and <code>Q_GADGET</code>/<code>QML_ELEMENT</code>. QML sees properties/methods as defined.</td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <caption><strong>Table B: QML → Qt → Python</strong></caption>
+    <thead>
+        <tr>
+            <th>QML/JavaScript Type</th>
+            <th>Qt/C++ Type</th>
+            <th>Python Type</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>int</code> (JS number)</td>
+            <td><code>int</code>, <code>qint32</code>, <code>long</code></td>
+            <td><code>int</code></td>
+            <td>JS numbers (53-bit integer precision) map to Qt integers; Python <code>int</code> is unbounded.</td>
+        </tr>
+        <tr>
+            <td><code>real</code> (JS number)</td>
+            <td><code>double</code>, <code>float</code></td>
+            <td><code>float</code></td>
+            <td>JS double-precision numbers map directly to Qt <code>double</code>; Python <code>float</code> is equivalent.</td>
+        </tr>
+        <tr>
+            <td><code>bool</code></td>
+            <td><code>bool</code></td>
+            <td><code>bool</code></td>
+            <td>Direct bidirectional conversion.</td>
+        </tr>
+        <tr>
+            <td><code>string</code></td>
+            <td><code>QString</code>, <code>std::string</code></td>
+            <td><code>str</code></td>
+            <td>QML JS strings (UTF-16) map to <code>QString</code> or <code>std::string</code>; Python uses <code>str</code> (UTF-8 internally, but compatible).</td>
+        </tr>
+        <tr>
+            <td><code>ArrayBuffer</code></td>
+            <td><code>QByteArray</code></td>
+            <td><code>bytes</code></td>
+            <td>QML <code>ArrayBuffer</code> maps to <code>QByteArray</code>; Python sees as <code>bytes</code>.</td>
+        </tr>
+        <tr>
+            <td>Array-like object (e.g., <code>[]</code>)</td>
+            <td><code>QVariantList</code>, <code>QList<T></code></td>
+            <td><code>list</code></td>
+            <td>QML array-like objects (from <code>QList</code>/<code>QVariantList</code>) map to Python <code>list</code>. Not true JS arrays.</td>
+        </tr>
+        <tr>
+            <td>JS object (e.g., <code>{}</code>)</td>
+            <td><code>QVariantMap</code>, <code>QMap<K,V></code></td>
+            <td><code>dict</code></td>
+            <td>QML objects map to <code>QVariantMap</code> or <code>QMap</code>; Python sees as <code>dict</code>.</td>
+        </tr>
+        <tr>
+            <td><code>null</code></td>
+            <td><code>void*</code>, null <code>QObject*</code></td>
+            <td><code>None</code></td>
+            <td>QML <code>null</code> maps to null pointers in Qt; Python sees as <code>None</code>.</td>
+        </tr>
+        <tr>
+            <td><code>Date</code></td>
+            <td><code>QDateTime</code>, <code>QDate</code></td>
+            <td>PySide <code>QDateTime</code>, <code>QDate</code></td>
+            <td>JS <code>Date</code> maps to <code>QDateTime</code> (preferred) or <code>QDate</code> (UTC start-of-day); Python gets PySide classes. Months adjust (JS: 0-11, Qt: 1-12).</td>
+        </tr>
+        <tr>
+            <td><code>color</code></td>
+            <td><code>QColor</code></td>
+            <td>PySide <code>QColor</code></td>
+            <td>QML color (strings or <code>Qt.rgba()</code>) maps to <code>QColor</code>; Python gets PySide <code>QColor</code>. Requires Qt Quick.</td>
+        </tr>
+        <tr>
+            <td>JS object <code>{x, y}</code> (e.g., <code>point</code>)</td>
+            <td><code>QPoint</code>, <code>QPointF</code></td>
+            <td>PySide <code>QPoint</code>, <code>QPointF</code></td>
+            <td>QML objects from <code>QPoint</code>/<code>QPointF</code> map directly; Python gets PySide classes. Requires <code>Q_GADGET</code>.</td>
+        </tr>
+        <tr>
+            <td><code>url</code></td>
+            <td><code>QUrl</code></td>
+            <td>PySide <code>QUrl</code></td>
+            <td>QML URLs (strings or <code>Qt.resolvedUrl()</code>) map to <code>QUrl</code>; Python gets PySide <code>QUrl</code>.</td>
+        </tr>
+        <tr>
+            <td>QML component/object</td>
+            <td><code>QObject*</code> (registered with <code>QML_ELEMENT</code>)</td>
+            <td>PySide <code>QObject</code> subclass</td>
+            <td>QML-instantiated objects map to registered <code>QObject</code> types; Python gets PySide-wrapped instances.</td>
+        </tr>
+        <tr>
+            <td>JS object (custom gadget)</td>
+            <td>User-defined <code>Q_GADGET</code> type</td>
+            <td>Custom Python class or <code>dict</code></td>
+            <td>QML properties map to <code>Q_GADGET</code> properties; Python may need custom conversion or get a <code>dict</code> if unregistered.</td>
+        </tr>
+        <tr>
+            <td><code>array</code> (true JS array)</td>
+            <td><code>QJSValue</code> (or <code>QList<T></code> if registered)</td>
+            <td><code>list</code></td>
+            <td>True JS arrays (via <code>QJSEngine::newArray()</code>) map to <code>QJSValue</code> or sequence types; Python sees as <code>list</code>.</td>
+        </tr>
+        <tr>
+            <td>Enum (e.g., <code>Class.EnumValue</code>)</td>
+            <td>Qt enum (via <code>Q_ENUM</code>)</td>
+            <td><code>int</code> or custom enum</td>
+            <td>QML enums (from <code>Q_ENUM</code>) map to Qt enum values; Python typically sees as <code>int</code> unless enum is wrapped in PySide.</td>
+        </tr>
+    </tbody>
+</table>
+
