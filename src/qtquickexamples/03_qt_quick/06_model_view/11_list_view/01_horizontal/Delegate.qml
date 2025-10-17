@@ -6,11 +6,6 @@ import QtQuick.Layouts
 Rectangle {
     
     id: root
-    
-    required property int index
-    required property var model
-
-    required property string value
 
     width: 40
     height: ListView.view.height
@@ -18,15 +13,10 @@ Rectangle {
     border.color: ListView.isCurrentItem ? "#1976d2" : "lightgrey"
     border.width: 1
     
-    RowLayout {
-    
-        anchors.fill: parent
-
-        Label {
-            Layout.alignment : Layout.alignVCenter | Layout.alignHCenter 
-            text: value
-            rotation: 270
-        }
+    Label {
+        anchors.centerIn: parent
+        text: modelData
+        rotation: 270
     }
     
     MouseArea {

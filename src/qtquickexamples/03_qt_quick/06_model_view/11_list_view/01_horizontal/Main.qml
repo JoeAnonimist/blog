@@ -15,7 +15,7 @@ ApplicationWindow {
         id: listView
         
         anchors.fill: parent
-        model: Model {}
+        model: 6
         
         implicitWidth: count * 45
         implicitHeight: 210
