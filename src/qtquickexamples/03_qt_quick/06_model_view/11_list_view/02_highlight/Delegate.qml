@@ -7,16 +7,19 @@ Rectangle {
     
     id: root
 
-    width: 40
-    height: ListView.view.height
-    color: ListView.isCurrentItem ? "#e3f2fd" : "transparent"
-    border.color: ListView.isCurrentItem ? "#1976d2" : "lightgrey"
+    width: ListView.view.width
+    height: 40
+    color: "transparent"
+    border.color: "lightgrey"
     border.width: 1
     
+    required property int value
+    required property int index
+    property int barCount: value
+
     Label {
+        text: value
         anchors.centerIn: parent
-        text: modelData
-        rotation: 270
     }
     
     MouseArea {
@@ -25,7 +28,7 @@ Rectangle {
             root.ListView.view.currentIndex = index
             console.log("Clicked: " +
                 "Current index: " + root.ListView.view.currentIndex +
-                " Value: " + modelData)
+                " Value: " + value)
         }
     }
 }
