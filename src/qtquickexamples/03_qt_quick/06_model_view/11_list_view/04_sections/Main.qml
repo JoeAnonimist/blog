@@ -7,8 +7,8 @@ ApplicationWindow {
 
     visible: true
     width: listView.implicitWidth
-    height: listView.implicitHeight
-    title: "ListModel with static data"
+    height: listView.implicitWidth
+    title: "ListModel Sections Demo"
 
     ListView {
     
@@ -18,16 +18,20 @@ ApplicationWindow {
         model: Model {}
         
         implicitWidth: 210
-        implicitHeight: count * 45
-        anchors.margins: 4
+        anchors.leftMargin: 4
+        anchors.rightMargin: 4
         spacing: 4
+        clip: true
         
         focus: true
         
         section.property: "parity"
+        section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart | ViewSection.NextLabelAtEnd
         section.delegate: Rectangle {
-            width: 210
             height: 20
+            color: "#87CEEB"
+            anchors.left: parent.left
+            anchors.right: parent.right
             required property string section
             Text {
                 anchors.centerIn: parent
