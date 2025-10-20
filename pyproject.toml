@@ -358,6 +358,8 @@ files = [
     "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/08_states_transitions_and_scene_management/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/09_graphical_effects_and_shaders/placeholder.txt",
+    "src/qtquickexamples/03_qt_quick/10_particles_system/01_basic/Main.qml",
+    "src/qtquickexamples/03_qt_quick/10_particles_system/01_basic/main.py",
     "src/qtquickexamples/03_qt_quick/10_particles_system/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/11_further_topics/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/12_type_conversions/python_to_qml/Main.qml",
