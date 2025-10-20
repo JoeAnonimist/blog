@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts    
+
 
 Rectangle {
 
@@ -37,13 +37,13 @@ Rectangle {
         }
         
         Keys.onReturnPressed: () => {
-            root.ListView.view.model.setProperty(index, "value", text)
+            root.ListView.view.model.setProperty(root.index, "value", text)
             root.editing = false
             mouse.forceActiveFocus()
         }
         
         Keys.onEnterPressed: () => {
-            root.ListView.view.model.setProperty(index, "value", text)
+            root.ListView.view.model.setProperty(root.index, "value", text)
             root.editing = false
             mouse.forceActiveFocus()
         }
