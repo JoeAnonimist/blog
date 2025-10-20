@@ -1,16 +1,15 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts    
 
 Rectangle {
 
     id: root
     required property string value
     required property int index
-    
+
     width: ListView.view.width
     height: 40
-    
+
     color: "transparent"
     border.color: "lightgrey"
     border.width: 1
@@ -25,8 +24,8 @@ Rectangle {
     MouseArea {
         id: mouse
         anchors.fill: parent
-        onClicked: (mouse) => {
-            root.ListView.view.currentIndex = root.index
-        }
+        onClicked: mouse => {
+                       root.ListView.view.currentIndex = root.index
+                   }
     }
 }

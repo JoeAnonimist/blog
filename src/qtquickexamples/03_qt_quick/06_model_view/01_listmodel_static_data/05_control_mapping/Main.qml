@@ -7,46 +7,45 @@ ApplicationWindow {
     visible: true
     width: 200
     height: 300
-    title: "Editable ListModel"
-    
+    title: "Editable ListModel with Mapped Controls"
+
     ColumnLayout {
-    
+
         anchors.fill: parent
         anchors.margins: 4
-    
-	    ListView {
-	    
-	        id: listView
-	
-	        Layout.fillWidth: true
-	        height: 250
-	        anchors.margins: 4
-	        spacing: 4
-	        focus: true
-	        clip: true
-	        
-	        highlightFollowsCurrentItem: true
-	        highlight: Rectangle {
-	            height: 40; width: parent.width
-	            color: "#0078d7"; opacity: 0.2
-	        }
-	
-	        ScrollBar.vertical: ScrollBar { }
-	        
-	        model: Model { id: listModel }
-	
-	        delegate: Delegate {}
 
-		    Keys.onEnterPressed: () => {
-		        valueField.forceActiveFocus()
-		        console.log("focus")
-		    }
-		    Keys.onReturnPressed: () => {
-		        valueField.forceActiveFocus()
-		        console.log("focus")
-		    }
-	    }
-	    
+        ListView {
+
+            id: listView
+
+            Layout.fillWidth: true
+            implicitHeight: 250
+            spacing: 4
+            focus: true
+            clip: true
+
+            highlightFollowsCurrentItem: true
+            highlight: Rectangle {
+                height: 40; width: parent.width
+                color: "#0078d7"; opacity: 0.2
+            }
+
+            ScrollBar.vertical: ScrollBar { }
+
+            model: Model { id: listModel }
+
+            delegate: Delegate {}
+
+            Keys.onEnterPressed: () => {
+                valueField.forceActiveFocus()
+                console.log("focus")
+            }
+            Keys.onReturnPressed: () => {
+                valueField.forceActiveFocus()
+                console.log("focus")
+            }
+        }
+
         RowLayout {
 
             Layout.fillWidth: true
@@ -90,16 +89,16 @@ ApplicationWindow {
                 enabled: listModel.count > 0
                 Layout.preferredWidth: implicitHeight
                 onClicked: () => {
-	                if (listModel.count > 0) {
-		                listModel.remove(listView.currentIndex)
-		                if (listView.currentIndex == listModel.count) {
-		                    listView.currentIndex = listView.currentIndex - 1
-		                } 
-		                listView.forceActiveFocus()
-		            }
+                    if (listModel.count > 0) {
+                        listModel.remove(listView.currentIndex)
+                        if (listView.currentIndex == listModel.count) {
+                            listView.currentIndex = listView.currentIndex - 1
+                        }
+                        listView.forceActiveFocus()
+                    }
                 }
             }
         }
-    
-	}
+
+    }
 }
