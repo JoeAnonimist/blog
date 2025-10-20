@@ -9,7 +9,6 @@ files = [
     "README.md",
     "_config.yml",
     "_sass/custom/custom.scss",
-    "addfilestopyproject.py",
     "docs/miscellaneous.md",
     "docs/miscellaneous/0001_monitor_file_creation.md",
     "docs/miscellaneous/0002_list_running_processes.md",
