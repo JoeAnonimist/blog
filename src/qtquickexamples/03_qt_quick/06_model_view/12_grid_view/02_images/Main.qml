@@ -20,7 +20,11 @@ ApplicationWindow {
         focus: true
 
         highlight: Rectangle {
-            color: "#dddedf"
+            z: 100
+            border.color: "steelblue"
+            border.width: 2
+            radius: 2
+            color: "transparent"
         }
         highlightMoveDuration: 300
 
