@@ -37,5 +37,15 @@ ApplicationWindow {
             console.log( "Current index changed: "
             + currentIndex)
         }
+
+        ContextMenu.menu: Menu {
+            MenuItem {
+                text: "Add new item"
+                onTriggered: () => {
+                    gridView.model.addItem();
+                    gridView.currentIndex = gridView.model.count - 1
+                }
+            }
+        }
     }
 }
