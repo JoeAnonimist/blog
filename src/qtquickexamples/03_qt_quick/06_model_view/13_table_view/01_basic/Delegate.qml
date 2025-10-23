@@ -4,12 +4,9 @@ import QtQuick.Controls
 TableViewDelegate {
 
     id: root
-/*
+
     implicitWidth: 120
     implicitHeight: 40
-
-    //required property string display
-    //required property string edit
 
     contentItem: Rectangle {
         anchors.fill: parent
@@ -20,7 +17,7 @@ TableViewDelegate {
             anchors.centerIn: parent
             text: root.model.display
         }
-    }*/
+    }
 
     TableView.editDelegate: TextField {
 
