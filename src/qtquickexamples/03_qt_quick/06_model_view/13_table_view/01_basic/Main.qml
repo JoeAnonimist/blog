@@ -14,10 +14,12 @@ ApplicationWindow {
 
         anchors.fill: parent
         anchors.margins: 10
+        rowSpacing: -1
+        columnSpacing: -1
 
         focus: true
 
-        editTriggers: TableView.DoubleTapped
+        editTriggers: TableView.DoubleTapped | TableView.EditKeyPressed
         selectionBehavior: TableView.SelectCells
         selectionModel: ItemSelectionModel{ }
 
