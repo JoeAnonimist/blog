@@ -390,6 +390,8 @@ files = [
     "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/01_property_animation/main.py",
     "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/02_number_animation/Main.qml",
     "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/02_number_animation/main.py",
+    "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/03_color_animation/Main.qml",
+    "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/03_color_animation/main.py",
     "src/qtquickexamples/03_qt_quick/07_animations_and_behaviors/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/08_states_transitions_and_scene_management/placeholder.txt",
     "src/qtquickexamples/03_qt_quick/09_graphical_effects_and_shaders/placeholder.txt",
