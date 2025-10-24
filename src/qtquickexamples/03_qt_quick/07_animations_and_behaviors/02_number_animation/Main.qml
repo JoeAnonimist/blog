@@ -17,12 +17,11 @@ ApplicationWindow {
         anchors.centerIn: parent
         text: "Click me"
 
-        NumberAnimation {
+        NumberAnimation on scale {
             id: animation
-            target: button
-            property: "scale"
-            to: target.scale === 1 ? 1.2 : 1
+            to: button.scale === 1 ? 1.2 : 1
             duration: 300
+            running: false
         }
 
         onClicked: () => {
