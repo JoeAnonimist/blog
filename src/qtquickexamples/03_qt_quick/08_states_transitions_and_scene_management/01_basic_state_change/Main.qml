@@ -6,32 +6,29 @@ ApplicationWindow {
     visible: true
     width: 400
     height: 200
-    title: "Basic State When Condition"
+    title: "Basic State Change"
 
     Button {
 
         id: button
 
-        checkable: true
-
         height: 40
         width: 100
         x: 10
         y: 80
-        text: button.checked ? "ON" : "OFF"
+        text: "Click me"
 
-        state: "OFF"
+        state: "left"
         states: [
             State {
-                name: "OFF"
+                name: "left"
                 PropertyChanges {
                     target: button
                     x: 10
                 }
             },
             State {
-                name: "ON"
-                when: button.checked
+                name: "right"
                 PropertyChanges {
                     target: button
                     x: 280
@@ -45,6 +42,11 @@ ApplicationWindow {
                 duration: 300
                 easing.type: Easing.InOutQuad
             }
+        }
+
+        onClicked: () => {
+            button.state = button.state === "left" ?
+                           "right" : "left"
         }
     }
 }
