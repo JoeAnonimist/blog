@@ -37,8 +37,8 @@ ApplicationWindow {
         ]
 
         onClicked: () => {
-            console.log("clicked", button.background)
-            button.state = button.state === "left" ? "right" : "left"
+            button.state = button.state === "left" ?
+                           "right" : "left"
         }
     }
 }
